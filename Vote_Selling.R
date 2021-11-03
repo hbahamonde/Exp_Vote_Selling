@@ -147,33 +147,6 @@ v.selling.dat = dat[c(id.vars, v.selling.vars, socio.dem.vars)]
 # dropping obs that dont belong to the vote buying exp
 v.selling.dat <- subset(v.selling.dat, !is.na(vote_s.1.player.votanteOpartido))
 
-p_load(dplyr)
-v.selling.dat = v.selling.dat %>% select(vote_s.1.player.votanteOpartido,
-                                         vote_s.1.player.tipoAoB,
-                                         vote_s.1.player.p_oferta_choice_A,
-                                         vote_s.1.player.p_oferta_choice_B,
-                                         vote_s.1.player.p_oferta_amount_A,
-                                         vote_s.1.player.p_oferta_amount_B,
-                                         voter.offer,
-                                         vote_s.1.player.partido_envia_puntos,
-                                         vote_s.1.player.votante_acepta_oferta,
-                                         vote_s.1.player.win_lose,
-                                         vote_s.1.player.win_losev,
-                                         vote_s.1.player.puntos,
-                                         vote_s.1.player.payoff,
-                                         vote_s.1.group.id_in_subsession,
-                                         vote_s.1.group.presupuesto,
-                                         vote_s.1.group.n_votantes,
-                                         vote_s.1.group.n_votantes_A,
-                                         vote_s.1.group.n_votantes_B,
-                                         vote_s.1.group.partido_elegido,
-                                         vote_s.1.group.tipo_votante,
-                                         vote_s.1.group.ubicacion_pA,
-                                         vote_s.1.group.ubicacion_pB,
-                                         vote_s.1.group.pje_win_cA,
-                                         vote_s.1.group.pje_win_cB,
-                                         everything())
-
 # voter.offer
 v.selling.dat$voter.offer.1 = (v.selling.dat$vote_s.1.player.p_oferta_amount_A-v.selling.dat$vote_s.1.player.p_oferta_amount_B)
 v.selling.dat$voter.offer.2 = (v.selling.dat$vote_s.2.player.p_oferta_amount_A-v.selling.dat$vote_s.2.player.p_oferta_amount_B)
@@ -184,15 +157,161 @@ v.selling.dat$ideo.distance.1 = (v.selling.dat$vote_s.1.group.ubicacion_pB-100)+
 v.selling.dat$ideo.distance.2 = (v.selling.dat$vote_s.2.group.ubicacion_pB-100)+(v.selling.dat$vote_s.2.group.ubicacion_pA)
 v.selling.dat$ideo.distance.3 = (v.selling.dat$vote_s.3.group.ubicacion_pB-100)+(v.selling.dat$vote_s.3.group.ubicacion_pA)
 
-# pivotal.voter
-v.selling.dat$pivotal.voter.1 = abs(v.selling.dat$vote_s.1.group.n_votantes_A-v.selling.dat$vote_s.1.group.n_votantes_B)
-v.selling.dat$pivotal.voter.1 = ifelse(v.selling.dat$pivotal.voter.1==1, 1, 0)
-v.selling.dat$pivotal.voter.2 = abs(v.selling.dat$vote_s.2.group.n_votantes_A-v.selling.dat$vote_s.2.group.n_votantes_B)
-v.selling.dat$pivotal.voter.2 = ifelse(v.selling.dat$pivotal.voter.2==1, 1, 0)
-v.selling.dat$pivotal.voter.3 = abs(v.selling.dat$vote_s.3.group.n_votantes_A-v.selling.dat$vote_s.3.group.n_votantes_B)
-v.selling.dat$pivotal.voter.3 = ifelse(v.selling.dat$pivotal.voter.3==1, 1, 0)
+# party.id.before.voter
+p_load(dplyr)
+v.selling.dat = v.selling.dat %>% group_by(vote_s.1.group.presupuesto) %>% fill(vote_s.1.player.tipoAoB); v.selling.dat$party.id.before.voter.1 = v.selling.dat$vote_s.1.player.tipoAoB 
+v.selling.dat = v.selling.dat %>% group_by(vote_s.2.group.presupuesto) %>% fill(vote_s.2.player.tipoAoB); v.selling.dat$party.id.before.voter.2 = v.selling.dat$vote_s.2.player.tipoAoB 
+v.selling.dat = v.selling.dat %>% group_by(vote_s.3.group.presupuesto) %>% fill(vote_s.3.player.tipoAoB); v.selling.dat$party.id.before.voter.3 = v.selling.dat$vote_s.3.player.tipoAoB 
+
+# pivotal.voter 1
+v.selling.dat$pivotal.voter.1 = ifelse(
+  v.selling.dat$party.id.before.voter.1=="A" & # votante (A o B).
+    v.selling.dat$vote_s.1.group.n_votantes == 5 & # grupo (3 o 5).
+    v.selling.dat$vote_s.1.group.n_votantes_A == 3, 1,
+  ifelse(
+    v.selling.dat$party.id.before.voter.1=="A" & # votante (A o B).
+      v.selling.dat$vote_s.1.group.n_votantes == 3 & # grupo (3 o 5).
+      v.selling.dat$vote_s.1.group.n_votantes_A == 2, 1,
+    ifelse(
+      v.selling.dat$party.id.before.voter.1=="B" & # votante (A o B).
+        v.selling.dat$vote_s.1.group.n_votantes == 5 & # grupo (3 o 5).
+        v.selling.dat$vote_s.1.group.n_votantes_B == 3, 1,
+      ifelse(
+        v.selling.dat$party.id.before.voter.1=="B" & # votante (A o B).
+          v.selling.dat$vote_s.1.group.n_votantes == 3 & # grupo (3 o 5).
+          v.selling.dat$vote_s.1.group.n_votantes_B == 2, 1, 0
+      )
+    )
+  )
+)
+
+# pivotal.voter 2
+v.selling.dat$pivotal.voter.2 = ifelse(
+  v.selling.dat$party.id.before.voter.2=="A" & # votante (A o B).
+    v.selling.dat$vote_s.2.group.n_votantes == 5 & # grupo (3 o 5).
+    v.selling.dat$vote_s.2.group.n_votantes_A == 3, 1,
+  ifelse(
+    v.selling.dat$party.id.before.voter.2=="A" & # votante (A o B).
+      v.selling.dat$vote_s.2.group.n_votantes == 3 & # grupo (3 o 5).
+      v.selling.dat$vote_s.2.group.n_votantes_A == 2, 1,
+    ifelse(
+      v.selling.dat$party.id.before.voter.2=="B" & # votante (A o B).
+        v.selling.dat$vote_s.2.group.n_votantes == 5 & # grupo (3 o 5).
+        v.selling.dat$vote_s.2.group.n_votantes_B == 3, 1,
+      ifelse(
+        v.selling.dat$party.id.before.voter.2=="B" & # votante (A o B).
+          v.selling.dat$vote_s.2.group.n_votantes == 3 & # grupo (3 o 5).
+          v.selling.dat$vote_s.2.group.n_votantes_B == 2, 1, 0
+      )
+    )
+  )
+)
+
+# pivotal.voter 3
+v.selling.dat$pivotal.voter.3 = ifelse(
+  v.selling.dat$party.id.before.voter.3=="A" & # votante (A o B).
+    v.selling.dat$vote_s.3.group.n_votantes == 5 & # grupo (3 o 5).
+    v.selling.dat$vote_s.3.group.n_votantes_A == 3, 1,
+  ifelse(
+    v.selling.dat$party.id.before.voter.3=="A" & # votante (A o B).
+      v.selling.dat$vote_s.3.group.n_votantes == 3 & # grupo (3 o 5).
+      v.selling.dat$vote_s.3.group.n_votantes_A == 2, 1,
+    ifelse(
+      v.selling.dat$party.id.before.voter.3=="B" & # votante (A o B).
+        v.selling.dat$vote_s.3.group.n_votantes == 5 & # grupo (3 o 5).
+        v.selling.dat$vote_s.3.group.n_votantes_B == 3, 1,
+      ifelse(
+        v.selling.dat$party.id.before.voter.3=="B" & # votante (A o B).
+          v.selling.dat$vote_s.3.group.n_votantes == 3 & # grupo (3 o 5).
+          v.selling.dat$vote_s.3.group.n_votantes_B == 2, 1, 0
+      )
+    )
+  )
+)
+
+
 
 # vote.intention.party
-v.selling.dat$vote.intention.party = round((v.selling.dat$vote.intention.party*100)/vote_s.1.group.n_votantes,0)
+v.selling.dat$vote.intention.party.1 = v.selling.dat$vote_s.1.group.n_votantes_A + (-1*v.selling.dat$vote_s.1.group.n_votantes_B)
+v.selling.dat$vote.intention.party.2 = v.selling.dat$vote_s.2.group.n_votantes_A + (-1*v.selling.dat$vote_s.2.group.n_votantes_B)
+v.selling.dat$vote.intention.party.3 = v.selling.dat$vote_s.3.group.n_votantes_A + (-1*v.selling.dat$vote_s.3.group.n_votantes_B)
 
-(v.selling.dat$vote_s.1.group.n_votantes_A-(v.selling.dat$vote_s.1.group.n_votantes_B))
+
+# budget
+v.selling.dat$budget.1 = v.selling.dat$vote_s.1.group.presupuesto
+v.selling.dat$budget.2 = v.selling.dat$vote_s.2.group.presupuesto
+v.selling.dat$budget.3 = v.selling.dat$vote_s.3.group.presupuesto
+
+# role
+# HERE
+
+# subset data 1
+v.selling.dat.1 = subset(
+  v.selling.dat, select = c(
+    participant.code,
+    session.code,
+    participant.payoff,
+    voter.offer.1, 
+    ideo.distance.1, 
+    pivotal.voter.1, 
+    vote.intention.party.1, 
+    budget.1
+    )
+  )
+
+names(v.selling.dat.1) = gsub(pattern = ".1", replacement = "", x = names(v.selling.dat.1))
+
+# subset data 2
+v.selling.dat.2 = subset(
+  v.selling.dat, select = c(
+    participant.code,
+    session.code,
+    participant.payoff,
+    voter.offer.2, 
+    ideo.distance.2, 
+    pivotal.voter.2, 
+    vote.intention.party.2, 
+    budget.2
+  )
+)
+
+names(v.selling.dat.2) = gsub(pattern = ".2", replacement = "", x = names(v.selling.dat.2))
+
+# subset data 3
+v.selling.dat.3 = subset(
+  v.selling.dat, select = c(
+    participant.code,
+    session.code,
+    participant.payoff,
+    voter.offer.3, 
+    ideo.distance.3, 
+    pivotal.voter.3, 
+    vote.intention.party.3, 
+    budget.3
+  )
+)
+
+names(v.selling.dat.3) = gsub(pattern = ".3", replacement = "", x = names(v.selling.dat.3))
+
+
+# Stack up 3 games
+v.selling.dat = data.frame(rbind(v.selling.dat.1,v.selling.dat.2,v.selling.dat.3))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
