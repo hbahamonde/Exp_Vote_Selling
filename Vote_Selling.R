@@ -175,14 +175,14 @@ v.selling.dat = v.selling.dat %>% select(vote_s.1.player.votanteOpartido,
                                          everything())
 
 # voter.offer
-v.selling.dat$voter.offer.1 = abs(v.selling.dat$vote_s.1.player.p_oferta_amount_A-(-1*v.selling.dat$vote_s.1.player.p_oferta_amount_B))
-v.selling.dat$voter.offer.2 = abs(v.selling.dat$vote_s.2.player.p_oferta_amount_A-(-1*v.selling.dat$vote_s.2.player.p_oferta_amount_B))
-v.selling.dat$voter.offer.3 = abs(v.selling.dat$vote_s.3.player.p_oferta_amount_A-(-1*v.selling.dat$vote_s.3.player.p_oferta_amount_B))
+v.selling.dat$voter.offer.1 = (v.selling.dat$vote_s.1.player.p_oferta_amount_A-v.selling.dat$vote_s.1.player.p_oferta_amount_B)
+v.selling.dat$voter.offer.2 = (v.selling.dat$vote_s.2.player.p_oferta_amount_A-1*v.selling.dat$vote_s.2.player.p_oferta_amount_B)
+v.selling.dat$voter.offer.3 = (v.selling.dat$vote_s.3.player.p_oferta_amount_A-1*v.selling.dat$vote_s.3.player.p_oferta_amount_B)
 
 # ideo.distance
-v.selling.dat$ideo.distance.1 = abs(v.selling.dat$vote_s.1.group.ubicacion_pA-(-1*v.selling.dat$vote_s.1.group.ubicacion_pB))
-v.selling.dat$ideo.distance.2 = abs(v.selling.dat$vote_s.2.group.ubicacion_pA-(-1*v.selling.dat$vote_s.2.group.ubicacion_pB))
-v.selling.dat$ideo.distance.3 = abs(v.selling.dat$vote_s.3.group.ubicacion_pA-(-1*v.selling.dat$vote_s.3.group.ubicacion_pB))
+v.selling.dat$ideo.distance.1 = v.selling.dat$vote_s.1.group.ubicacion_pA-v.selling.dat$vote_s.1.group.ubicacion_pB
+v.selling.dat$ideo.distance.2 = v.selling.dat$vote_s.2.group.ubicacion_pA-v.selling.dat$vote_s.2.group.ubicacion_pB
+v.selling.dat$ideo.distance.3 = v.selling.dat$vote_s.3.group.ubicacion_pA-v.selling.dat$vote_s.3.group.ubicacion_pB
 
 # pivotal.voter
 v.selling.dat$pivotal.voter.1 = abs(v.selling.dat$vote_s.1.group.n_votantes_A-v.selling.dat$vote_s.1.group.n_votantes_B)
@@ -195,3 +195,4 @@ v.selling.dat$pivotal.voter.3 = ifelse(v.selling.dat$pivotal.voter.3==1, 1, 0)
 # vote.intention.party
 v.selling.dat$vote.intention.party = round((v.selling.dat$vote.intention.party*100)/vote_s.1.group.n_votantes,0)
 
+(v.selling.dat$vote_s.1.group.n_votantes_A-(v.selling.dat$vote_s.1.group.n_votantes_B))
