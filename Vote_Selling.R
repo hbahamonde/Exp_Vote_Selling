@@ -147,3 +147,51 @@ v.selling.dat = dat[c(id.vars, v.selling.vars, socio.dem.vars)]
 # dropping obs that dont belong to the vote buying exp
 v.selling.dat <- subset(v.selling.dat, !is.na(vote_s.1.player.votanteOpartido))
 
+p_load(dplyr)
+v.selling.dat = v.selling.dat %>% select(vote_s.1.player.votanteOpartido,
+                                         vote_s.1.player.tipoAoB,
+                                         vote_s.1.player.p_oferta_choice_A,
+                                         vote_s.1.player.p_oferta_choice_B,
+                                         vote_s.1.player.p_oferta_amount_A,
+                                         vote_s.1.player.p_oferta_amount_B,
+                                         voter.offer,
+                                         vote_s.1.player.partido_envia_puntos,
+                                         vote_s.1.player.votante_acepta_oferta,
+                                         vote_s.1.player.win_lose,
+                                         vote_s.1.player.win_losev,
+                                         vote_s.1.player.puntos,
+                                         vote_s.1.player.payoff,
+                                         vote_s.1.group.id_in_subsession,
+                                         vote_s.1.group.presupuesto,
+                                         vote_s.1.group.n_votantes,
+                                         vote_s.1.group.n_votantes_A,
+                                         vote_s.1.group.n_votantes_B,
+                                         vote_s.1.group.partido_elegido,
+                                         vote_s.1.group.tipo_votante,
+                                         vote_s.1.group.ubicacion_pA,
+                                         vote_s.1.group.ubicacion_pB,
+                                         vote_s.1.group.pje_win_cA,
+                                         vote_s.1.group.pje_win_cB,
+                                         everything())
+
+# voter.offer
+v.selling.dat$voter.offer.1 = abs(v.selling.dat$vote_s.1.player.p_oferta_amount_A-(-1*v.selling.dat$vote_s.1.player.p_oferta_amount_B))
+v.selling.dat$voter.offer.2 = abs(v.selling.dat$vote_s.2.player.p_oferta_amount_A-(-1*v.selling.dat$vote_s.2.player.p_oferta_amount_B))
+v.selling.dat$voter.offer.3 = abs(v.selling.dat$vote_s.3.player.p_oferta_amount_A-(-1*v.selling.dat$vote_s.3.player.p_oferta_amount_B))
+
+# ideo.distance
+v.selling.dat$ideo.distance.1 = abs(v.selling.dat$vote_s.1.group.ubicacion_pA-(-1*v.selling.dat$vote_s.1.group.ubicacion_pB))
+v.selling.dat$ideo.distance.2 = abs(v.selling.dat$vote_s.2.group.ubicacion_pA-(-1*v.selling.dat$vote_s.2.group.ubicacion_pB))
+v.selling.dat$ideo.distance.3 = abs(v.selling.dat$vote_s.3.group.ubicacion_pA-(-1*v.selling.dat$vote_s.3.group.ubicacion_pB))
+
+# pivotal.voter
+v.selling.dat$pivotal.voter.1 = abs(v.selling.dat$vote_s.1.group.n_votantes_A-v.selling.dat$vote_s.1.group.n_votantes_B)
+v.selling.dat$pivotal.voter.1 = ifelse(v.selling.dat$pivotal.voter.1==1, 1, 0)
+v.selling.dat$pivotal.voter.2 = abs(v.selling.dat$vote_s.2.group.n_votantes_A-v.selling.dat$vote_s.2.group.n_votantes_B)
+v.selling.dat$pivotal.voter.2 = ifelse(v.selling.dat$pivotal.voter.2==1, 1, 0)
+v.selling.dat$pivotal.voter.3 = abs(v.selling.dat$vote_s.3.group.n_votantes_A-v.selling.dat$vote_s.3.group.n_votantes_B)
+v.selling.dat$pivotal.voter.3 = ifelse(v.selling.dat$pivotal.voter.3==1, 1, 0)
+
+# vote.intention.party
+v.selling.dat$vote.intention.party = round((v.selling.dat$vote.intention.party*100)/vote_s.1.group.n_votantes,0)
+
