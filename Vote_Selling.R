@@ -418,8 +418,8 @@ m1plot = xyplot(predicted ~ x | group,
 )
 
 
-
-
+# K-adic Data Analyses
+# https://www.paulpoast.com/stata-software/4587316769
 
 
 
