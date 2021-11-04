@@ -158,7 +158,7 @@ v.selling.dat$ideo.distance.2 = (v.selling.dat$vote_s.2.group.ubicacion_pB-100)+
 v.selling.dat$ideo.distance.3 = (v.selling.dat$vote_s.3.group.ubicacion_pB-100)+(v.selling.dat$vote_s.3.group.ubicacion_pA)
 
 # party.id.before.voter
-p_load(dplyr)
+p_load(dplyr,tidyverse)
 v.selling.dat = v.selling.dat %>% group_by(vote_s.1.group.presupuesto) %>% fill(vote_s.1.player.tipoAoB); v.selling.dat$party.id.before.voter.1 = v.selling.dat$vote_s.1.player.tipoAoB 
 v.selling.dat = v.selling.dat %>% group_by(vote_s.2.group.presupuesto) %>% fill(vote_s.2.player.tipoAoB); v.selling.dat$party.id.before.voter.2 = v.selling.dat$vote_s.2.player.tipoAoB 
 v.selling.dat = v.selling.dat %>% group_by(vote_s.3.group.presupuesto) %>% fill(vote_s.3.player.tipoAoB); v.selling.dat$party.id.before.voter.3 = v.selling.dat$vote_s.3.player.tipoAoB 
@@ -229,13 +229,10 @@ v.selling.dat$pivotal.voter.3 = ifelse(
   )
 )
 
-
-
 # vote.intention.party
 v.selling.dat$vote.intention.party.1 = v.selling.dat$vote_s.1.group.n_votantes_A + (-1*v.selling.dat$vote_s.1.group.n_votantes_B)
 v.selling.dat$vote.intention.party.2 = v.selling.dat$vote_s.2.group.n_votantes_A + (-1*v.selling.dat$vote_s.2.group.n_votantes_B)
 v.selling.dat$vote.intention.party.3 = v.selling.dat$vote_s.3.group.n_votantes_A + (-1*v.selling.dat$vote_s.3.group.n_votantes_B)
-
 
 # budget
 v.selling.dat$budget.1 = v.selling.dat$vote_s.1.group.presupuesto
@@ -243,7 +240,18 @@ v.selling.dat$budget.2 = v.selling.dat$vote_s.2.group.presupuesto
 v.selling.dat$budget.3 = v.selling.dat$vote_s.3.group.presupuesto
 
 # role
-# HERE
+v.selling.dat$role.1 = v.selling.dat$vote_s.1.player.votanteOpartido
+v.selling.dat$role.2 = v.selling.dat$vote_s.2.player.votanteOpartido
+v.selling.dat$role.3 = v.selling.dat$vote_s.3.player.votanteOpartido
+p_load(dplyr)
+v.selling.dat = v.selling.dat %>% mutate(role.1=recode(role.1, "Partido A" = "Party A","Partido B" = "Party B","votantes" = "Voter"))
+v.selling.dat = v.selling.dat %>% mutate(role.2=recode(role.2, "Partido A" = "Party A","Partido B" = "Party B","votantes" = "Voter"))
+v.selling.dat = v.selling.dat %>% mutate(role.3=recode(role.3, "Partido A" = "Party A","Partido B" = "Party B","votantes" = "Voter"))
+
+# points
+v.selling.dat$points.this.round.1 = v.selling.dat$vote_s.1.player.puntos
+v.selling.dat$points.this.round.2 = v.selling.dat$vote_s.2.player.puntos
+v.selling.dat$points.this.round.3 = v.selling.dat$vote_s.3.player.puntos
 
 # subset data 1
 v.selling.dat.1 = subset(
@@ -251,14 +259,15 @@ v.selling.dat.1 = subset(
     participant.code,
     session.code,
     participant.payoff,
+    role.1,
     voter.offer.1, 
     ideo.distance.1, 
     pivotal.voter.1, 
     vote.intention.party.1, 
-    budget.1
+    budget.1,
+    points.this.round.1
     )
   )
-
 names(v.selling.dat.1) = gsub(pattern = ".1", replacement = "", x = names(v.selling.dat.1))
 
 # subset data 2
@@ -267,14 +276,15 @@ v.selling.dat.2 = subset(
     participant.code,
     session.code,
     participant.payoff,
+    role.2,
     voter.offer.2, 
     ideo.distance.2, 
     pivotal.voter.2, 
     vote.intention.party.2, 
-    budget.2
+    budget.2,
+    points.this.round.2
+    )
   )
-)
-
 names(v.selling.dat.2) = gsub(pattern = ".2", replacement = "", x = names(v.selling.dat.2))
 
 # subset data 3
@@ -283,23 +293,34 @@ v.selling.dat.3 = subset(
     participant.code,
     session.code,
     participant.payoff,
+    role.3,
     voter.offer.3, 
     ideo.distance.3, 
     pivotal.voter.3, 
     vote.intention.party.3, 
-    budget.3
+    budget.3,
+    points.this.round.3
+    )
   )
-)
-
 names(v.selling.dat.3) = gsub(pattern = ".3", replacement = "", x = names(v.selling.dat.3))
 
+# round count
+v.selling.dat.1$round = 1
+v.selling.dat.2$round = 2
+v.selling.dat.3$round = 3
 
 # Stack up 3 games
 v.selling.dat = data.frame(rbind(v.selling.dat.1,v.selling.dat.2,v.selling.dat.3))
 
+# change in payoff
+p_load(dplyr,tidyverse)
+v.selling.dat = v.selling.dat %>%
+  group_by(participant.code) %>%
+  arrange(round) %>%
+  mutate(points.cumul.delta = points.this.round - lag(points.this.round))
 
-
-
+# Merging with ID df
+v.selling.dat = merge(v.selling.dat, dat.v.s.ID, by=c("participant.code"))
 
 
 
