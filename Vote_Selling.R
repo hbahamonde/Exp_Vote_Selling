@@ -322,13 +322,100 @@ v.selling.dat = v.selling.dat %>%
 # Merging with ID df
 v.selling.dat = merge(v.selling.dat, dat.v.s.ID, by=c("participant.code"))
 
+p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
+
+#########################################################################
+##### Amount Model
+#########################################################################
+
+# Subsetting Data
+# m1.v.s = dat.v.b %>% select(offer.made.party, vote.intention.party.2, points.cumul.delta, ideo.distance2, budget, participant.code, pivotal.voter) %>% drop_na()
+# m1.v.s = as.data.frame(m1.d)
+
+v.selling.dat.m.1.d <- subset(v.selling.dat, role == "Voter")
+
+m1.v.s = lm(voter.offer ~ vote.intention.party + points.cumul.delta + ideo.distance + budget + pivotal.voter, v.selling.dat.m.1.d)
+# options(scipen=9999999) # turn off sci not
+# summary(m1.v.s)
+
+options(scipen=9999999) # turn off sci not
+p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
+m1.v.s.clst.std.err = as.numeric(coeftest(m1.v.s, vcov. = vcovCL(m1.v.s, cluster = v.selling.dat.m.1.d$participant.code, type = "HC0"))[,2])[1:6]
+m1.v.s.clst.t.test = c(as.numeric(coeftest(m1.v.s, vcov. = vcovCL(m1.v.s, cluster = v.selling.dat$participant.code, type = "HC0"))[,3])[1:6])
+m1.v.s.clst.p.value = c(as.numeric(coeftest(m1.v.s, vcov. = vcovCL(m1.v.s, cluster = v.selling.dat$participant.code, type = "HC0"))[,4])[1:6])
+custom.model.names.m1 = "Amount of Vote-Buying Offer"
 
 
 
+## MODEL 1 PLOTS
+#mientras mas pierdo ayer, mas caro compro hoy
+m1.p1.d = data.frame(ggeffects::ggpredict(
+  model=m1.v.s,
+  terms=c("points.cumul.delta [all]"), 
+  vcov.fun = "vcovHC", 
+  vcov.type = "HC0")
+); m1.p1.d$group = "Points Cumul (delta)"
 
 
+#mientras mas votos a favor tengo, mas ofrezco
+m1.p2.d = data.frame(ggeffects::ggpredict(
+  model=m1.v.s,
+  terms=c("vote.intention.party [all]"), 
+  vcov.fun = "vcovHC", 
+  vcov.type = "HC0")
+); m1.p2.d$group = "Vote Share"
+
+# no importa la distancia ideologica
+m1.p3.d = data.frame(ggeffects::ggpredict(
+  model=m1.v.s,
+  terms=c("ideo.distance [all]"), 
+  vcov.fun = "vcovHC", 
+  vcov.type = "HC0")
+); m1.p3.d$group = "Spatial Distance (left-right)"
+
+# no importa el budget del partido
+m1.p4.d = data.frame(ggeffects::ggpredict(
+  model=m1.v.s,
+  terms=c("budget [all]"), 
+  vcov.fun = "vcovHC", 
+  vcov.type = "HC0")
+); m1.p4.d$group = "Party's Budget"
 
 
+# pivotal voter
+m1.p5.d = data.frame(ggeffects::ggpredict(
+  model=m1.v.s,
+  terms=c("pivotal.voter [all]"), 
+  vcov.fun = "vcovHC", 
+  vcov.type = "HC0")
+); m1.p5.d$group = "Pivotal Voter"
+
+# plot (export by hand)
+m1.p.d = as.data.frame(rbind(m1.p1.d,m1.p2.d,m1.p3.d,m1.p4.d,m1.p5.d))
+m1.p.d$group = factor(m1.p.d$group, 
+                      levels = c("Vote Share", 
+                                 "Points Cumul (delta)", 
+                                 "Spatial Distance (left-right)", 
+                                 "Party's Budget",
+                                 "Pivotal Voter"))
+
+#m1.p.d$group = as.factor(m1.p.d$group)
+#m1.p.d$group <- relevel(m1.p.d$group, "Points Cumul (delta)")
+
+p_load(lattice, latticeExtra, DAMisc)
+m1plot = xyplot(predicted ~ x | group, 
+                scales=list(relation="free", rot=0),
+                data=m1.p.d, 
+                aspect = 1,
+                xlab = " ", 
+                ylab = "Amount of Vote-Buying Offer (points)", 
+                lower=m1.p.d$conf.low,
+                upper=m1.p.d$conf.high,
+                panel = panel.ci, 
+                zl=F, 
+                prepanel=prepanel.ci,
+                layout = c(5, 1) # columns, rows
+)
 
 
 
