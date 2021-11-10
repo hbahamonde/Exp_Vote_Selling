@@ -168,17 +168,18 @@ v.selling.dat$ideo.distance.3.b = abs(v.selling.dat$vote_s.3.group.tipo_votante 
 
 # voter.offer dyadic
 ## 1
-v.selling.dat$voter.offer.1.a = v.selling.dat$vote_s.1.player.p_oferta_amount_A
-v.selling.dat$voter.offer.1.b = v.selling.dat$vote_s.1.player.p_oferta_amount_B
+p_load(dplyr,tidyverse)
+v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.1.group.presupuesto) %>% mutate(voter.offer.1.a = max(vote_s.1.player.p_oferta_amount_A))
+v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.1.group.presupuesto) %>% mutate(voter.offer.1.b = max(vote_s.1.player.p_oferta_amount_B))
 ## 2
-v.selling.dat$voter.offer.2.a = v.selling.dat$vote_s.2.player.p_oferta_amount_A
-v.selling.dat$voter.offer.2.b = v.selling.dat$vote_s.2.player.p_oferta_amount_B
+v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.2.group.presupuesto) %>% mutate(voter.offer.2.a = max(vote_s.1.player.p_oferta_amount_A))
+v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.2.group.presupuesto) %>% mutate(voter.offer.2.b = max(vote_s.1.player.p_oferta_amount_B))
 ## 3
-v.selling.dat$voter.offer.3.a = v.selling.dat$vote_s.3.player.p_oferta_amount_A
-v.selling.dat$voter.offer.3.b = v.selling.dat$vote_s.3.player.p_oferta_amount_B
+v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.3.group.presupuesto) %>% mutate(voter.offer.3.a = max(vote_s.3.player.p_oferta_amount_A))
+v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.3.group.presupuesto) %>% mutate(voter.offer.3.b = max(vote_s.3.player.p_oferta_amount_B))
 
 
-# voter's own party (0,1)
+# voter's own party dyadic (0,1)
 ## 1
 v.selling.dat$voter.own.1.a = ifelse(v.selling.dat$vote_s.1.player.votanteOpartido=="Partido A" & v.selling.dat$vote_s.1.player.tipoAoB=="A", 1, 0)
 v.selling.dat$voter.own.1.b = ifelse(v.selling.dat$vote_s.1.player.votanteOpartido=="Partido B" & v.selling.dat$vote_s.1.player.tipoAoB=="B", 1, 0)
@@ -322,172 +323,42 @@ v.selling.dat$points.this.round.1 = v.selling.dat$vote_s.1.player.puntos
 v.selling.dat$points.this.round.2 = v.selling.dat$vote_s.2.player.puntos
 v.selling.dat$points.this.round.3 = v.selling.dat$vote_s.3.player.puntos
 
+
 # HERE
 
 
-# subset data 1
-v.selling.dat.1 = subset(
+
+v.selling.dat.1.a = subset(
   v.selling.dat, select = c(
     participant.code,
-    session.code,
-    participant.payoff,
     role.1,
-    voter.offer.1, 
-    ideo.distance.1, 
-    pivotal.voter.1, 
-    vote.intention.party.1, 
-    budget.1,
+    participant.payoff,
+    ideo.distance.1.a, 
+    voter.offer.1.a,
+    pivotal.voter.1.a, 
+    voter.own.1.a,
+    budget.1.a,
     points.this.round.1
-    )
   )
-names(v.selling.dat.1) = gsub(pattern = ".1", replacement = "", x = names(v.selling.dat.1))
-
-# subset data 2
-v.selling.dat.2 = subset(
-  v.selling.dat, select = c(
-    participant.code,
-    session.code,
-    participant.payoff,
-    role.2,
-    voter.offer.2, 
-    ideo.distance.2, 
-    pivotal.voter.2, 
-    vote.intention.party.2, 
-    budget.2,
-    points.this.round.2
-    )
-  )
-names(v.selling.dat.2) = gsub(pattern = ".2", replacement = "", x = names(v.selling.dat.2))
-
-# subset data 3
-v.selling.dat.3 = subset(
-  v.selling.dat, select = c(
-    participant.code,
-    session.code,
-    participant.payoff,
-    role.3,
-    voter.offer.3, 
-    ideo.distance.3, 
-    pivotal.voter.3, 
-    vote.intention.party.3, 
-    budget.3,
-    points.this.round.3
-    )
-  )
-names(v.selling.dat.3) = gsub(pattern = ".3", replacement = "", x = names(v.selling.dat.3))
-
-# round count
-v.selling.dat.1$round = 1
-v.selling.dat.2$round = 2
-v.selling.dat.3$round = 3
-
-# Stack up 3 games
-v.selling.dat = data.frame(rbind(v.selling.dat.1,v.selling.dat.2,v.selling.dat.3))
-
-# change in payoff
-p_load(dplyr,tidyverse)
-v.selling.dat = v.selling.dat %>%
-  group_by(participant.code) %>%
-  arrange(round) %>%
-  mutate(points.cumul.delta = points.this.round - lag(points.this.round))
-
-# Merging with ID df
-v.selling.dat = merge(v.selling.dat, dat.v.s.ID, by=c("participant.code"))
-
-p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
-
-#########################################################################
-##### Amount Model
-#########################################################################
-
-# Subsetting Data
-# m1.v.s = dat.v.b %>% select(offer.made.party, vote.intention.party.2, points.cumul.delta, ideo.distance2, budget, participant.code, pivotal.voter) %>% drop_na()
-# m1.v.s = as.data.frame(m1.d)
-
-v.selling.dat.m.1.d <- subset(v.selling.dat, role == "Voter")
-
-m1.v.s = lm(voter.offer ~ vote.intention.party + points.cumul.delta + ideo.distance + budget + pivotal.voter, v.selling.dat.m.1.d)
-# options(scipen=9999999) # turn off sci not
-# summary(m1.v.s)
-
-options(scipen=9999999) # turn off sci not
-p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
-m1.v.s.clst.std.err = as.numeric(coeftest(m1.v.s, vcov. = vcovCL(m1.v.s, cluster = v.selling.dat.m.1.d$participant.code, type = "HC0"))[,2])[1:6]
-m1.v.s.clst.t.test = c(as.numeric(coeftest(m1.v.s, vcov. = vcovCL(m1.v.s, cluster = v.selling.dat$participant.code, type = "HC0"))[,3])[1:6])
-m1.v.s.clst.p.value = c(as.numeric(coeftest(m1.v.s, vcov. = vcovCL(m1.v.s, cluster = v.selling.dat$participant.code, type = "HC0"))[,4])[1:6])
-custom.model.names.m1 = "Amount of Vote-Buying Offer"
-
-
-
-## MODEL 1 PLOTS
-#mientras mas pierdo ayer, mas caro compro hoy
-m1.p1.d = data.frame(ggeffects::ggpredict(
-  model=m1.v.s,
-  terms=c("points.cumul.delta [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC0")
-); m1.p1.d$group = "Points Cumul (delta)"
-
-
-#mientras mas votos a favor tengo, mas ofrezco
-m1.p2.d = data.frame(ggeffects::ggpredict(
-  model=m1.v.s,
-  terms=c("vote.intention.party [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC0")
-); m1.p2.d$group = "Vote Share"
-
-# no importa la distancia ideologica
-m1.p3.d = data.frame(ggeffects::ggpredict(
-  model=m1.v.s,
-  terms=c("ideo.distance [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC0")
-); m1.p3.d$group = "Spatial Distance (left-right)"
-
-# no importa el budget del partido
-m1.p4.d = data.frame(ggeffects::ggpredict(
-  model=m1.v.s,
-  terms=c("budget [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC0")
-); m1.p4.d$group = "Party's Budget"
-
-
-# pivotal voter
-m1.p5.d = data.frame(ggeffects::ggpredict(
-  model=m1.v.s,
-  terms=c("pivotal.voter [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC0")
-); m1.p5.d$group = "Pivotal Voter"
-
-# plot (export by hand)
-m1.p.d = as.data.frame(rbind(m1.p1.d,m1.p2.d,m1.p3.d,m1.p4.d,m1.p5.d))
-m1.p.d$group = factor(m1.p.d$group, 
-                      levels = c("Vote Share", 
-                                 "Points Cumul (delta)", 
-                                 "Spatial Distance (left-right)", 
-                                 "Party's Budget",
-                                 "Pivotal Voter"))
-
-#m1.p.d$group = as.factor(m1.p.d$group)
-#m1.p.d$group <- relevel(m1.p.d$group, "Points Cumul (delta)")
-
-p_load(lattice, latticeExtra, DAMisc)
-m1plot = xyplot(predicted ~ x | group, 
-                scales=list(relation="free", rot=0),
-                data=m1.p.d, 
-                aspect = 1,
-                xlab = " ", 
-                ylab = "Amount of Vote-Buying Offer (points)", 
-                lower=m1.p.d$conf.low,
-                upper=m1.p.d$conf.high,
-                panel = panel.ci, 
-                zl=F, 
-                prepanel=prepanel.ci,
-                layout = c(5, 1) # columns, rows
 )
+
+
+v.selling.dat.1.a <- subset(v.selling.dat.1.a, role.1 == "Party A") # drop voters
+colnames(v.selling.dat.1.a)[colnames(v.selling.dat.1.a)=="role.1"] <- "Dyad" # changes name to dyad
+v.selling.dat.1.a$Dyad = as.factor(v.selling.dat.1.a$Dyad)
+p_load(dplyr)
+v.selling.dat.1.a = v.selling.dat.1.a %>% mutate(Dyad=recode(Dyad, "Party A" = "Party A, Voter","Party B" = "Party B, Voter"))
+colnames(v.selling.dat.1.a) = sub(".1.*", "", colnames(v.selling.dat.1.a)) # remove extra characters in col names
+v.selling.dat.1.a$round = 1
+
+# do.
+## 1. compute vote share
+## 2. compute points cumula
+
+
+
+
+
 
 
 # K-adic Data Analyses
