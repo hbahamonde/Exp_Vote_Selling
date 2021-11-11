@@ -522,12 +522,22 @@ dat.v.s = dat.v.s %>%
 
 
 
+# plotting dep variable plot BY HAND
+p_load(gridExtra,lattice)
+m1.dep.var = histogram(~dat.v.s$voter.offer, 
+                       aspect = 1,
+                       xlab = "Amount of Vote-Buying Demand (points)"
+)
+
+
+
 ######################################################################### 
 # ************** M      O       D       E       L       S **************
 #########################################################################
 
 
 m1 = lm(voter.offer ~ vote.intention.party.per + ideo.distance + budget + pivotal.voter , dat.v.s)
+
 options(scipen=9999999)
 summary(m1)
 
@@ -542,7 +552,7 @@ custom.model.names.m1 = "Amount of Vote-Buying Offer"
 
 plot(ggeffects::ggpredict(
   model=m1,
-  terms=c("points.this.round [all]")))
+  terms=c("round [all]")))
 
 
 plot(ggeffects::ggpredict(
@@ -554,10 +564,10 @@ plot(ggeffects::ggpredict(
 #mientras mas pierdo ayer, mas caro compro hoy
 m1.p1.d = data.frame(ggeffects::ggpredict(
   model=m1,
-  terms=c("points.cumul.delta [all]"), 
+  terms=c("voter.own [all]"), 
   vcov.fun = "vcovHC", 
   vcov.type = "HC0")
-); m1.p1.d$group = "Points Cumul (delta)"
+); m1.p1.d$group = "voter.own"
 
 
 #mientras mas votos a favor tengo, mas ofrezco
@@ -599,7 +609,8 @@ m1.p.d$group = factor(m1.p.d$group,
                       levels = c("Vote Share (%)", 
                                  "Spatial Distance", 
                                  "Party's Budget",
-                                 "Pivotal Voter"))
+                                 "Pivotal Voter", 
+                                 "voter.own"))
 
 #m1.p.d$group = as.factor(m1.p.d$group)
 #m1.p.d$group <- relevel(m1.p.d$group, "Points Cumul (delta)")
