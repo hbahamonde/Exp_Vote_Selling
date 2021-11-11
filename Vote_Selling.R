@@ -554,16 +554,9 @@ summary(m1)
 
 
 
-p_load(sjPlot,sjmisc,ggplot2)
-theme_set(theme_sjplot())
-plot_model(m1, type = "int")
-
 p_load(effects)
-
-effectsTheme(show.strip.values=)
-
 plot(effects::effect("ideo.distance*vote.intention.party.per", m1, confidence.level = 0.90),
-     ylab="Predicted Vote-Selling Offer\nMade by Voter (points)",
+     ylab="Predicted Amount of Vote-Selling Offer\nMade by Voter (points)",
      xlab="Ideological Distance",
      main = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made Voters",
      aspect = 1)
@@ -572,19 +565,25 @@ plot(effects::effect("ideo.distance*vote.intention.party.per", m1, confidence.le
 
 
 ## Additional Interaction Stuff
+### 1
 # DAintfun2(m1, c("vote.intention.party.per", "ideo.distance"), hist=T, scale.hist=.3, level = 0.90) # plot.type="pdf"
 # BGMtest(m1, vars=c("vote.intention.party.per", "ideo.distance"))
 # DAintfun(m1, c("vote.intention.party.per", "ideo.distance"), theta=-45, phi=20)
+### 2
+# p_load(sjPlot,sjmisc,ggplot2)
+# theme_set(theme_sjplot())
+# plot_model(m1, type = "int")
 
 
 ## MODEL 1 PLOTS
+
 #mientras mas pierdo ayer, mas caro compro hoy
-m1.p1.d = data.frame(ggeffects::ggpredict(
-  model=m1,
-  terms=c("voter.own [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC0")
-); m1.p1.d$group = "voter.own"
+# m1.p1.d = data.frame(ggeffects::ggpredict(
+#   model=m1,
+#   terms=c("voter.own [all]"), 
+#   vcov.fun = "vcovHC", 
+#   vcov.type = "HC0")
+# ); m1.p1.d$group = "voter.own"
 
 
 #mientras mas votos a favor tengo, mas ofrezco
@@ -601,7 +600,7 @@ m1.p3.d = data.frame(ggeffects::ggpredict(
   terms=c("ideo.distance [all]"), 
   vcov.fun = "vcovHC", 
   vcov.type = "HC0")
-); m1.p3.d$group = "Spatial Distance"
+); m1.p3.d$group = "Ideological Distance"
 
 # no importa el budget del partido
 m1.p4.d = data.frame(ggeffects::ggpredict(
@@ -624,7 +623,7 @@ m1.p5.d = data.frame(ggeffects::ggpredict(
 m1.p.d = as.data.frame(rbind(m1.p2.d,m1.p3.d,m1.p4.d,m1.p5.d))
 m1.p.d$group = factor(m1.p.d$group, 
                       levels = c("Vote Share (%)", 
-                                 "Spatial Distance", 
+                                 "Ideological Distance", 
                                  "Party's Budget",
                                  "Pivotal Voter", 
                                  "voter.own"))
@@ -638,7 +637,7 @@ xyplot(predicted ~ x | group,
                 data=m1.p.d, 
                 aspect = 1,
                 xlab = " ", 
-                ylab = "Amount of Vote-Buying Offer (points)", 
+                ylab = "Amount of Vote-Buying\nOffer (points)", 
                 lower=m1.p.d$conf.low,
                 upper=m1.p.d$conf.high,
                 panel = panel.ci, 
