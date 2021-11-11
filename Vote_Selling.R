@@ -527,7 +527,7 @@ dat.v.s = dat.v.s %>%
 #########################################################################
 
 
-m1 = lm(voter.offer ~ vote.intention.party.per + points.cumul.delta + ideo.distance + budget + pivotal.voter + participant.code.dyad, dat.v.s)
+m1 = lm(voter.offer ~ vote.intention.party.per + ideo.distance + budget + pivotal.voter , dat.v.s)
 options(scipen=9999999)
 summary(m1)
 
@@ -538,6 +538,16 @@ m1.clst.std.err = as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$p
 m1.clst.t.test = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,3])[1:6])
 m1.clst.p.value = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,4])[1:6])
 custom.model.names.m1 = "Amount of Vote-Buying Offer"
+
+
+plot(ggeffects::ggpredict(
+  model=m1,
+  terms=c("points.this.round [all]")))
+
+
+plot(ggeffects::ggpredict(
+  model=m1,
+  terms=c("vote.intention.party.per [all]")))
 
 
 ## MODEL 1 PLOTS
@@ -553,7 +563,7 @@ m1.p1.d = data.frame(ggeffects::ggpredict(
 #mientras mas votos a favor tengo, mas ofrezco
 m1.p2.d = data.frame(ggeffects::ggpredict(
   model=m1,
-  terms=c("vote.intention.party.2 [all]"), 
+  terms=c("vote.intention.party.per [all]"), 
   vcov.fun = "vcovHC", 
   vcov.type = "HC0")
 ); m1.p2.d$group = "Vote Share (%)"
@@ -561,7 +571,7 @@ m1.p2.d = data.frame(ggeffects::ggpredict(
 # no importa la distancia ideologica
 m1.p3.d = data.frame(ggeffects::ggpredict(
   model=m1,
-  terms=c("ideo.distance2 [all]"), 
+  terms=c("ideo.distance [all]"), 
   vcov.fun = "vcovHC", 
   vcov.type = "HC0")
 ); m1.p3.d$group = "Spatial Distance"
@@ -584,10 +594,9 @@ m1.p5.d = data.frame(ggeffects::ggpredict(
 ); m1.p5.d$group = "Pivotal Voter"
 
 # plot (export by hand)
-m1.p.d = as.data.frame(rbind(m1.p1.d,m1.p2.d,m1.p3.d,m1.p4.d,m1.p5.d))
+m1.p.d = as.data.frame(rbind(m1.p2.d,m1.p3.d,m1.p4.d,m1.p5.d))
 m1.p.d$group = factor(m1.p.d$group, 
                       levels = c("Vote Share (%)", 
-                                 "Points Cumul (delta)", 
                                  "Spatial Distance", 
                                  "Party's Budget",
                                  "Pivotal Voter"))
@@ -596,7 +605,7 @@ m1.p.d$group = factor(m1.p.d$group,
 #m1.p.d$group <- relevel(m1.p.d$group, "Points Cumul (delta)")
 
 p_load(lattice, latticeExtra, DAMisc)
-m1plot = xyplot(predicted ~ x | group, 
+xyplot(predicted ~ x | group, 
                 scales=list(relation="free", rot=0),
                 data=m1.p.d, 
                 aspect = 1,
