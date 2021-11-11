@@ -536,7 +536,7 @@ m1.dep.var = histogram(~dat.v.s$voter.offer,
 #########################################################################
 
 
-m1 = lm(voter.offer ~ vote.intention.party.per + ideo.distance + budget + pivotal.voter , dat.v.s)
+m1 = lm(voter.offer ~ vote.intention.party.per*ideo.distance + budget + pivotal.voter , dat.v.s)
 
 options(scipen=9999999)
 summary(m1)
@@ -548,6 +548,13 @@ m1.clst.std.err = as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$p
 m1.clst.t.test = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,3])[1:6])
 m1.clst.p.value = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,4])[1:6])
 custom.model.names.m1 = "Amount of Vote-Buying Offer"
+
+
+
+p_load(sjPlot,sjmisc,ggplot2)
+plot_model(m1, type = "int")
+
+
 
 
 plot(ggeffects::ggpredict(
