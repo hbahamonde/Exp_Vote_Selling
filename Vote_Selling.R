@@ -3,6 +3,8 @@
 ##############################
 cat("\014")
 rm(list=ls())
+setwd("/Users/hectorbahamonde/research/Exp_Vote_Selling/")
+
 
 # K-adic Data Analyses
 # https://www.paulpoast.com/stata-software/4587316769
@@ -530,41 +532,49 @@ m1.dep.var = histogram(~dat.v.s$voter.offer,
 )
 
 
-
+# pivotal to factor
+dat.v.s$pivotal.voter = as.factor(dat.v.s$pivotal.voter)
 ######################################################################### 
 # ************** M      O       D       E       L       S **************
 #########################################################################
 
 
-m1 = lm(voter.offer ~ vote.intention.party.per*ideo.distance + budget + pivotal.voter , dat.v.s)
+m1 = lm(voter.offer ~ ideo.distance*vote.intention.party.per + budget + pivotal.voter + participant.code.dyad, dat.v.s)
 
 options(scipen=9999999)
 summary(m1)
 
 # Clustered Std Errors and Model info
-options(scipen=9999999) # turn off sci not
-p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
-m1.clst.std.err = as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,2])[1:6]
-m1.clst.t.test = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,3])[1:6])
-m1.clst.p.value = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,4])[1:6])
-custom.model.names.m1 = "Amount of Vote-Buying Offer"
+# options(scipen=9999999) # turn off sci not
+# p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
+# m1.clst.std.err = as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,2])[1:6]
+# m1.clst.t.test = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,3])[1:6])
+# m1.clst.p.value = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,4])[1:6])
+# custom.model.names.m1 = "Amount of Vote-Buying Offer"
 
 
 
 p_load(sjPlot,sjmisc,ggplot2)
+theme_set(theme_sjplot())
 plot_model(m1, type = "int")
 
+p_load(effects)
+
+effectsTheme(show.strip.values=)
+
+plot(effects::effect("ideo.distance*vote.intention.party.per", m1, confidence.level = 0.90),
+     ylab="Predicted Vote-Selling Offer\nMade by Voter (points)",
+     xlab="Ideological Distance",
+     main = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made Voters",
+     aspect = 1)
 
 
 
-plot(ggeffects::ggpredict(
-  model=m1,
-  terms=c("round [all]")))
 
-
-plot(ggeffects::ggpredict(
-  model=m1,
-  terms=c("vote.intention.party.per [all]")))
+## Additional Interaction Stuff
+# DAintfun2(m1, c("vote.intention.party.per", "ideo.distance"), hist=T, scale.hist=.3, level = 0.90) # plot.type="pdf"
+# BGMtest(m1, vars=c("vote.intention.party.per", "ideo.distance"))
+# DAintfun(m1, c("vote.intention.party.per", "ideo.distance"), theta=-45, phi=20)
 
 
 ## MODEL 1 PLOTS
