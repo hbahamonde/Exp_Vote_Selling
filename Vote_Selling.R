@@ -190,8 +190,8 @@ p_load(dplyr,tidyverse)
 v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.1.group.presupuesto) %>% mutate(voter.offer.1.a = max(vote_s.1.player.p_oferta_amount_A))
 v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.1.group.presupuesto) %>% mutate(voter.offer.1.b = max(vote_s.1.player.p_oferta_amount_B))
 ## 2
-v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.2.group.presupuesto) %>% mutate(voter.offer.2.a = max(vote_s.1.player.p_oferta_amount_A))
-v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.2.group.presupuesto) %>% mutate(voter.offer.2.b = max(vote_s.1.player.p_oferta_amount_B))
+v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.2.group.presupuesto) %>% mutate(voter.offer.2.a = max(vote_s.2.player.p_oferta_amount_A))
+v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.2.group.presupuesto) %>% mutate(voter.offer.2.b = max(vote_s.2.player.p_oferta_amount_B))
 ## 3
 v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.3.group.presupuesto) %>% mutate(voter.offer.3.a = max(vote_s.3.player.p_oferta_amount_A))
 v.selling.dat <- v.selling.dat %>% dplyr::group_by(session.code,vote_s.3.group.presupuesto) %>% mutate(voter.offer.3.b = max(vote_s.3.player.p_oferta_amount_B))
@@ -536,13 +536,13 @@ m1.dep.var = histogram(~dat.v.s$voter.offer,
 dat.v.s$pivotal.voter = as.factor(dat.v.s$pivotal.voter)
 
 # voter.offer to %
-
+dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
 ######################################################################### 
 # ************** M      O       D       E       L       S **************
 #########################################################################
 
 
-m1 = lm(voter.offer ~ ideo.distance*vote.intention.party.per  + budget + pivotal.voter + participant.code.dyad, dat.v.s)
+m1 = lm(voter.offer ~ ideo.distance*vote.intention.party.per  + budget + pivotal.voter, dat.v.s)
 
 options(scipen=9999999)
 summary(m1)
