@@ -539,7 +539,7 @@ dat.v.s$pivotal.voter = as.factor(dat.v.s$pivotal.voter)
 #########################################################################
 
 
-m1 = lm(voter.offer ~ ideo.distance*vote.intention.party.per + budget + pivotal.voter + participant.code.dyad, dat.v.s)
+m1 = lm(voter.offer ~ ideo.distance*vote.intention.party.per*voter.own + budget + pivotal.voter + participant.code.dyad, dat.v.s)
 
 options(scipen=9999999)
 summary(m1)
@@ -555,11 +555,13 @@ summary(m1)
 
 
 p_load(effects)
-plot(effects::effect("ideo.distance*vote.intention.party.per", m1, confidence.level = 0.90),
+plot(effects::effect("ideo.distance*vote.intention.party.per*voter.own", m1, confidence.level = 0.90),
      ylab="Predicted Amount of Vote-Selling Offer\nMade by Voter (points)",
      xlab="Ideological Distance",
      main = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made Voters",
-     aspect = 1)
+     aspect = 1,
+     layout = c(5, 1)
+     )
 
 
 
