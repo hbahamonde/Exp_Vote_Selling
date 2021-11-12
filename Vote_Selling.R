@@ -542,7 +542,7 @@ dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
 #########################################################################
 
 
-m1 = lm(voter.offer ~ ideo.distance*vote.intention.party.per  + budget + pivotal.voter, dat.v.s)
+m1 = lm(voter.offer.p ~ ideo.distance*vote.intention.party.per + pivotal.voter, dat.v.s)
 
 options(scipen=9999999)
 summary(m1)
@@ -550,37 +550,50 @@ summary(m1)
 # Clustered Std Errors and Model info
 # options(scipen=9999999) # turn off sci not
 # p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
-# m1.clst.std.err = as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,2])[1:6]
+# m1.clst.std.err = as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code, type = "HC0"))[,2])[1:6]
 # m1.clst.t.test = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,3])[1:6])
 # m1.clst.p.value = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,4])[1:6])
 # custom.model.names.m1 = "Amount of Vote-Buying Offer"
 
 
 
-p_load(effects)
-plot(effects::effect("ideo.distance*vote.intention.party.per*voter.own", m1, confidence.level = 0.90),
-     ylab="Predicted Amount of Vote-Selling Offer\nMade by Voter (points)",
-     xlab="Ideological Distance",
-     main = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made Voters",
-     aspect = 1,
-     layout = c(5, 2)
-     )
+# p_load(effects)
+# plot(effects::effect("ideo.distance*vote.intention.party.per", m1, confidence.level = 0.90),
+# ylab="Predicted Amount of Vote-Selling Offer\nMade by Voter (points)",
+#      xlab="Ideological Distance",
+#      main = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made Voters",
+#      aspect = 1,
+#      layout = c(5, 2)
+#      )
 
+# with panel corrected std errors
+# p_load(ggeffects)
+# plot(ggeffects::ggpredict(
+#   model=m1,
+#   terms=c("ideo.distance", "vote.intention.party.per [20, 80]"), 
+#   vcov.fun = "vcovHC", 
+#   vcov.type = "HC0")
+# )
 
 
 
 ## Additional Interaction Stuff
 ### 1
+# p_load(DAMisc)
 # DAintfun2(m1, c("vote.intention.party.per", "ideo.distance"), hist=T, scale.hist=.3, level = 0.90) # plot.type="pdf"
 # BGMtest(m1, vars=c("vote.intention.party.per", "ideo.distance"))
 # DAintfun(m1, c("vote.intention.party.per", "ideo.distance"), theta=-45, phi=20)
 ### 2
 p_load(sjPlot,sjmisc,ggplot2)
 theme_set(theme_sjplot())
-plot_model(m1, type = "int")
+plot_model(m1, 
+           type = "int", 
+           robust = T,
+           title = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made by Voters",
+           axis.title = c("Ideological Distance","Predicted Amount of Vote-Selling Offer\nMade by Voter (%)"),
+           legend.title = "Vote Intention (%)"
+           )
 
-
-## MODEL 1 PLOTS
 
 #mientras mas pierdo ayer, mas caro compro hoy
 # m1.p1.d = data.frame(ggeffects::ggpredict(
@@ -591,62 +604,3 @@ plot_model(m1, type = "int")
 # ); m1.p1.d$group = "voter.own"
 
 
-#mientras mas votos a favor tengo, mas ofrezco
-m1.p2.d = data.frame(ggeffects::ggpredict(
-  model=m1,
-  terms=c("vote.intention.party.per [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC0")
-); m1.p2.d$group = "Vote Share (%)"
-
-# no importa la distancia ideologica
-m1.p3.d = data.frame(ggeffects::ggpredict(
-  model=m1,
-  terms=c("ideo.distance [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC0")
-); m1.p3.d$group = "Ideological Distance"
-
-# no importa el budget del partido
-m1.p4.d = data.frame(ggeffects::ggpredict(
-  model=m1,
-  terms=c("budget [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC0")
-); m1.p4.d$group = "Party's Budget"
-
-
-# pivotal voter
-m1.p5.d = data.frame(ggeffects::ggpredict(
-  model=m1,
-  terms=c("pivotal.voter [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC0")
-); m1.p5.d$group = "Pivotal Voter"
-
-# plot (export by hand)
-m1.p.d = as.data.frame(rbind(m1.p2.d,m1.p3.d,m1.p4.d,m1.p5.d))
-m1.p.d$group = factor(m1.p.d$group, 
-                      levels = c("Vote Share (%)", 
-                                 "Ideological Distance", 
-                                 "Party's Budget",
-                                 "Pivotal Voter", 
-                                 "voter.own"))
-
-#m1.p.d$group = as.factor(m1.p.d$group)
-#m1.p.d$group <- relevel(m1.p.d$group, "Points Cumul (delta)")
-
-p_load(lattice, latticeExtra, DAMisc)
-xyplot(predicted ~ x | group, 
-                scales=list(relation="free", rot=0),
-                data=m1.p.d, 
-                aspect = 1,
-                xlab = " ", 
-                ylab = "Amount of Vote-Buying\nOffer (points)", 
-                lower=m1.p.d$conf.low,
-                upper=m1.p.d$conf.high,
-                panel = panel.ci, 
-                zl=F, 
-                prepanel=prepanel.ci,
-                layout = c(5, 1) # columns, rows
-)
