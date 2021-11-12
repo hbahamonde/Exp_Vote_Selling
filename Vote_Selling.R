@@ -534,12 +534,15 @@ m1.dep.var = histogram(~dat.v.s$voter.offer,
 
 # pivotal to factor
 dat.v.s$pivotal.voter = as.factor(dat.v.s$pivotal.voter)
+
+# voter.offer to %
+
 ######################################################################### 
 # ************** M      O       D       E       L       S **************
 #########################################################################
 
 
-m1 = lm(voter.offer ~ ideo.distance*vote.intention.party.per*voter.own + budget + pivotal.voter + participant.code.dyad, dat.v.s)
+m1 = lm(voter.offer ~ ideo.distance*vote.intention.party.per  + budget + pivotal.voter + participant.code.dyad, dat.v.s)
 
 options(scipen=9999999)
 summary(m1)
@@ -560,7 +563,7 @@ plot(effects::effect("ideo.distance*vote.intention.party.per*voter.own", m1, con
      xlab="Ideological Distance",
      main = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made Voters",
      aspect = 1,
-     layout = c(5, 1)
+     layout = c(5, 2)
      )
 
 
@@ -572,9 +575,9 @@ plot(effects::effect("ideo.distance*vote.intention.party.per*voter.own", m1, con
 # BGMtest(m1, vars=c("vote.intention.party.per", "ideo.distance"))
 # DAintfun(m1, c("vote.intention.party.per", "ideo.distance"), theta=-45, phi=20)
 ### 2
-# p_load(sjPlot,sjmisc,ggplot2)
-# theme_set(theme_sjplot())
-# plot_model(m1, type = "int")
+p_load(sjPlot,sjmisc,ggplot2)
+theme_set(theme_sjplot())
+plot_model(m1, type = "int")
 
 
 ## MODEL 1 PLOTS
