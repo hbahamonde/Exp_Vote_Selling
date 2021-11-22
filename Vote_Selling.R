@@ -353,6 +353,23 @@ v.selling.dat$points.this.round.2 = v.selling.dat$vote_s.2.player.puntos
 v.selling.dat$points.this.round.3 = v.selling.dat$vote_s.3.player.puntos
 
 
+# if party accepts offer from voter
+v.selling.dat$accepts.offer.1 = v.selling.dat$vote_s.1.player.votante_acepta_oferta
+v.selling.dat$accepts.offer.2 = v.selling.dat$vote_s.2.player.votante_acepta_oferta
+v.selling.dat$accepts.offer.3 = v.selling.dat$vote_s.3.player.votante_acepta_oferta
+##
+v.selling.dat = v.selling.dat %>% group_by(vote_s.1.group.presupuesto) %>% fill(accepts.offer.1, .direction = "downup")
+v.selling.dat = v.selling.dat %>% group_by(vote_s.2.group.presupuesto) %>% fill(accepts.offer.2, .direction = "downup")
+v.selling.dat = v.selling.dat %>% group_by(vote_s.3.group.presupuesto) %>% fill(accepts.offer.3, .direction = "downup")
+###
+v.selling.dat$accepts.offer.1.a = ifelse(v.selling.dat$role.1=="Party A" & v.selling.dat$accepts.offer.1==1, 1, 0)
+v.selling.dat$accepts.offer.1.b = ifelse(v.selling.dat$role.1=="Party B" & v.selling.dat$accepts.offer.1==2, 1, 0)
+v.selling.dat$accepts.offer.2.a = ifelse(v.selling.dat$role.2=="Party A" & v.selling.dat$accepts.offer.2==1, 1, 0)
+v.selling.dat$accepts.offer.2.b = ifelse(v.selling.dat$role.2=="Party B" & v.selling.dat$accepts.offer.2==2, 1, 0)
+v.selling.dat$accepts.offer.3.a = ifelse(v.selling.dat$role.3=="Party A" & v.selling.dat$accepts.offer.3==1, 1, 0)
+v.selling.dat$accepts.offer.3.b = ifelse(v.selling.dat$role.3=="Party B" & v.selling.dat$accepts.offer.3==2, 1, 0)
+
+
 ## 1A
 v.selling.dat.1.a = subset(
   v.selling.dat, select = c(
@@ -364,6 +381,7 @@ v.selling.dat.1.a = subset(
     vote.intention.party.1.a,
     vote.intention.party.per.1.a,
     voter.offer.1.a,
+    accepts.offer.1.a,
     pivotal.voter.1.a, 
     voter.own.1.a,
     budget.1.a,
@@ -389,6 +407,7 @@ v.selling.dat.1.b = subset(
     vote.intention.party.1.b,
     vote.intention.party.per.1.b,
     voter.offer.1.b,
+    accepts.offer.1.b,
     pivotal.voter.1.b, 
     voter.own.1.b,
     budget.1.b,
@@ -414,6 +433,7 @@ v.selling.dat.2.a = subset(
     vote.intention.party.2.a,
     vote.intention.party.per.2.a,
     voter.offer.2.a,
+    accepts.offer.2.a,
     pivotal.voter.2.a, 
     voter.own.2.a,
     budget.2.a,
@@ -439,6 +459,7 @@ v.selling.dat.2.b = subset(
     vote.intention.party.2.b,
     vote.intention.party.per.2.b,
     voter.offer.2.b,
+    accepts.offer.2.b,
     pivotal.voter.2.b, 
     voter.own.2.b,
     budget.2.b,
@@ -464,6 +485,7 @@ v.selling.dat.3.a = subset(
     vote.intention.party.3.a,
     vote.intention.party.per.3.a,
     voter.offer.3.a,
+    accepts.offer.3.a,
     pivotal.voter.3.a, 
     voter.own.3.a,
     budget.3.a,
@@ -489,6 +511,7 @@ v.selling.dat.3.b = subset(
     vote.intention.party.3.b,
     vote.intention.party.per.3.b,
     voter.offer.3.b,
+    accepts.offer.3.b,
     pivotal.voter.3.b, 
     voter.own.3.b,
     budget.3.b,
@@ -537,6 +560,7 @@ dat.v.s$pivotal.voter = as.factor(dat.v.s$pivotal.voter)
 
 # voter.offer to %
 dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
+
 ######################################################################### 
 # ************** M      O       D       E       L       S **************
 #########################################################################
@@ -602,5 +626,30 @@ plot_model(m1,
 #   vcov.fun = "vcovHC", 
 #   vcov.type = "HC0")
 # ); m1.p1.d$group = "voter.own"
+
+
+
+m2 = glm(accepts.offer ~ ideo.distance*vote.intention.party.per + pivotal.voter,
+         data = dat.v.s, 
+         family = binomial(link = "logit")
+)
+
+options(scipen=9999999)
+summary(m2)
+
+# Clustered Std Errors and Model info
+options(scipen=9999999) # turn off sci not
+p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
+coeftest(m2, vcov. = vcovCL(m2, cluster = dat.v.s$participant.code.dyad, type = "HC0"))
+
+p_load(effects)
+plot(predictorEffects(m2))
+
+
+plot_model(m2, 
+           type = "int", 
+           robust = T,
+           terms="ideo.distance [all]"
+           )
 
 
