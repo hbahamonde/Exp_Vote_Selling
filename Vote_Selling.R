@@ -566,7 +566,7 @@ dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
 #########################################################################
 
 
-m1 = lm(voter.offer.p ~ ideo.distance*vote.intention.party.per + pivotal.voter + budget, dat.v.s)
+m1 = lm(voter.offer.p ~ ideo.distance*vote.intention.party.per + pivotal.voter, dat.v.s)
 
 options(scipen=9999999)
 summary(m1)
@@ -577,10 +577,11 @@ vcov <- vcovCL(m1,
                cluster=dat.v.s$participant.code.dyad,
                multi0 = TRUE,
                cadjust = TRUE,
-               type = "HC0",
+               type = "HC1",
                sandwich = TRUE
                )
-# p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
+p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
+coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC1"))
 # m1.clst.std.err = as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code, type = "HC0"))[,2])[1:6]
 # m1.clst.t.test = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,3])[1:6])
 # m1.clst.p.value = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,4])[1:6])
@@ -614,7 +615,7 @@ plot(predictorEffects(m1))
 ## Additional Interaction Stuff
 ### 1
 # p_load(DAMisc)
-DAintfun2(m1, c("vote.intention.party.per", "ideo.distance"), varcov = vcov, hist=T, scale.hist=.3, level = 0.90) # plot.type="pdf"
+# DAintfun2(m1, c("vote.intention.party.per", "ideo.distance"), varcov = vcov, hist=T, scale.hist=.3, level = 0.90) # plot.type="pdf"
 # BGMtest(m1, vars=c("vote.intention.party.per", "ideo.distance"))
 # DAintfun(m1, c("vote.intention.party.per", "ideo.distance"), theta=-45, phi=20)
 ### 2
@@ -631,147 +632,5 @@ plot_model(m1,
            legend.title = "Vote Intention (%)"
            )
 
-
-m1.p1.d = data.frame(ggeffects::ggpredict(
-  model=m1,
-  terms=c("ideo.distance [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC1",
-  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
-); m1.p1.d$group = "ideo.distance"
-
-m1.p2.d = data.frame(ggeffects::ggpredict(
-  model=m1,
-  terms=c("vote.intention.party.per [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC1",
-  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
-); m1.p2.d$group = "vote.intention.party.per"
-
-m1.p3.d = data.frame(ggeffects::ggpredict(
-  model=m1,
-  terms=c("pivotal.voter [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC1",
-  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
-); m1.p3.d$group = "pivotal.voter"
-
-m1.p4.d = data.frame(ggeffects::ggpredict(
-  model=m1,
-  terms=c("budget [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC1",
-  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
-); m1.p4.d$group = "budget"
-
-
-m1.p.d = as.data.frame(rbind(m1.p1.d,m1.p2.d,m1.p3.d,m1.p4.d))
-
-#m1.p.d$group = as.factor(m1.p.d$group)
-#m1.p.d$group <- relevel(m1.p.d$group, "Points Cumul (delta)")
-
-p_load(lattice, latticeExtra, DAMisc)
-xyplot(predicted ~ x | group, 
-                scales=list(relation="free", rot=0),
-                data=m1.p.d, 
-                aspect = 1,
-                xlab = " ", 
-                ylab = "Predicted Amount of\nVote-Buying Offer (points)", 
-                lower=m1.p.d$conf.low,
-                upper=m1.p.d$conf.high,
-                panel = panel.ci, 
-                zl=F, 
-                prepanel=prepanel.ci,
-                layout = c(4, 1) # columns, rows
-)
-
-
-
-################
-lattice::histogram(as.factor(dat.v.s$accepts.offer))
-
-
-m2 = glm(accepts.offer ~ ideo.distance + vote.intention.party.per + pivotal.voter + budget,
-         data = dat.v.s, 
-         family = binomial(link = "logit")
-)
-
-options(scipen=9999999)
-summary(m2)
-
-# Clustered Std Errors and Model info
-options(scipen=9999999) # turn off sci not
-p_load(sandwich,lmtest,DAMisc,lattice,latticeExtra)
-coeftest(m2, vcov. = vcovCL(m2, cluster = dat.v.s$participant.code.dyad, type = "HC0"))
-
-p_load(effects)
-# d1 = as.data.frame(predictorEffects(m2)[1]$ideo.distance)
-# d2 = as.data.frame(predictorEffects(m2)[2]$vote.intention.party.per)
-plot(predictorEffects(m2))
-
-p_load(ggplot2)
-ggplot(data=d1, aes(x=ideo.distance, y=fit)) + geom_line() + 
-  geom_ribbon(aes(ymin=d1$lower, ymax=d1$upper), linetype=2, alpha=0.1)
-
-ggplot(data=d2, aes(x=vote.intention.party.per, y=fit)) + geom_line() + 
-  geom_ribbon(aes(ymin=d2$lower, ymax=d2$upper), linetype=2, alpha=0.1)
-
-
-p_load(DAMisc)
-DAintfun2(m2, c("vote.intention.party.per", "ideo.distance"), varcov = vcov, hist=T, scale.hist=.3, level = 0.90) # plot.type="pdf"
-
-
-plot_model(m2, 
-           type = "eff",  # int / pred
-           robust = T,
-           terms = "vote.intention.party.per",
-           #vcov.fun = "vcovCL",
-           #vcov.args=list(cluster=dat.v.s$participant.code.dyad),
-           title = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made by Voters",
-           axis.title = c("Ideological Distance","Predicted Amount of Vote-Selling Offer\nMade by Voter (%)"),
-           legend.title = "Vote Intention (%)"
-)
-
-
-m2.p1.d = data.frame(ggeffects::ggpredict(
-  model=m2,
-  terms=c("ideo.distance [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC1",
-  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
-); m2.p1.d$group = "ideo.distance"
-
-m2.p2.d = data.frame(ggeffects::ggpredict(
-  model=m2,
-  terms=c("vote.intention.party.per [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC1",
-  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
-); m2.p2.d$group = "vote.intention.party.per"
-
-m2.p3.d = data.frame(ggeffects::ggpredict(
-  model=m2,
-  terms=c("pivotal.voter [all]"), 
-  vcov.fun = "vcovHC", 
-  vcov.type = "HC1",
-  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
-); m2.p3.d$group = "pivotal.voter"
-
-m2.p.d = as.data.frame(rbind(m2.p1.d,m2.p2.d,m2.p3.d))
-
-
-xyplot(predicted ~ x | group, 
-       scales=list(relation="free", rot=0),
-       data=m2.p.d, 
-       aspect = 1,
-       xlab = " ", 
-       ylab = "Predicted Amount of\nVote-Buying Offer (points)", 
-       lower=m2.p.d$conf.low,
-       upper=m2.p.d$conf.high,
-       panel = panel.ci, 
-       zl=F, 
-       prepanel=prepanel.ci,
-       layout = c(3, 1) # columns, rows
-)
 
 
