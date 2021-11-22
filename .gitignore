@@ -276,3 +276,5 @@ TSWLatexianTemp*
 *.lpz
 
 .Rhistory
+
+.DS_Store
