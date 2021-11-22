@@ -632,5 +632,107 @@ plot_model(m1,
            legend.title = "Vote Intention (%)"
            )
 
+# Voters
+voters.payoff.v.b = data.frame(
+  Payoff = c(
+    dat$participant.payoff[dat$vote_b.1.player.votanteOpartido=="votantes"], 
+    dat$participant.payoff[dat$vote_b.2.player.votanteOpartido=="votantes"], 
+    dat$participant.payoff[dat$vote_b.3.player.votanteOpartido=="votantes"]),
+  Role = "Voter",
+  Game = "Vote Buying"
+  )
+  
+
+voters.payoff.v.s = data.frame(
+  Payoff = c(
+    dat$participant.payoff[dat$vote_s.1.player.votanteOpartido=="votantes"], 
+    dat$participant.payoff[dat$vote_s.2.player.votanteOpartido=="votantes"], 
+    dat$participant.payoff[dat$vote_s.3.player.votanteOpartido=="votantes"]),
+  Role = "Voter",
+  Game = "Vote Selling"
+  )
+  
 
 
+# Parties
+parties.payoff.v.b = data.frame(
+  Payoff = c(
+    dat$participant.payoff[dat$vote_b.1.player.votanteOpartido=="Partido A"], 
+    dat$participant.payoff[dat$vote_b.2.player.votanteOpartido=="Partido A"], 
+    dat$participant.payoff[dat$vote_b.3.player.votanteOpartido=="Partido A"], 
+    dat$participant.payoff[dat$vote_b.1.player.votanteOpartido=="Partido B"], 
+    dat$participant.payoff[dat$vote_b.2.player.votanteOpartido=="Partido B"], 
+    dat$participant.payoff[dat$vote_b.3.player.votanteOpartido=="Partido B"]),
+  Role = "Party",
+  Game = "Vote Buying"
+  )
+  
+  
+  
+  
+parties.payoff.v.s = data.frame(
+  Payoff = c(
+    dat$participant.payoff[dat$vote_s.1.player.votanteOpartido=="Partido A"], 
+    dat$participant.payoff[dat$vote_s.2.player.votanteOpartido=="Partido A"], 
+    dat$participant.payoff[dat$vote_s.3.player.votanteOpartido=="Partido A"], 
+    dat$participant.payoff[dat$vote_s.1.player.votanteOpartido=="Partido B"], 
+    dat$participant.payoff[dat$vote_s.2.player.votanteOpartido=="Partido B"], 
+    dat$participant.payoff[dat$vote_s.3.player.votanteOpartido=="Partido B"]),
+  Role = "Party",
+  Game = "Vote Selling"
+  )
+  
+  
+payoffs.d = data.frame(
+  rbind(voters.payoff.v.b,
+        voters.payoff.v.s,
+        parties.payoff.v.b,
+        parties.payoff.v.s)
+  )
+
+# Dropping NAs
+payoffs.d = payoffs.d %>% drop_na()
+voters.payoff.v.b = voters.payoff.v.b %>% drop_na()
+voters.payoff.v.s = voters.payoff.v.s %>% drop_na()
+parties.payoff.v.b = parties.payoff.v.b %>% drop_na()
+parties.payoff.v.s = parties.payoff.v.s %>% drop_na()
+
+
+p_load(Rmisc)
+
+
+payoffs.d = data.frame(
+  Payoff = c(
+    as.numeric(CI(voters.payoff.v.s$Payoff, ci = 0.90)[2]), # mean voters v.s 
+    as.numeric(CI(voters.payoff.v.b$Payoff, ci = 0.90)[2]), # mean voters v.b 
+    as.numeric(CI(parties.payoff.v.b$Payoff, ci = 0.90)[2]), # mean parties v.b 
+    as.numeric(CI(parties.payoff.v.s$Payoff, ci = 0.90)[2]) # mean parties v.s 
+  ),
+  Upper = c(
+    as.numeric(CI(voters.payoff.v.s$Payoff, ci = 0.90)[1]), # mean voters v.s 
+    as.numeric(CI(voters.payoff.v.b$Payoff, ci = 0.90)[1]), # mean voters v.b 
+    as.numeric(CI(parties.payoff.v.b$Payoff, ci = 0.90)[1]), # mean parties v.b 
+    as.numeric(CI(parties.payoff.v.s$Payoff, ci = 0.90)[1]) # mean parties v.s
+  ),
+  Lower = c(
+    as.numeric(CI(voters.payoff.v.s$Payoff, ci = 0.90)[3]), # mean voters v.s 
+    as.numeric(CI(voters.payoff.v.b$Payoff, ci = 0.90)[3]), # mean voters v.b 
+    as.numeric(CI(parties.payoff.v.b$Payoff, ci = 0.90)[3]), # mean parties v.b 
+    as.numeric(CI(parties.payoff.v.s$Payoff, ci = 0.90)[3]) # mean parties v.s
+  ),
+  Role = c(rep("Voters",2), rep("Parties", 2)),
+  Game = c("Vote Selling", "Vote Buying", "Vote Buying", "Vote Selling")
+  
+)
+
+p_load(ggplot2)
+ggplot(payoffs.d,
+       aes(Game,
+         y=Payoff,
+  ymin=Lower,
+  ymax=Upper))+
+  geom_pointrange()+facet_wrap(~Role)
+
+
+2652.564-2568.749 
+t.test(voters.payoff.v.b$Payoff,voters.payoff.v.s$Payoff) # substantively significant (10%)
