@@ -566,7 +566,7 @@ dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
 #########################################################################
 
 
-m1 = lm(voter.offer.p ~ ideo.distance + vote.intention.party.per + pivotal.voter + budget, dat.v.s)
+m1 = lm(voter.offer.p ~ ideo.distance*vote.intention.party.per + pivotal.voter + budget, dat.v.s)
 
 options(scipen=9999999)
 summary(m1)
@@ -621,9 +621,9 @@ DAintfun2(m1, c("vote.intention.party.per", "ideo.distance"), varcov = vcov, his
 p_load(sjPlot,sjmisc,ggplot2)
 theme_set(theme_sjplot())
 plot_model(m1, 
-           type = "eff",  # int / pred
+           type = "int",  # int / pred
            robust = T,
-           terms = "ideo.distance",
+           ci.lvl = 0.90,
            #vcov.fun = "vcovCL",
            #vcov.args=list(cluster=dat.v.s$participant.code.dyad),
            title = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made by Voters",
