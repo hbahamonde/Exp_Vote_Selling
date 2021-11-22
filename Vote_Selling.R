@@ -566,7 +566,7 @@ dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
 #########################################################################
 
 
-m1 = lm(voter.offer.p ~ ideo.distance*vote.intention.party.per + pivotal.voter, dat.v.s)
+m1 = lm(voter.offer.p ~ ideo.distance + vote.intention.party.per + pivotal.voter + budget, dat.v.s)
 
 options(scipen=9999999)
 summary(m1)
@@ -607,6 +607,9 @@ vcov <- vcovCL(m1,
 # )
 
 
+p_load(effects)
+plot(predictorEffects(m1))
+
 
 ## Additional Interaction Stuff
 ### 1
@@ -618,8 +621,9 @@ DAintfun2(m1, c("vote.intention.party.per", "ideo.distance"), varcov = vcov, his
 p_load(sjPlot,sjmisc,ggplot2)
 theme_set(theme_sjplot())
 plot_model(m1, 
-           type = "int", 
+           type = "eff",  # int / pred
            robust = T,
+           terms = "ideo.distance",
            #vcov.fun = "vcovCL",
            #vcov.args=list(cluster=dat.v.s$participant.code.dyad),
            title = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made by Voters",
@@ -628,19 +632,66 @@ plot_model(m1,
            )
 
 
-#mientras mas pierdo ayer, mas caro compro hoy
-# m1.p1.d = data.frame(ggeffects::ggpredict(
-#   model=m1,
-#   terms=c("voter.own [all]"), 
-#   vcov.fun = "vcovHC", 
-#   vcov.type = "HC0")
-# ); m1.p1.d$group = "voter.own"
+m1.p1.d = data.frame(ggeffects::ggpredict(
+  model=m1,
+  terms=c("ideo.distance [all]"), 
+  vcov.fun = "vcovHC", 
+  vcov.type = "HC1",
+  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
+); m1.p1.d$group = "ideo.distance"
+
+m1.p2.d = data.frame(ggeffects::ggpredict(
+  model=m1,
+  terms=c("vote.intention.party.per [all]"), 
+  vcov.fun = "vcovHC", 
+  vcov.type = "HC1",
+  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
+); m1.p2.d$group = "vote.intention.party.per"
+
+m1.p3.d = data.frame(ggeffects::ggpredict(
+  model=m1,
+  terms=c("pivotal.voter [all]"), 
+  vcov.fun = "vcovHC", 
+  vcov.type = "HC1",
+  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
+); m1.p3.d$group = "pivotal.voter"
+
+m1.p4.d = data.frame(ggeffects::ggpredict(
+  model=m1,
+  terms=c("budget [all]"), 
+  vcov.fun = "vcovHC", 
+  vcov.type = "HC1",
+  vcov.args=list(cluster=dat.v.s$participant.code.dyad))
+); m1.p4.d$group = "budget"
 
 
+m1.p.d = as.data.frame(rbind(m1.p1.d,m1.p2.d,m1.p3.d,m1.p4.d))
+
+#m1.p.d$group = as.factor(m1.p.d$group)
+#m1.p.d$group <- relevel(m1.p.d$group, "Points Cumul (delta)")
+
+p_load(lattice, latticeExtra, DAMisc)
+xyplot(predicted ~ x | group, 
+                scales=list(relation="free", rot=0),
+                data=m1.p.d, 
+                aspect = 1,
+                xlab = " ", 
+                ylab = "Predicted Amount of\nVote-Buying Offer (points)", 
+                lower=m1.p.d$conf.low,
+                upper=m1.p.d$conf.high,
+                panel = panel.ci, 
+                zl=F, 
+                prepanel=prepanel.ci,
+                layout = c(4, 1) # columns, rows
+)
+
+
+
+################
 lattice::histogram(as.factor(dat.v.s$accepts.offer))
 
 
-m2 = glm(accepts.offer ~ ideo.distance*vote.intention.party.per + pivotal.voter,
+m2 = glm(accepts.offer ~ ideo.distance + vote.intention.party.per + pivotal.voter + budget,
          data = dat.v.s, 
          family = binomial(link = "logit")
 )
@@ -671,11 +722,15 @@ DAintfun2(m2, c("vote.intention.party.per", "ideo.distance"), varcov = vcov, his
 
 
 plot_model(m2, 
-           type = "int", 
-           #robust = T
-           )
-
-
+           type = "eff",  # int / pred
+           robust = T,
+           terms = "vote.intention.party.per",
+           #vcov.fun = "vcovCL",
+           #vcov.args=list(cluster=dat.v.s$participant.code.dyad),
+           title = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made by Voters",
+           axis.title = c("Ideological Distance","Predicted Amount of Vote-Selling Offer\nMade by Voter (%)"),
+           legend.title = "Vote Intention (%)"
+)
 
 
 m2.p1.d = data.frame(ggeffects::ggpredict(
