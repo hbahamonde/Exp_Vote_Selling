@@ -716,22 +716,22 @@ p_load(Rmisc,bayestestR)
 
 payoffs.d = data.frame(
   Payoff = c(
-    mean(voters.payoff.v.s$Payoff), # mean voters v.s 
-    mean(voters.payoff.v.b$Payoff), # mean voters v.b 
-    mean(parties.payoff.v.b$Payoff), # mean parties v.b 
-    mean(parties.payoff.v.s$Payoff) # mean parties v.s 
+    as.numeric(CI(voters.payoff.v.s$Payoff, ci = 0.90)[2]), # mean voters v.s 
+    as.numeric(CI(voters.payoff.v.b$Payoff, ci = 0.90)[2]), # mean voters v.b 
+    as.numeric(CI(parties.payoff.v.b$Payoff, ci = 0.90)[2]), # mean parties v.b 
+    as.numeric(CI(parties.payoff.v.s$Payoff, ci = 0.90)[2]) # mean parties v.s 
   ),
   Upper = c(
-    as.numeric(ci(voters.payoff.v.s$Payoff, method = "ETI", ci = 0.95)$CI_high), # mean voters v.s 
-    as.numeric(ci(voters.payoff.v.b$Payoff, method = "ETI", ci = 0.95)$CI_high), # mean voters v.b 
-    as.numeric(ci(parties.payoff.v.b$Payoff, method = "ETI", ci = 0.95)$CI_high), # mean parties v.b 
-    as.numeric(ci(parties.payoff.v.s$Payoff, method = "ETI", ci = 0.95)$CI_high) # mean parties v.s
+    as.numeric(CI(voters.payoff.v.s$Payoff, ci = 0.90)[1]), # mean voters v.s 
+    as.numeric(CI(voters.payoff.v.b$Payoff, ci = 0.90)[1]), # mean voters v.b 
+    as.numeric(CI(parties.payoff.v.b$Payoff, ci = 0.90)[1]), # mean parties v.b 
+    as.numeric(CI(parties.payoff.v.s$Payoff, ci = 0.90)[1]) # mean parties v.s
   ),
   Lower = c(
-    as.numeric(ci(voters.payoff.v.s$Payoff, method = "ETI", ci = 0.95)$CI_low), # mean voters v.s 
-    as.numeric(ci(voters.payoff.v.b$Payoff, method = "ETI", ci = 0.95)$CI_low), # mean voters v.b 
-    as.numeric(ci(parties.payoff.v.b$Payoff, method = "ETI", ci = 0.95)$CI_low), # mean parties v.b 
-    as.numeric(ci(parties.payoff.v.s$Payoff, method = "ETI", ci = 0.95)$CI_low) # mean parties v.s
+    as.numeric(CI(voters.payoff.v.s$Payoff, ci = 0.90)[3]), # mean voters v.s 
+    as.numeric(CI(voters.payoff.v.b$Payoff, ci = 0.90)[3]), # mean voters v.b 
+    as.numeric(CI(parties.payoff.v.b$Payoff, ci = 0.90)[3]), # mean parties v.b 
+    as.numeric(CI(parties.payoff.v.s$Payoff, ci = 0.90)[3]) # mean parties v.s
   ),
   Role = c(rep("Voters",2), rep("Parties", 2)),
   Game = c("Vote Selling", "Vote Buying", "Vote Buying", "Vote Selling")
@@ -749,14 +749,8 @@ ggplot(payoffs.d,
   geom_pointrange()+facet_wrap(~Role)
 
 
-2652.564-2568.749 
-t.test(voters.payoff.v.b$Payoff,voters.payoff.v.s$Payoff) # substantively significant (10%)
+t.test(voters.payoff.v.b$Payoff,voters.payoff.v.s$Payoff, 
+       conf.level = 0.95,
+       alternative = "greater") # substantively significant (10%)
 
-p_load(Bolstad)
-
-bayes.t.test(voters.payoff.v.b$Payoff, 
-                    y = voters.payoff.v.s$Payoff, 
-                    nIter = 100000000,
-                    nBurn = 100000,
-                    conf.level = 0.95)
 
