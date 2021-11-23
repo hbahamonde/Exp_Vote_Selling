@@ -164,6 +164,13 @@ v.selling.dat = v.selling.dat %>% group_by(vote_s.2.group.presupuesto) %>% fill(
 v.selling.dat$participant.code.dyad.3 = ifelse(v.selling.dat$vote_s.3.player.votanteOpartido == "votantes", v.selling.dat$participant.code, NA)
 v.selling.dat = v.selling.dat %>% group_by(vote_s.3.group.presupuesto) %>% fill(participant.code.dyad.3, .direction = "downup")
 
+# voter sells to both parties A and B
+v.selling.dat$voter.sells.to.both.1 = ifelse(v.selling.dat$vote_s.1.player.p_oferta_choice_A == 1 & v.selling.dat$vote_s.1.player.p_oferta_choice_B == 1, 1, 0)
+v.selling.dat$voter.sells.to.both.2 = ifelse(v.selling.dat$vote_s.2.player.p_oferta_choice_A == 1 & v.selling.dat$vote_s.2.player.p_oferta_choice_B == 1, 1, 0)
+v.selling.dat$voter.sells.to.both.3 = ifelse(v.selling.dat$vote_s.3.player.p_oferta_choice_A == 1 & v.selling.dat$vote_s.3.player.p_oferta_choice_B == 1, 1, 0)
+v.selling.dat = v.selling.dat %>% group_by(vote_s.1.group.presupuesto) %>% fill(voter.sells.to.both.1, .direction = "downup")
+v.selling.dat = v.selling.dat %>% group_by(vote_s.2.group.presupuesto) %>% fill(voter.sells.to.both.2, .direction = "downup")
+v.selling.dat = v.selling.dat %>% group_by(vote_s.3.group.presupuesto) %>% fill(voter.sells.to.both.3, .direction = "downup")
 
 # party.id.before.voter
 p_load(dplyr,tidyverse)
@@ -381,6 +388,7 @@ v.selling.dat.1.a = subset(
     vote.intention.party.1.a,
     vote.intention.party.per.1.a,
     voter.offer.1.a,
+    voter.sells.to.both.1,
     accepts.offer.1.a,
     pivotal.voter.1.a, 
     voter.own.1.a,
@@ -407,6 +415,7 @@ v.selling.dat.1.b = subset(
     vote.intention.party.1.b,
     vote.intention.party.per.1.b,
     voter.offer.1.b,
+    voter.sells.to.both.1,
     accepts.offer.1.b,
     pivotal.voter.1.b, 
     voter.own.1.b,
@@ -433,6 +442,7 @@ v.selling.dat.2.a = subset(
     vote.intention.party.2.a,
     vote.intention.party.per.2.a,
     voter.offer.2.a,
+    voter.sells.to.both.2,
     accepts.offer.2.a,
     pivotal.voter.2.a, 
     voter.own.2.a,
@@ -459,6 +469,7 @@ v.selling.dat.2.b = subset(
     vote.intention.party.2.b,
     vote.intention.party.per.2.b,
     voter.offer.2.b,
+    voter.sells.to.both.2,
     accepts.offer.2.b,
     pivotal.voter.2.b, 
     voter.own.2.b,
@@ -485,6 +496,7 @@ v.selling.dat.3.a = subset(
     vote.intention.party.3.a,
     vote.intention.party.per.3.a,
     voter.offer.3.a,
+    voter.sells.to.both.3,
     accepts.offer.3.a,
     pivotal.voter.3.a, 
     voter.own.3.a,
@@ -511,6 +523,7 @@ v.selling.dat.3.b = subset(
     vote.intention.party.3.b,
     vote.intention.party.per.3.b,
     voter.offer.3.b,
+    voter.sells.to.both.3,
     accepts.offer.3.b,
     pivotal.voter.3.b, 
     voter.own.3.b,
