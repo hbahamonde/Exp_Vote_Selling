@@ -1,0 +1,670 @@
+\documentclass[onesided]{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[T1]{fontenc}
+\linespread{1.5} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{threeparttable} % package to have long notes in reg tables in texreg. 
+\usepackage[hmarginratio=1:1,columnsep=20pt]{geometry} % Document margins
+%\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+
+
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+
+% to ignore texts: good for thank messages and paper submissions.
+      % \fbox{\phantom{This text will be invisible too, but a box will be printed arround it.}}
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+%\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+
+\usepackage[]{titlesec} % Allows customization of titles
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\usepackage{fancybox, fancyvrb, calc}
+\usepackage[svgnames]{xcolor}
+\usepackage{epigraph}
+
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage{graphics}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{rotating}
+\usepackage{paracol}
+\usepackage{textcomp}
+\usepackage[export]{adjustbox}
+\usepackage{afterpage}
+\usepackage{color}
+\usepackage{latexsym}
+\usepackage{lscape}       %\begin{landscape} and \end{landscape}
+\usepackage{wasysym}
+\usepackage{dashrule}
+
+\usepackage{framed}
+\usepackage{tree-dvips}
+\usepackage{pgffor}
+\usepackage[]{authblk}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage[latin1]{inputenc}
+\usepackage{hyperref}     %desactivar para link rojos
+\usepackage{graphicx}
+\usepackage{dcolumn} % for R tables
+\usepackage{multirow} % For multirow in tables
+\usepackage{pifont}
+\usepackage{listings}
+
+
+
+
+% hypothesis / theorem package begin
+\usepackage{amsthm}
+\usepackage{thmtools}
+\declaretheoremstyle[
+spaceabove=6pt, spacebelow=6pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries, notebraces={(}{)},
+bodyfont=\normalfont,
+postheadspace=0.6em,
+headpunct=:
+]{mystyle}
+\declaretheorem[style=mystyle, name=Hypothesis, preheadhook={\renewcommand{\thehyp}{H\textsubscript{\arabic{hyp}}}}]{hyp}
+
+\usepackage{cleveref}
+\crefname{hyp}{hypothesis}{hypotheses}
+\Crefname{hyp}{Hypothesis}{Hypotheses}
+% hypothesis / theorem package end
+
+
+%----------------------------------------------------------------------------------------
+% Other ADDS-ON
+%----------------------------------------------------------------------------------------
+
+% independence symbol \independent
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+
+
+
+
+
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat's bookmarks
+    pdftoolbar=true,        % show Acrobat's toolbar?
+    pdfmenubar=true,        % show Acrobat's menu?
+    pdffitwindow=true,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={My title},    % title
+    pdfauthor={Author},     % author
+    pdfsubject={Subject},   % subject of the document
+    pdfcreator={Creator},   % creator of the document
+    pdfproducer={Producer}, % producer of the document
+    pdfkeywords={keyword1} {key2} {key3}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=Maroon,          % color of internal links (change box color with linkbordercolor)
+    citecolor=Maroon,        % color of links to bibliography
+    filecolor=Maroon,      % color of file links
+    urlcolor=Maroon           % color of external links
+}
+
+%\usepackage[nodayofweek,level]{datetime} % to have date within text
+
+\newcommand{\LETT}[3][]{\lettrine[lines=4,loversize=.2,#1]{\smash{#2}}{#3}} % letrine customization
+
+
+
+% comments on margin
+  % Select what to do with todonotes: 
+  % \usepackage[disable]{todonotes} % notes not showed
+  \usepackage[draft]{todonotes}   % notes showed
+  % usage: \todo{This is a note at margin}
+
+\usepackage{cooltooltips}
+
+%%% bib begin
+\usepackage[american]{babel}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=authoryear,dashed=false,doi=false,isbn=false,url=false,arxiv=false]{biblatex}
+%\DeclareLanguageMapping{american}{american-apa}
+\addbibresource{Vote_Selling_Bahamonde_Canales.bib} 
+\addbibresource{/Users/hectorbahamonde/Bibliografia_PoliSci/library.bib} 
+\addbibresource{/Users/hectorbahamonde/Bibliografia_PoliSci/Bahamonde_BibTex2013.bib} 
+
+% USAGES
+%% use \textcite to cite normal
+%% \parencite to cite in parentheses
+%% \footcite to cite in footnote
+%% the default can be modified in autocite=FOO, footnote, for ex. 
+%%% bib end
+
+
+% DOCUMENT ID
+
+
+
+% TITLE SECTION
+
+\title{\vspace{-15mm}\fontsize{18pt}{7pt}\selectfont\textbf{\input{title.txt}\unskip}} % Article title
+
+
+\author[1]{
+
+\textsc{Hector Bahamonde}
+\thanks{\href{mailto:hibano@utu.fi}{hibano@utu.fi}; \href{http://www.hectorbahamonde.com}{\texttt{www.HectorBahamonde.com}}.}}
+
+
+
+\author[2]{
+
+\textsc{Andrea Canales}
+\thanks{\href{mailto:andrea.canales@uoh.cl}{andrea.canales@uoh.cl}; 
+\href{http://sites.google.com/view/andrea-canales-g}{\texttt{http://sites.google.com/view/andrea-canales-g}}. \\
+Authors are listed in alphabetical order. We thank Jack Levy for his detailed comments and helpful revisions. We also thank Janne Tukiainen, Lauri Saaksvuori and Salomo Hirvonen for their suggestions. We thank O'Higgins University for funding this project, and the participants of the colloquium at the Centre for Experimental Social Sciences (CESS) at Universidad de Santiago (Chile) and the participants of the ``DPINVEST \& INVESThub Workshop on Interventions, Evaluations and Field Experiments'' (Finland). Javiera Tobar, Cristopher Reyes and Basti\'an Garrido provided excellent research assistance.}}
+
+
+% Share with: Rick Lau, Ana de la O, Virginia Oliveros, Dave Redlawsk, Bob Kaufman, Jack Levi, Barbara Vis (https://www.barbaravis.nl/publications/)
+
+\affil[1]{Senior Researcher, University of Turku, Finland}
+\affil[2]{Assistant Professor, O$'$Higgins University, Chile}
+
+
+\date{\today}
+
+%----------------------------------------------------------------------------------------
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+\pagenumbering{gobble} 
+
+
+\setcounter{hyp}{0} % sets hypothesis counter to 1
+
+\maketitle % Insert title
+
+
+%----------------------------------------------------------------------------------------
+% ABSTRACT
+%----------------------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% loading knitr package
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% end knitr stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\begin{abstract}
+\input{abstract.txt}\unskip
+\end{abstract}
+
+
+\vspace*{0.3cm}
+\centerline{{\bf Abstract length}: 103 words.}
+\vspace*{0.3cm}
+
+
+
+\centerline{\bf Please consider downloading the last version of the paper \href{https://github.com/hbahamonde/Exp_Vote_Selling/raw/master/Vote_Selling_Bahamonde_Canales_Paper_2.pdf}{\texttt{{\color{red}here}}}.}
+
+\vspace*{0.3cm}
+\centerline{\bf {\color{red}Rough draft PLEASE DO NOT CIRCULATE}.}
+
+
+\centerline{\providecommand{\keywords}[1]{\textbf{\textit{Keywords---}} #1} % keywords.  
+\keywords{{\input{keywords.txt}\unskip}}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONTENT (write the paper below)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\newpage
+
+\section{Section}
+
+
+
+
+
+
+\clearpage
+\newpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+\printbibliography
+\clearpage
+\newpage
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WORD COUNT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+
+
+\begin{center}
+\vspace*{\stretch{1}}
+\dotfill
+\dotfill {\huge {\bf Word count}: 243} \dotfill
+\dotfill
+\vspace*{\stretch{1}}
+\end{center}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WORD COUNT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Online Appendix
+%\newpage
+%\section{Online Appendix}
+%\pagenumbering{Roman}
+%\setcounter{page}{1}
+
+
+
+%% reset tables and figures counter
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{A\arabic{figure}}
+
+
+
+\section{Appendix}
+\pagenumbering{roman}
+\setcounter{page}{1}
+%\newpage
+
+Appendix
+
+
+
+\end{document}
+
+
+% ``[managers] believe that fewer risks should, and would, be taken when things are going well. They expect riskier choices to be made when an organization is `failing'.'' March1987, 1409
+
+% ``In classical decision theory, risk is most commonly conceived as reflecting variation in the distribution of possible outcomes.'' March1987, 1404
+
+% Scholars mostly agree on the positive correlation between poverty and clientelism \parencite{Calvo2004,Weitz-shapiro,Kitschelt2000,Kitschelt2015}.\footnote{Following \textcite[316]{Nichter2014}, clientelist vote-buying is defined as ``the distribution of rewards to individuals or small groups during elections in contingent exchange for vote choices.''} Since the poor derive more utility from immediate transfers than the uncertain returns associated with future policy packages, clientelist political parties only target the poor (\textcite{Brusco2004,Stokes:2013cj}). Indeed, \textcite[12]{Weitz-Shapiro:2014aa} explained that ``[a]lmost universally, scholars of clientelism treat and analyze [this] practice as an exchange between politicians and their poor clients.'' 
+
+% challenge: income
+% This agreement has recently been challenged \parencite[55]{Hicken2007}. \textcite{Gonzalez-Ocantos2012} and \textcite[]{Holland2015} found that income had little or no effect on vote-buying. For instance, \textcite[32]{Szwarcberg2013} ``challenges the assumption [that brokers] with access to material benefits will always distribute goods to low-income voters in exchange for electoral support.'' In fact, \textcite{Bahamonde2018} explains that non-poor individuals can be targeted when they are sufficiently noticeable, increasing compliance. He explains that wealthy houses in very poor neighborhoods in Brazil can be targeted too.
+
+
+% ``Expected-utility theory has dominated the analysis of decision-making under risk, both as a normative model of rational choice and a descriptive model of how people actually behave. But not all of its predictors appear to be fully consistent with observed behavior'' Levy1992a, 173
+
+% ``Recent years have witnessed increasing dLssatisfaction with expected utility (EU) theory as a descriptive model of choice under uncertainty.'' Battalio1990, 25
+
+
+% Risk is a central feature of political decision making
+% ``Risk is a central feature of political decision making'' \parencite[334]{Vis2011}. 
+
+% For instance, governments might risk political support when pursuing unpopular reforms \parencite{Vis2007,Vis2009,Weyland2002}.\todo{add more} 
+
+% Yet, vote buying is still a very common practice \parencite[F356]{Vicente2014}. For instance, in some countries vote buying is so deeply embedded in electoral politics that \textcite{Gonzalez-Ocantos2012} report that 24\% of registered voters in Nicaragua were offered a clientelist gift. 
+
+% Why do parties keep buying votes? 
+% \emph{Why do political parties buy votes?} The core of the answer rests on the idea that clientelist political parties resort to vote buying when anticipating electoral losses \parencite{Diaz-Cayeros2008}. But then, considering that resources aimed at buying votes are scarce, 
+
+% ``The expected-utility principle asserts that individuals attempt to maximize expected utility in their choices between risky options: they weight the utilities of individual outcomes by their probabilities and choose the option with the highest weighted sum''  Levy1992a, 173
+
+% ``The expected-utility principle posits that actors try to maximize their expected by weighting the utility of each possible outcome of a given course of action by the probability of its occurrence, summing over all possible outcomes for each strategy, and selecting that strategy with the highest expected utility.'' Levy1997, 88
+
+% is that parties anticipating electoral losses resort to alternative methods other than delivering policy packages \parencite{Kitschelt2000,Calvo2012a}. 
+
+% Since clientelist political parties operate in uncertain scenarios, the literature has described a few decision-making strategies parties employ, particularly, under contexts of risk. Overall, vote buying requires parties to sustain close relationships over time with their clients in a personal and individualized way \parencite{Auyero2000,Szwarcberg2013,Bahamonde2018}. Unfortunately, parties are left with no more than guesses about whether their clientelistic investments are effective or not. 
+
+
+% multiplicidad de approaches.
+% Instead, the clientelism literature has seen a proliferation of tangential answers. While all of them are contributions, they do not really tackle the afore mentioned question. \textcite{Dixit1996} explain that parties both swing and core voters, but that depends on a number of factors. \todo{add something}. \textcite{Nichter2008} (turnout-buying) is another very important contribution. Unfortunately, it deviates from the question by increasing the complexity on the varieties of clientelism. Similarly
+
+
+% this paper's contribution
+% The paper seeks to contribute to this issue by incorporating both structural and individual factors that foster clientelism in the same theory.
+
+% ``Since its formulation by Kahneman1979, prospect theory has emerged as a leading alternative to expected utility as a theory under risk.'' Levy1992a, 171
+
+% ``Kahneman1979 prospect theory, which provides a descriptive model of decision-making under risk.'' Ackert2006, 5
+
+ % ``In theoretical terms, the S-shaped curve means that people tend to be risk averse in the domain of gains and risk seeking in the domain of losses; this is the crux of prospect theory. In short, prospect theory predicts that domain affects risk propensity. The third aspect of the value function is the asymmetric nature of the value curve; it is steeper in the domain of losses than in that of gains.'' McDermott1998, 29
+
+% ``[prospect theory] focuses attention on the context of a situation, which helps illuminate other important areas of research, including framing, uncertainty, accountability, escalation and commitment, sunk costs, and momentum effects.'' McDermott2004, 290
+
+% ``In most rational choice models [...] preferences themselves are assumed not to shift. This is not the case in prospect theory, where a decision- maker's risk propensity is expected to shift in response to changes in the environment.'' McDermott2004, 292
+
+% ``Empirical studies of risk taking [...] indicate that risk preference varies with context.'' March1987, 1412
+
+% ``The reference point is a critical concept in assessing gains and losses; thus, it is central to the notions of domain and risk.'' McDermott1998, 40
+
+% ``In prospect theory, value is a function of this change, in a positive or negative direction, rather than a result of absolute welfare, as is the case with subjective expected utility theory.'' McDermott1998, 28
+
+% ``reference point which is not equivalent to the status quo'' Levy1992a, 174
+
+% ``While normative theory implores decision makers to only consider incremental outcomes, real decision makers are influenced by prior outcomes.'' Thaler1990, 643
+
+
+% ``While students of economics and decision theory are implored to concentrate only on incremental costs, it is well established that real decision makers are often influenced by historical or sunk costs''  Thaler1990, 643
+
+% ``We begin by recognizing that most decision makers are influenced by prior outcomes. Our goal then is to investigate how prior gains and losses affect choices.'' Thaler1990, 643
+
+% ``we find that under some circumstances a prior gain can increase subjects' willingness to accept gambles. This finding is labeled the \emph{house money effect'}. In contrast, prior losses can decrease the willingness to take risks. We also find that when decision makers have prior losses, outcomes which offer the opportunity to `break even' are especially attractive.''\footnote{Italics in original.} Thaler1990, 643-644
+
+% ``Our experimental results provide support for a house money effect. Traders' bids, price predictions, and market prices are influenced by the amount of money that is provided prior to trading.'' Ackert2006, 5
+
+% ``An initial loss can cause an increase in risk aversion such that prior losses reduce risk-taking behavior'' Ackert2006, 6
+
+% ``At first consideration Thaler1990's evidence may appear to contradict prospect theory because it suggests risk-seeking behavior after a windfall, whereas prospect theory suggests risk aversion in the domain of gains. However, a house money effect is not inconsistent with prospect theory because prospect theory was developed for one-shot gambles.'' Ackert2006, 6
+
+% ``Our results suggest that applying aspects of prospect theory to model dynamic financial market behavior is problematic [:] Our results can be interpreted as evidence that risk aversion decreases with found money.'' %% THIS IS OPPOSITE WITH WHAT I'VE GOT Ackert2006, 7
+
+% ``People appear to be less risk averse after a windfall of money'' Ackert2006, 15
+
+ % ``negative information is more influential than comparable positive information'' Lau1985, 132
+
+ % ``This attention to losses speaks to a wide variety of literature in political science'' McDermott2004, 298
+
+% ``the `adjustment and anchoring' heuristic. Once people have an initial assessment of a problem---even if the assessment is arbitrary---they will use it to anchor subsequent judgments and thus inadequately revise their beliefs to accommodate new information.'' Mercer2005, 7-8
+
+ % ``The situation in a large sense determines the domain of action.'' McDermott2004, 294
+
+
+% ``How is risk-taking behavior affected by prior gains and losses? The question is quite general since decisions are rarely made in temporal isolation. Current'' Thaler1990, 643
+
+ % ``Prospect theory is based on psychophysical models, such as those that originally inspired Bernoulli's expected value proposition.'' McDermott1998, 18
+
+% ``Prospect theory posits that individuals evaluate outcomes to deviations from a reference point rather than with respect to net that their identification of this reference point is a critical variable, that they give more weight to losses than to comparable gains, and that they are generally averse with respect to gains and risk-acceptant with respect to losses''  Levy1992a, 171
+
+% ``In the domain of gains [...] the underweighting of probabilities works together with the concavity of the value function to undervalue the gamble relative to the certain outcome, and thus to encourage risk aversion. In the the domain of losses, the underweighting of probabilities [...] reduces the weights given to risky negative prospects [making] them less unattractive, and thus encouraging risk-seeking.'' Levy1992a, 183
+
+% ``Thus the over overweighting (and perhaps the exaggeration) of small probabilities is one possible explanation for the appeal of long-shot gambling, and it also might reinforce the tendency for risk averse individuals to insure against rare but catastrophic losses'' Levy1992a, 184
+
+ % ``prospect theory accounts for these discrepancies by noting the extreme (over)weight and attention that individuals give to small probabilities that potentially involve either huge gains (winning the lottery) or huge losses (losing your house in a fire). This phenomenon helps account for worst-case scenario planning.'' McDermott1998, 32
+
+ % ``Risk-seeking in the domain of losses should led decision-makers to take \emph{disproportionate risks} to avoid certain losses, and risk aversion in the domain of gains should led decision-makers to be \emph{excessively eager} to secure certain gains.''\footnote{My emphases.} Levy1992, 299-300
+
+    % ``people have difficulty with probability at extreme ranges: sometimes people may treat highly likely but uncertain events as certain; on other occasions, people may treat highly unlikely events as impossible.'' McDermott1998, 30
+
+ %``individuals are often willing to tolerate a prospect which is significantly lower in expected value than an alternative in order to avoid a certain loss or secure a certain gain.''  Levy1992, 297
+
+
+% ``Experimental evidence suggests that people tend to evaluate choices with respect to a reference point, overweight losses relative to comparable gains, engage in risk-averse behavior in choices among gains but risk-acceptant behavior in choices among losses, and respond to probabilities in a nonlinear manner.'' Levy1997, 87
+
+
+% ``We should say, for example, not that an actor pursued a risky policy because she was in the domain of losses, but that because of risk-seeking with respect to loses she adopted a more risky alternative than predicted by a standard expected-value calculations.'' Levy1992, 298
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Prospect theory and EU incosistencies
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% ``It is not certain, however, that managers believe that risk and retum are positively correlated.'' March1987, 1405
+
+% ``argue here that the central task of asset pricing is to examine how expected returns are related to risk and to investor misvaluation.'' Hirshleifer2001, 1534
+
+% ``No single alternative consistently organizes choices. Among the more important inconsistencies, we identify conditions generating systematic fanning in of indifference curves in the unit probability triangle, and find risk-loving over a number of gambles with all positive payoffs, in cases where prospect theory predicts risk aversion.'' Battalio1990, 25
+
+
+% ``Our overall conclusion is that none of the alternatives to expected utility theory considered here consistently organize the data, so we have a long way to go before having a complete descriptive model of choice under uncertainty.'' Battalio1990, 46
+
+
+
+% ``there are a number of conceptual and methodological problems which must be overcome before hypotheses based on prospect theory can be constructed and tested against the empirical evidence'' Levy1992, 283-284
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PROBLEMS OF PROSPECT THEORY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ``Risk is an even more difficult variable to operationalize than domain. The central concern is fear of tautological definition; risk cannot be determined by domain, on the one hand, or by outcome, on the other.'' McDermott1998, 38
+
+%``Prospect theory may appear to be less precise than rational choice theories claim to be, but, in reality, prospect theory proves to be more analytically maleable. This is because, with rational choice theories, utilities are notoriously difficult to assess, and basic supporting axioms are frequently violated in individual behavior.'' McDermott1998, 36
+
+% ``This model failed in predicting outcomes in many instances because it was obvious that the value that a particular payoff held for someone was not always directly related to its precise monetary worth.'' McDermott1998, 15
+
+
+% ``Prospect theory implies that the magnitudes of the losses need not be that large in order to induce risk-seeking behavior [...] even small losses appear to have significant consequences'' Levy1992, 297
+
+% ``Prospect theory suggests another hypothesis as well: actors perceive themselves to be in the domain of losses more often than we would normally expect'' Levy1992 291  (HERE CITE LAU)
+
+ % ``Loss aversion also helps to explain why states are more concerned to prevent a decline in their reputation or credibility than to increase it by a comparable amount'' Levy1992, 285
+
+% ``One implication of loss aversion is that people tend to value what they have more than comparable things they do not have, and that the disutility of relinquishing a good is greater than the utility of acquiring it.'' Levy1997, 89
+
+
+% ``the very fact of a loss is often more important than the magnitude of the loss and that large losses may not be that much worse than smaller losses'' Levy1992, 287
+
+% ``A change of reference point alters the preference order for prospects. In particular, the present theory implies that a negative translation of a choice problem, such as arises from imcomplete adaptation to recent losses, increases risk seeking in some situations [...] the tendency to bet on long shots increases in the course of the betting day provides some support for the hypothesis that a failure to adapt to losses or to attain an expected gain induces risk seeking'' \parencite[286-287]{Kahneman1979}
+
+ % As \parencite[297]{Levy1992} explains, the magnitudes of the losses need not be that large in order to induce risk-seeking behavior, even small losses should induce the risk-seeking behavior. 
+
+% ``prospect theory's limited influence in political science'' Mercer2005, 2
+
+% ``Prospect theory is influential in political science only among international relations (IR) theorists.'' Mercer2005, 2
+
+% ``Although international relations theorists who study security have used prospect theory extensively, Americanists, comparativists, and political economists have shown little interest in it.'' Mercer2005, 1
+
+% Fanis2004  
+% ``Expected utility theory explains collective action as an attempt by individuals to maximize their gains. In contrast, my application of prospect theory to collective action suggests that people are motivated to participate in collective action by a fear of loss.'' Fanis2004, 363
+
+% ``Weyland extends loss aversion to comparative politics. He challenges the view that dictatorships engage in radical economic reform more easily than democracies by emphasizing the importance of loss aversion for both leaders and citizens in Latin American democracies.'' Mercer2005, 12
+
+% welfare state
+    % Vis2009,Vis:2010tq ``it shows that an improving political position (a gain) is the necessary condition for not-unpopular reform while for unpopular reform it is a deteriorating socio-economic situation (a loss)'' (Vis2009, 395)
+
+% issue salience
+% ``Depending on the initial baseline’s position relative to the optimal outcome, that same outcome could be reached by either a negative externality change (if the base is lower than the optimal outcome) or a positive externality change (if the base is higher than the optimal outcome).'' Steinacker2006, 474
+
+
+
+% party platform change
+% ``due to loss aversion evoked by the expectation of losing office, government parties, on average, change their platform more than opposition parties do.'' Schumacher2015, 1051
+
+
+% advances in economics 
+
+
+% Koszegi2007: focuses on ``delayed consequences, to study preferences over monetary risk.''
+
+% ``First---and second---generation prospect theory have a common limitation: the reference points from which prospects are evaluated are assumed to be certainties [so they extend PT]  by allowing reference points to be uncertain.'' Schmidt2008
+
+%%% In Comparative Politics:
+
+% ``the bias toward experiments focused primarily on American topics is reflected in the predominance of voting behavior as a primary concern of experimental work.'' McDermott2002, 44
+
+    
+% personality
+
+%``prospect theory works at the individual level of analysis. But prospect theory is not a traditional personality theory; that is, an analyst need not know much about the individual character or history of a particular leader in order to explain or predict behavior. Rather, it is a theory concerned with the importance and impact of the environment on the person.'' McDermott2004, 293
+
+% ``Attitudes toward risk are usually pictured as stable properties of individuals, perhaps related to aspects of personality development or culture.'' March1987, 1406
+
+% ``This means that the propensity to take risks is thus not a stable personality trait, with some individuals being prone to take risks while others always steer away from them'' Vis2011, 335
+
+%%%% "instant endowment effect"
+% ``after a series of gains an individual will treat the possibility of a subsequent setback as a loss rather than as a foregone gain, overweight it, and engage in risk-seeking behavior to maintain her cumulative gains against that loss'' Levy1997, 91
+
+%%%% Formal Models
+
+% Aldrich2011 gives an extensive review about the use of experiments and formal models.
+
+% ``formal models can help experimentalists determine which settings are most critical to a particular causal hypothesis and experimenters can inform formal modelers by evaluating their theoretical predictions' performance in relevant environs.'' Aldrich2011
+
+% ``Formal models present hypotheses, which are then tested under experimental conditions. The experimental findings are used to refine and develop hypotheses to produce new theoretical models and predictions, which can then be experimentally tested in turn. Political scientists might benefit from this process as well in order to both establish empirical validation of formal models and speed the cumulation of knowledge'' McDermott2002, 45
+
+% ``research agendas that integrate experimental and formal modeling pursuits provide a portal for more effective interdisciplinary work and can improve the applicability and relevance of formal models to a wide range of important substantive questions in political science.'' Aldrich2011
+
+% ``paying subjects for their participation as a means of aligning their incentives with those of analogous actors in the formal models.'' Aldrich2011
+
+% ``A significant body of theoretical work now incorporates the ideas in prospect theory into more traditional models of economic behavior, and a growing body of empirical work tests the predictions of these new theories.'' Barberis2013, 174
+
+
+
+% \parencite{Downs:1957vg} the value of voting decreases as the size of the electorate increases.
+
+% Downsian/Spatial
+
+% they do a ``strategic voting in a controlled (laboratory) environment. Our aim is to carefully isolate important determinants of the strategic vote. In particular, we are interested in the effect on strategic voting of information about others' preferences'' Tyszler2016, 361
+
+% McDermott2002 provides a good summary of Experimental Methods in Political Science, with an emphasis on EXPERIMENTAL VOTING AND ELECTIONS Since
+
+
+% ``allow us to learn about individuals’ intrinsic motivations by observing deviations from game-theoretic predictions''  Dickson2011
+
+% ``A growing body of work has used laboratory voting games to evaluate theories of voting where subjects are given monetary incentives to induce them to have preferences over outcomes as in the evaluated theory.'' Bassi2011, 559
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Experiments invalidating EUT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ``According to prospect theory, we make a decision dependent on our perception of whether the decision involves making a gain or a loss. This is at odds with the consistency or invariance assumptions of rational theory.'' Fatas2007, 168
+
+
+
+% ``Thus expected-utility theory is more parsimonious than prospect theory.'' Levy1992, 296
+
+
+% ``These alternatives to EU theory often hold quite different views of the behavioral processes underlying choice under uncertainty, and make a number of new predictions that have yet to be subject to thorough experimental investigation.'' Battalio1990, 25
+
+% % ``Prospect theory has received little attention in the fields of American politics and comparative politics, with a few exceptions (e.g., Hansen 1985, Pierson 1994, Weyland2002). Most surprising, political economists have shown no interest in prospect theory.'' Mercer2005, 2
+
+% ``Comparative Politics (CP) have been particularly slow on incorporating prospect theory in their work'' Vis2011, 338-339
+
+% ``experiments are a promising research tool that have the potential to make substantial contributions to the study of democracy and development.'' DeLaO2011
+
+% ``formal models can help experimentalists determine which settings are most critical to a particular causal hypothesis and experimenters can inform formal modelers by evaluating their theoretical predictions' performance in relevant environs.'' Aldrich2011
+
+% ``Formal models present hypotheses, which are then tested under experimental conditions. The experimental findings are used to refine and develop hypotheses to produce new theoretical models and predictions, which can then be experimentally tested in turn. Political scientists might benefit from this process as well in order to both establish empirical validation of formal models and speed the cumulation of knowledge'' McDermott2002, 45
+
+% ``research agendas that integrate experimental and formal modeling pursuits provide a portal for more effective interdisciplinary work and can improve the applicability and relevance of formal models to a wide range of important substantive questions in political science.'' Aldrich2011
+
+% ``prospect theory does not depend on assumptions of individual behavior that are rooted in economic models that presume that individual actors naturally incorporate invariance, dominance, and transitivity into their decision-making. Rather, prospect theory develops its assumptions empirically, through experimentation.'' McDermott2004, 291
+
+% Lupia:1998ub develop game-theoretical expectations and designed an experiment.
+
+
+% ``In between-subjects designs, different groups of subjects are randomly assigned to various experimental or control conditions.'' McDermott2002, 33
+
+% ``this paper uses the `between-sample' (between individual) variation in loss aversion.'' Hwang2021, 11
+
+% ``All variations were made across subjects'', Tyszler2016, 371
+
+% ``Every individual is informed about his or her own preferences before each election. All this is common knowledge.'' Tyszler2016, 371
+
+% ``No other methodology can offer the strong support for the causal inferences that experiments allow'' McDermott2002, 38
+
+% ``Another approach to the problem of creating meaningful monetary incentives involves conducting the research in poorer societies where the ratio of monetary reward to normal income is relatively high.'' Levy1997, 95
+
+% ``We need experiments because they help to reduce the bias that can exist in less rigorous forms ofobservation'' McDermott2002, 33
+
+
+% this is NOT my design
+% In within-subject de- signs, otherwise known as the A-B-A experimental design strategy, each person serves as his or her own control by participating across time in both control and treatment conditions. Subjects begin with a baseline (A), are then administered a treatment or manipulation condition (B), and are measured again at baseline (A) once the treatment ends McDermott2002, 33
+
+
+% ``In most economics experiments, subjects receive cash payments that depend on their own choices in the laboratory and, in the case of game-theoretic experiments, on the choices of other people.'' Dickson2011
+
+% ``By controlling for preferences using monetary incentives, experimental economists attempt to focus on testing other aspects of their theoretical models, such as whether actors make choices that are consistent with a model's equilibrium predictions, or the extent to which actors' cognitive skills enable them to make the optimal choices predicted by theory.'' Dickson2011
+
+% ``Morton:2010ly summarize existing norms by estimating that payments are typically structured to average around 50 to 100 percent above the minimum wage for the time spent in the lab. Such considerations aside, resource constraints give experimentalists a natural incentive to minimize the scale of payoffs in order to maximize the amount of data that can be selected---as long as the payments that subjects receive are sufficient to motivate them in the necessary way.'' Dickson2011
+
+
+% ``Bassi2011 suggest that the scale of financial incentives can affect experimental results [...] The fit between subjects' behavior and game-theoretic predictions became monotonically stronger as incentives increased'' Dickson2011
+
+% party a and b
+% ``The roles assumed by subjects, and the alternatives that subjects face, are generally described using neutral terminology with a minimum of moral or emotional connotations'' Dickson2011
+
+% ``The abstract experimental tasks associated with this form of stylization are used in part because of a desire to maintain experimental control.'' Dickson2011
+
+
+%As \textcite[1405]{March1987} explain, rational agents in the EUT framework, ``when faced with one alternative having a given outcome with certainty, and a second alternative which is a gamble but has the same expected value as the first, [agents] will choose the certain outcome rather than the gamble.''% \footnote{This implies that decision makers should be compensated for taking risky decisions \parencite[1405]{March1987}. Note that the gamble has the \emph{same} expected value (mean) but differs with the certain outcome in its risk (variance).}
+
+% For instance, electoral explanations based on the EUT contend that voters see elections as ``investments'' \parencite{Downs:1957vg,Bassi2011}, a notion that also holds for clientelist political parties under risk \parencite{Diaz-Cayeros2008}. 
+
+% Importantly, it should not matter whether the voter is a swing or a core voter. 
+% Importantly, it should not matter whether the voter is a swing or a core voter. Besides risking electoral support from the wealthy \parencite{Weitz-shapiro} or from society in general \parencite{GonzalezOcantos2014}, when clientelist political parties are probable winners, they incur in the additional risk of buying votes from unlikely voters, irregardless of where that voter is in the swing-core continuum. Given the impossibility of accurate monitoring \parencite{Nichter2008,Hicken2020}, in risky contexts parties avoid the (small) probability of losing the election by diversifying their electoral portfolio. 

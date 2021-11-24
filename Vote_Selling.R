@@ -1,6 +1,8 @@
 ############################## 
 # Cleaning
 ##############################
+
+## ---- abstract ----
 cat("\014")
 rm(list=ls())
 setwd("/Users/hectorbahamonde/research/Exp_Vote_Selling/")
@@ -573,6 +575,7 @@ dat.v.s$pivotal.voter = as.factor(dat.v.s$pivotal.voter)
 
 # voter.offer to %
 dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
+## ----
 
 ######################################################################### 
 # ************** M      O       D       E       L       S **************
@@ -711,7 +714,7 @@ parties.payoff.v.b = parties.payoff.v.b %>% drop_na()
 parties.payoff.v.s = parties.payoff.v.s %>% drop_na()
 
 
-p_load(Rmisc,bayestestR)
+p_load(Rmisc)
 # https://cran.r-project.org/web/packages/bayestestR/vignettes/credible_interval.html
 
 payoffs.d = data.frame(
@@ -754,3 +757,32 @@ t.test(voters.payoff.v.b$Payoff,voters.payoff.v.s$Payoff,
        alternative = "greater") # substantively significant (10%)
 
 
+
+boxplot(Payoff~Role*Game,
+        data = payoffs.d#,
+        #main="Car Milage Data", 
+        #xlab="Number of Cylinders", 
+        #ylab="Miles Per Gallon"
+        )
+
+
+
+################
+#### ABSTRACT
+################
+
+## ---- abstract ----
+fileConn <- file ("abstract.txt")
+abstract.c = as.character(c(
+  "The clientelism literature has advanced a number of important questions. Unfortunately, most of it addresses the issue from the party's side (vote-buying). In this paper we bridge this gap by bringing the voters back in,  particularly by incorporating the vote-buying and vote-selling dynamics into the same framework. After formalizing a basic theory of vote-buying and vote-selling, we implemented an economic experiment to study different strategic behaviors. Our empirical results suggest that parties buy votes from their core constituencies, while voters sell their votes to the opponent winning party. Voters consistently derive more utility when parties take the initiative in the vote-buying game."
+  ))
+writeLines(abstract.c, fileConn)
+close(fileConn)
+## ----
+
+
+
+
+## ---- abstract.length ----
+abstract.c.l = sapply(strsplit(abstract.c, " "), length)
+## ----
