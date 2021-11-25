@@ -276,23 +276,41 @@ options(scipen = 99999999999)
     # 1. Clientelist targeting: core/swing voters. 
     # 2. Political contestation: when do parties buy votes (winning or losing).
 
-# Vote-buying and vote-selling are risky strategies. 
+# We formalized a basic theory of vote-buying and vote-selling.
 
-# In this paper we also take distance from classic approaches of clientelism and hypothesize building on the prospect theory approach, as the best theory of decision-making under risk. 
+# Following the model, we designed and implemented an economic experiment in the lab. 
 
-# We hypothesize:
-    # 1. Parties OFFER TO buy from core voters because they are NATURALLY (?) risk-averse (IN THE DOMAIN OF?): would hate to lose the sure thing (a voter of their own).
-    // because they anticipate the voter's risk-aversion levels (voters would hate to lose the sure thing: ), and gamble their money on the safest bet: buy from their own supporters. 
-    # 2. Voters OFFER TO sell to opponent winning parties because they are risk-seeking (IN THE DOMAIN OF?): since voters anticipate the party's risk-aversion levels (parties would hate to lose the sure thing: to win the election), voters gamble their vote in long-shots strategies.
-    # Consistent with prospect theory: parties buy votes when,
-        # 1. Are likely winners (risk-seeking in the domain of gains).
-        # 2. Have experienced sunk costs in the past (risk-aversion in the domain of loses).
+# We found the following strategies.
 
+# This paper contributes to the literature in the following ways.
 
+# The paper proceeds as follows:
+
+    # 1. Formal model. 
+    # 2. Experimental design.
+    # 3. Statistical analyses.
+    # 4. Results: Strategies
+    # 5. Discussion.
 
 \section{Section}
 
+% exchange, but only seen from one pov
+Vote-buying has been typically defined as an exchange between parties and voters where the former provide particularistic benefits and the latter provide electoral support \parencite[19]{Nichter2008}. While the literature has advanced a number of important questions \parencite{Hicken2011}, most of quantitative accounts tackle the issue from the party's side, thus addressing only vote-buying. For instance, \textcite{Reynolds1980} provides a historical account of different vote-buying dynamics in New Jersey during early 20th century, \textcite{Brusco2004} analyze vote-buying in Argentina, \textcite{Nichter2008} introduces several party targeting strategies, notably ``turnout buying'' which explains why parties target nonvoting supporters. Similarly, \textcite{Gans-Morse2013} expand on the same idea and introduce other ways in which parties employ diverse portfolios of strategies (i.e., vote buying, turnout buying, abstention buying, and double persuasion.). 
 
+ In turn, \textcite{Diaz-Cayeros2012} studies different strategies of vote buying in Mexico, \textcite{Inan2012a} using survey and experimental data in Paraguay finds that targeted individuals are not significantly closer to the middlemen, 
+
+Importantly,  \textcite{Gonzalez-Ocantos2012,GonzalezOcantos2014}
+
+Others have studies vote-buying in other developing contexts different than Latin America. For instance, \textcite{Bratton2008a} studies vote-buying and violence in Nigeria, \textcite{Vicente2009} implemented a field experiment in Benin and Sao Tome and Principe and found that an anti-vote-buying campaign had a negative effect on vote-buying, 
+
+
+ vote-
+
+\parencite{Hicken2015,Hicken2018} studies the Philippines  and 
+
+Institutional-centered accounts have usually focused on vote-buying only. For instance, \textcite{Hicken2007} explain that candidate-centered electoral systems, weak parties, and access to resources may facilitate vote-buying. 
+
+% 
 
 
 
