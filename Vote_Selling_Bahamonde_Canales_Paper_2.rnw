@@ -307,37 +307,43 @@ options(scipen = 99999999999)
 %\linespread{2}
 
 
-\section{Toward a Multidimensional Study of Clientelism}
+\section{It Takes Two To Tango}
 
 % exchange, but only seen from one pov
-Vote-buying has been typically defined as an exchange between parties and voters where the former provide particularistic benefits and the latter provide electoral support \parencite{Nichter2008,Nichter2014}. While the literature has advanced a number of important questions \parencite{Hicken2011}, most of quantitative accounts tackle the issue from the party's side, thus addressing only vote-buying. For instance, \textcite{Reynolds1980} provides a historical account of different vote-buying dynamics in New Jersey during early 20th century, \textcite{Brusco2004} analyze vote-buying in Argentina, \textcite{Nichter2008} introduces several party targeting strategies, notably ``turnout buying'' which explains why parties target nonvoting supporters. Similarly, \textcite{Gans-Morse2013} expand on the same idea and introduce other ways in which parties employ diverse portfolios of strategies (i.e., vote buying, turnout buying, abstention buying, and double persuasion.). Moving forward, \textcite{Albertus2012a} explains that parties may buy votes from both swing and core voters \todo{cite Cox \& McCubbins, 1986; Dixit \& Londregan, 1996; Lindbeck \& Weibull, 1987; Stokes, 2005}, \textcite{Carreras2013a} analyze the consequences of low trust in elections and exposure to vote buying, while \textcite{Carlin2015} explain that parties also pay attention to individual democratic attitudinal profiles, suggesting that targets with higher levels of trust in democracy might condemn vote-buying (see also \cite{Weitz-shapiro})
+Vote-buying has been typically defined as an exchange between parties and voters where the former provide particularistic benefits and the latter provide electoral support \parencite{Nichter2008,Nichter2014}. While the literature has advanced a number of important questions (see \cite{Hicken2011} for an excellent review), most of accounts of clientelism tackle the issue from the party's side, thus addressing only vote-buying. 
 
-Country-specific studies predominantly also study vote-buying only. For instance, \textcite{Diaz-Cayeros2012} studies different strategies of vote buying in Mexico, \textcite{Inan2012a} finds that in Paraguay targeted individuals are not significantly closer to the middlemen. For the Brazilian case, \textcite{Hidalgo2012,Hidalgo2016} find that vote-buying shapes the composition of the electorate while \textcite{Bahamonde2018} argues that economic inequality rather individual levels of income are associated with vote-buying. In turn, \textcite{Rueda2016} finds that in Colombia brokers buy more votes in districts where the size of the polling station is small, i.e. providing better monitoring capacities. When the literature turns to other developing contexts different than Latin America, the focus is still on vote-buying. For instance, \textcite{Bratton2008a,Rueda2014a} study vote-buying in Nigeria, \textcite{Vicente2009,Vicente2014} implemented a field experiment in Benin and Sao Tome and Principe and found that an anti-vote-buying campaign had a negative effect on vote-buying, \textcite{Jensen2013a} study the impact of poverty on vote-buying in sub-Saharan Africa, while \textcite{Heath2018} studies vote-buying in India. Similarly, \parencite{Khemani2015,Hicken2015,Hicken2018} study vote-buying in the Philippines. And when studying vote-buying in developed regions such as  Australia \parencite{Denemark2021} and Russia \parencite{Saikkonen2021}, the focus is also on vote-buying. 
+% vote-buying in general
+While it takes both parties \emph{and} voters to produce a clientelist relationship \parencite{Auyero2000}, most scholars have overlooked the role of voters (vote-selling), often times focusing only on parties (vote-buying). For instance, \textcite{Reynolds1980} provides a historical account of different vote-buying dynamics in New Jersey during early 20th century, \textcite{Brusco2004} analyze vote-buying in Argentina, \textcite{Nichter2008} introduces several party targeting strategies, notably ``turnout buying'' which explains why parties target nonvoting supporters. Similarly, \textcite{Gans-Morse2013} expand on the same idea and introduce other ways in which parties employ diverse portfolios of strategies (i.e., vote buying, turnout buying, abstention buying, and double persuasion.). Moving forward, \textcite{Albertus2012a} explains that parties may buy votes from both swing and core voters \todo{cite Cox \& McCubbins, 1986; Dixit \& Londregan, 1996; Lindbeck \& Weibull, 1987; Stokes, 2005}, \textcite{Carreras2013a} analyze the consequences of low trust in elections and exposure to vote buying, while \textcite{Carlin2015} explain that parties also pay attention to individual democratic attitudinal profiles, suggesting that targets with higher levels of trust in democracy might condemn vote-buying (see also \cite{Weitz-shapiro}). 
+
+% Country-specific studies study vote-buying
+Country-specific studies predominantly study vote-buying as well. For instance, \textcite{Diaz-Cayeros2012} study different strategies of vote buying in Mexico, \textcite{Inan2012a} find that in Paraguay targeted individuals are not significantly closer to the middlemen. For the Brazilian case, \textcite{Hidalgo2012,Hidalgo2016} find that vote-buying shapes the composition of the electorate, while \textcite{Bahamonde2018} argues that economic inequality rather individual levels of income are associated with vote-buying. In turn, \textcite{Rueda2016} finds that in Colombia brokers buy more votes in districts where the size of the polling station is small, i.e. providing better monitoring capacities. When the literature turns to other developing contexts different than Latin America, the focus is still on vote-buying. For instance, \textcite{Bratton2008a,Rueda2014a} study vote-buying in Nigeria, \textcite{Vicente2009,Vicente2014} implemented a field experiment in Benin and Sao Tome and Principe and found that an anti-vote-buying campaign had a negative effect on vote-buying. In turn, \textcite{Jensen2013a} study the impact of poverty on vote-buying in sub-Saharan Africa, while \textcite{Heath2018} study vote-buying in India. Similarly, \textcite{Khemani2015,Hicken2015,Hicken2018} study vote-buying in the Philippines. Scholars focused on developed regions, such as  Australia \parencite{Denemark2021} and Russia \parencite{Saikkonen2021} also  focus on vote-buying exclusively. 
+
+% Institutional-centered accounts have usually focused on vote-buying
+Institutionalist accounts have usually focused on vote-buying also. For instance, \textcite{Hicken2007} explains that candidate-centered electoral systems, weak parties, and access to resources may facilitate vote-buying. In turn, \textcite{Aidt2011} concentrate on the effects of the secret ballot reform in Western Europe, the United States and British elections \parencite{Kam2016a} during the 19th and 20th centuries. Others have studied vote-buying respect to the availability of state resources \parencite{Gherghina2021a}, while \textcite{Kitschelt2000,Kitschelt2007,Kitschelt2015} have focused on other important structural conditions that make vote-buying more prone.
+
+% ethnographic accounts
+In fact, except for a few ethnographic accounts, most researchers consider mostly party dynamics. Notably \parencite[55]{Auyero2000} analyzes the logic of clientelism in Argentina not only by looking at political brokers but also while paying particular attention to the ``clients' own views on the network.'' In turn, \textcite{Zarazaga2015a} interviews 120 brokers from Argentina, \textcite{Szwarcberg2012} explains that brokers are independent agents motivated by personal interests, while \textcite{Szwarcberg2013} argues that parties with access to resources is a necessary but insufficient condition to vote-buying. However, as \textcite[152]{Hagene2015} notes, many clientelist relationships are ``client-initiated.'' Notably \textcite[55-57]{Tosoni2007} explores different instances where slum dwellers strategically approach brokers to solve their collective needs, while \textcite{Gay1999} describes how neighborhood associations successfully managed to attract resources to Brazilian \emph{favelas} in exchange of electoral support (vote-selling).
+
+% quant
+In this paper we contend that omitting the voter's side complicates our understanding of the phenomenon as a whole. This issue is particularly problematic because there are just a few quantitative papers that address vote-selling. For instance, \cite{Hicken2015,Hicken2018} study vote-selling in the Philippines while \textcite{Bahamonde2020a} studies vote-selling in the U.S.\footnote{\textcite{Gonzalez-Ocantos2012,GonzalezOcantos2014,KiewietDeJonge2015} note that voters systematically lie when asked directly about vote-buying.} One particular consequence of this important deficit in the literature is that we do not know whether the dynamics of vote-selling and vote-buying are different. Specifically, one simple question that has not been addressed in the literature due to this deficit is \emph{Which setting (vote-buying or vote-selling) is more convenient for either side (parties and voters)?} 
 
 
+This article starts by recreates the market conditions that make vote-buying and vote-selling more likely by randomizing 
 
-Importantly,  \textcite{Gonzalez-Ocantos2012,GonzalezOcantos2014,KiewietDeJonge2015,Bahamonde2020a}
-
-
-
+ The authors are not aware of any experimental design that considers both vote-buying and vote-selling.\footnote{\textcite{Leight2020} present an experimental design of vote-buying. They find that vote-buying reduces the voters- willingness to hold politicians accountable.}
 
 
-Institutional-centered accounts have usually focused on vote-buying only also. For instance, \textcite{Hicken2007} explain that candidate-centered electoral systems, weak parties, and access to resources may facilitate vote-buying. In turn, \textcite{Aidt2011}, concentrate on the effects of the secret ballot reform in Western Europe, the United States and British elections \textcite{Kam2016a} during the 19th and 20th centuries. Others have studied vote-buying respect to the availability of state resources \textcite{Gherghina2021a}, while \textcite{Kitschelt2000,Kitschelt2007,Kitschelt2015} have focused on other important structural conditions that make vote-buying more prone.
 
 
 \todo{cite Keefer2017}
 
-% ethnographers
-\textcite{Hagene2015} (voters go out to sell their votes)
-\textcite{Zarazaga2015a} interviews 120 brokers from Argentina
 
 % experimentalists
-In this paper we recreate the market conditions that make vote-buying and vote-selling more likely \todo{by randomizing...} The authors are not aware of any experimental design that considers both vote-buying and vote-selling.\footnote{\textcite{Leight2020} present an experimental design of vote-buying. They find that vote-buying reduces the voters- willingness to hold politicians accountable.}
 
-\textcite{Bahamonde2020a} studies vote-selling in the US.
+
+
  
 
-We contend in this paper that omitting the voter's side complicates our understanding of the phenomenon as a whole. 
 
 \clearpage
 \newpage
