@@ -330,7 +330,8 @@ Conceptually, clientelism is not so different from any other market: there is an
 % contribution
 This paper contributes to the literature by addressing the question about whether parties target core constituencies or swing voters. On the one hand, \textcite{Cox1986} and \textcite[7]{Zarazaga2015a} explain that since constituencies are well known to clientelist parties, they allocate resources to core voters. On the other hand, \textcite{Lindbeck1987,Dixit1996,Dahlberg2002,Stokes2005} argue that since allocating resources to individuals who \emph{ex-ante} vote for the party is a waste, parties target swing voters. However, ``our knowledge of who parties target remains incomplete'' \parencite[14]{Carlin2015}. Second, and from a methodological standpoint, we follow \textcite{Aldrich2011,McDermott2002} in that there is a need of implementing experiments aimed to test formal models, and such, we believe that political scientists might benefit from this process to establish empirical validation of formal models \parencite[45]{McDermott2002}. Our paper is particularly relevant to the the study of democracy and development where experiments have been described as ``a promising research tool'' \parencite{DeLaO2011}.
 
-\section{Vote-Buying}
+
+\section{Vote-Buying: I'm Dancing With Myself}
 
 % intro
 In this section we review the vote-buying literature paying particular attention to the different emphases or variants of each account. We concentrate on general accounts of vote-buying, accounts that are country or region-specific (where there are contributions that consider underdeveloped or developed cases) and level of inference (macro-institutionalist and ethnographic accounts). Ultimately, the section is an attempt to signal that there is a remarkable hyper-specialization among vote-buying scholars, putting heavy pressures to fix the heavy imbalance that exists between the vote-buying \emph{literature} and the few contributions on vote-selling. 
