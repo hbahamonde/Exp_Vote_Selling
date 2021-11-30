@@ -765,6 +765,19 @@ boxplot(Payoff~Role*Game,
         #ylab="Miles Per Gallon"
         )
 
+################
+#### META
+################
+
+# Load the data
+if (!require("pacman")) install.packages("pacman"); library(pacman) 
+p_load(rio,tibble)
+meta.d <- rio::import(
+  "https://github.com/hbahamonde/Exp_Vote_Selling/raw/main/vote_buying_selling_meta.xlsx",
+  sheet = c("")
+  )
+
+
 
 
 ################
