@@ -577,6 +577,30 @@ dat.v.s$pivotal.voter = as.factor(dat.v.s$pivotal.voter)
 dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
 ## ----
 
+# plotting dep variable plot BY HAND
+p_load(gridExtra,lattice)
+m1.dep.var = histogram(~dat.v.s$voter.offer.p, 
+                       aspect = 1,
+                       xlab = "Amount of Vote-Selling Offer (points)"
+)
+
+# m2.dep.var = histogram(~as.factor(dat.v.b$competitive.offers.party), 
+#                       aspect = 1,
+#                       xlab = "Competitive Vote-Buying Offer"
+#                       )
+
+png(filename="depvarplot.png", 
+    type="cairo",
+    units="in", 
+    width=5, 
+    height=5, 
+    pointsize=10, 
+    res=1000)
+
+m1.dep.var
+#grid.arrange(m1.dep.var,m2.dep.var, ncol=2)
+dev.off()
+
 ######################################################################### 
 # ************** M      O       D       E       L       S **************
 #########################################################################
