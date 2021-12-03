@@ -2,7 +2,7 @@
 # Cleaning
 ##############################
 
-## ---- abstract ----
+## ---- loadings:d:2 ----
 cat("\014")
 rm(list=ls())
 setwd("/Users/hectorbahamonde/research/Exp_Vote_Selling/")
@@ -577,6 +577,11 @@ dat.v.s$pivotal.voter = as.factor(dat.v.s$pivotal.voter)
 dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
 ## ----
 
+######################################################################### 
+# **************            D  E P   V A R                 **************
+#########################################################################
+
+
 # plotting dep variable plot BY HAND
 p_load(gridExtra,lattice)
 m1.dep.var = histogram(~dat.v.s$voter.offer.p, 
@@ -605,8 +610,9 @@ dev.off()
 # ************** M      O       D       E       L       S **************
 #########################################################################
 
-
+## ---- models
 m1 = lm(voter.offer.p ~ ideo.distance*vote.intention.party.per + pivotal.voter, dat.v.s)
+## ----
 
 options(scipen=9999999)
 summary(m1)
@@ -648,8 +654,8 @@ coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = 
 # )
 
 
-p_load(effects)
-plot(predictorEffects(m1))
+# p_load(effects)
+# plot(predictorEffects(m1))
 
 
 ## Additional Interaction Stuff
@@ -659,19 +665,47 @@ plot(predictorEffects(m1))
 # BGMtest(m1, vars=c("vote.intention.party.per", "ideo.distance"))
 # DAintfun(m1, c("vote.intention.party.per", "ideo.distance"), theta=-45, phi=20)
 ### 2
+
+## ---- int:plot:d
 p_load(sjPlot,sjmisc,ggplot2)
 theme_set(theme_sjplot())
-plot_model(m1, 
+m1plot = plot_model(m1, 
            type = "int",  # int / pred
            robust = T,
            ci.lvl = 0.90,
            #vcov.fun = "vcovCL",
            #vcov.args=list(cluster=dat.v.s$participant.code.dyad),
-           title = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made by Voters",
+           title = "Partial Conditional Effect of Ideological Distance and\nVote Share On Vote-Selling Offer Made by Voters",
            axis.title = c("Ideological Distance","Predicted Amount of Vote-Selling Offer\nMade by Voter (%)"),
            legend.title = "Vote Intention (%)"
-           )
+           ) + 
+  legend_style(pos = "bottom")
+## ----
 
+png(filename="m1plot.png", 
+    type="cairo",
+    units="in", 
+    width=5.5, 
+    height=5, 
+    pointsize=10, 
+    res=1000)
+
+m1plot
+#grid.arrange(m1.dep.var,m2.dep.var, ncol=2)
+dev.off()
+
+
+## ---- int:plot:p
+m1plot
+## ----
+
+
+######################################################################### 
+# ************** p  a y o f f s  **************
+#########################################################################
+
+
+## ---- payoffs:plot:d
 # Voters
 voters.payoff.v.b = data.frame(
   Payoff = c(
@@ -682,6 +716,8 @@ voters.payoff.v.b = data.frame(
   Game = "Vote Buying"
   )
   
+
+
 
 voters.payoff.v.s = data.frame(
   Payoff = c(
@@ -706,9 +742,6 @@ parties.payoff.v.b = data.frame(
   Role = "Party",
   Game = "Vote Buying"
   )
-  
-  
-  
   
 parties.payoff.v.s = data.frame(
   Payoff = c(
@@ -762,23 +795,44 @@ payoffs.d = data.frame(
   ),
   Role = c(rep("Voters",2), rep("Parties", 2)),
   Game = c("Vote Selling", "Vote Buying", "Vote Buying", "Vote Selling")
-  
-)
+  )
 
-
-
+# plot
 p_load(ggplot2)
-ggplot(payoffs.d,
-       aes(Game,
-         y=Payoff,
-  ymin=Lower,
-  ymax=Upper))+
-  geom_pointrange()+facet_wrap(~Role)
+payoffs.p = ggplot(payoffs.d,
+                   aes(Game,
+                       y=Payoff,
+                       ymin=Lower,
+                       ymax=Upper)) +
+  geom_pointrange()+ 
+  facet_wrap(~Role)
+## ----
+
+png(filename="payoffs_plot.png", 
+    type="cairo",
+    units="in", 
+    width=9, 
+    height=5, 
+    pointsize=10, 
+    res=1000)
+
+payoffs.p
+#grid.arrange(m1.dep.var,m2.dep.var, ncol=2)
+dev.off()
 
 
-t.test(voters.payoff.v.b$Payoff,voters.payoff.v.s$Payoff, 
+## ----payoffs:plot:p
+payoffs.p
+## ----
+
+
+
+
+## ----t:test
+t.test = t.test(voters.payoff.v.b$Payoff,voters.payoff.v.s$Payoff, 
        conf.level = 0.95,
        alternative = "greater") # substantively significant (10%)
+## ----
 
 
 
@@ -800,6 +854,10 @@ meta.d <- rio::import(
   "https://github.com/hbahamonde/Exp_Vote_Selling/raw/main/vote_buying_selling_meta.xlsx",
   sheet = c("")
   )
+
+
+
+
 
 
 
