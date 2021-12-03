@@ -804,8 +804,19 @@ payoffs.p = ggplot(payoffs.d,
                        y=Payoff,
                        ymin=Lower,
                        ymax=Upper)) +
-  geom_pointrange()+ 
-  facet_wrap(~Role)
+  geom_pointrange(size = 1.5)+ 
+  facet_wrap(~Role) +
+  theme(axis.text.y = element_text(size=15), 
+        axis.text.x = element_text(size=15), 
+        axis.title.y = element_text(size=15), 
+        axis.title.x = element_text(size=15), 
+        legend.text=element_text(size=15), 
+        legend.title=element_text(size=15),
+        plot.title = element_text(size=3),
+        #legend.position="bottom",
+        legend.key.size = unit(0.9,"cm"),
+        legend.spacing.x = unit(0.7, 'cm'),
+        strip.text.x = element_text(size = 15))
 ## ----
 
 png(filename="payoffs_plot.png", 
