@@ -854,9 +854,9 @@ boxplot(Payoff~Role*Game,
         #ylab="Miles Per Gallon"
         )
 
-################
-#### META
-################
+#######################
+#### META: Histogram
+#######################
 
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(tidyverse,readxl)
@@ -869,7 +869,7 @@ meta.d.v.s = read_excel("/Users/hectorbahamonde/research/Exp_Vote_Selling/vote_b
 meta.d = rbind(meta.d.v.b, meta.d.v.s)
 
 # plot
-ggplot(meta.d, aes(x=Year, fill = Literature)) + geom_histogram(binwidth=1, colour="white") +
+histogram.meta.plot = ggplot(meta.d, aes(x=Year, fill = Literature)) + geom_histogram(binwidth=1, colour="white") +
   ylab("Frequency") + xlab("Year of Publication") +
   theme_bw() + 
   #facet_wrap(~Literature) +
@@ -878,14 +878,31 @@ ggplot(meta.d, aes(x=Year, fill = Literature)) + geom_histogram(binwidth=1, colo
         axis.title.y = element_text(size=15), 
         axis.title.x = element_text(size=15), 
         legend.text=element_text(size=15), 
-        legend.title=element_text(size=15),
+        legend.title=element_text(size=0),
         plot.title = element_text(size=3),
         legend.position="bottom",
         legend.key.size = unit(0.9,"cm"),
         legend.spacing.x = unit(0.7, 'cm'),
         strip.text.x = element_text(size = 15))
 
-# Word cloud
+
+
+png(filename="histogram_meta_plot.png", 
+    type="cairo",
+    units="in", 
+    width=9, 
+    height=5, 
+    pointsize=10, 
+    res=1000)
+
+histogram.meta.plot
+dev.off()
+
+
+#######################
+#### META: Word cloud
+#######################
+
 p_load(ggwordcloud,ggplot2)
 set.seed(2020)
 ggplot(meta.d, aes(label = Abstract)) +
@@ -900,7 +917,10 @@ p_load(tm, SnowballC, wordcloud, RColorBrewer)
 v.buying.word.cloud =   as.character(meta.d.v.b$Abstract)
 v.selling.word.cloud =   as.character(meta.d.v.s$Abstract)
 
+###############
 # vote buying
+###############
+
 v.buying.w.c <- Corpus(VectorSource(v.buying.word.cloud))
 
 toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
@@ -932,11 +952,26 @@ head(d.v.b, 10)
 set.seed(2021)
 
 dev.off();dev.off()
-wordcloud(words = d.v.b$word, freq = d.v.b$freq, min.freq = 10,
+wordcloud.buying = wordcloud(words = d.v.b$word, freq = d.v.b$freq, min.freq = 10,
           max.words=200, rangesizefont = c(15, 15), random.order=FALSE, rot.per=0.35, 
           colors=brewer.pal(8, "Dark2"))
 
+
+png(filename="wordcloud_buying.png", 
+    type="cairo",
+    units="in", 
+    width=9, 
+    height=9, 
+    pointsize=10, 
+    res=1000)
+
+wordcloud.buying
+
+dev.off(); dev.off()
+###############
 # vote selling 
+###############
+
 v.selling.w.c <- Corpus(VectorSource(v.selling.word.cloud))
 
 toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
@@ -962,9 +997,21 @@ head(d.v.s, 10)
 set.seed(2021)
 
 dev.off();dev.off()
-wordcloud(words = d.v.s$word, freq = d.v.s$freq, min.freq = 2,
-          max.words=200, rangesizefont = c(1, 1), random.order=FALSE, rot.per=0.35, 
+wordcloud.selling = wordcloud(words = d.v.s$word, freq = d.v.s$freq, min.freq = 2,
+          max.words=200, rangesizefont = c(15, 15), random.order=FALSE, rot.per=0.35, 
           colors=brewer.pal(8, "Dark2"))
+
+png(filename="wordcloud_selling.png", 
+    type="cairo",
+    units="in", 
+    width=9, 
+    height=9, 
+    pointsize=10, 
+    res=1000)
+
+wordcloud.selling
+
+dev.off()
 
 
 ################
