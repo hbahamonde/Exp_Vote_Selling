@@ -858,19 +858,113 @@ boxplot(Payoff~Role*Game,
 #### META
 ################
 
-# Load the data
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
-p_load(rio,tibble)
-meta.d <- rio::import(
-  "https://github.com/hbahamonde/Exp_Vote_Selling/raw/main/vote_buying_selling_meta.xlsx",
-  sheet = c("")
-  )
+p_load(tidyverse,readxl)
 
+# Load the data
+meta.d.v.b = read_excel("/Users/hectorbahamonde/research/Exp_Vote_Selling/vote_buying_selling_meta.xlsx", sheet = "VB-WOS-PolSci")
+meta.d.v.s = read_excel("/Users/hectorbahamonde/research/Exp_Vote_Selling/vote_buying_selling_meta.xlsx", sheet = "VS-WOS-PoliSci")
 
+# rbind
+meta.d = rbind(meta.d.v.b, meta.d.v.s)
 
+# plot
+ggplot(meta.d, aes(x=Year, fill = Literature)) + geom_histogram(binwidth=1, colour="white") +
+  ylab("Frequency") + xlab("Year of Publication") +
+  theme_bw() + 
+  #facet_wrap(~Literature) +
+  theme(axis.text.y = element_text(size=15), 
+        axis.text.x = element_text(size=15), 
+        axis.title.y = element_text(size=15), 
+        axis.title.x = element_text(size=15), 
+        legend.text=element_text(size=15), 
+        legend.title=element_text(size=15),
+        plot.title = element_text(size=3),
+        legend.position="bottom",
+        legend.key.size = unit(0.9,"cm"),
+        legend.spacing.x = unit(0.7, 'cm'),
+        strip.text.x = element_text(size = 15))
 
+# Word cloud
+p_load(ggwordcloud,ggplot2)
+set.seed(2020)
+ggplot(meta.d, aes(label = Abstract)) +
+  geom_text_wordcloud() + 
+  theme_minimal() + 
+  facet_wrap(~Literature)
+  
+  
+p_load(tm, SnowballC, wordcloud, RColorBrewer)
 
+# declare text data
+v.buying.word.cloud =   as.character(meta.d.v.b$Abstract)
+v.selling.word.cloud =   as.character(meta.d.v.s$Abstract)
 
+# vote buying
+v.buying.w.c <- Corpus(VectorSource(v.buying.word.cloud))
+
+toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "/")
+v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "@")
+v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "\\|")
+v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "\\[")
+v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "\\]")
+v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "\\^")
+
+# Convert the text to lower case
+v.buying.w.c <- tm_map(v.buying.w.c, content_transformer(tolower))
+# Remove numbers
+v.buying.w.c <- tm_map(v.buying.w.c, removeNumbers)
+# Remove english common stopwords
+v.buying.w.c <- tm_map(v.buying.w.c, removeWords, stopwords("english"))
+v.buying.w.c <- tm_map(v.buying.w.c, removeWords, c("that", "and", "the", "paper", "explain", "see", "also", "one", "two", "different", "span", "example", "however", "important", "hence", "argue", "since", "https", "well", "with", "are", "for")) 
+# Remove punctuations
+v.buying.w.c <- tm_map(v.buying.w.c, removePunctuation)
+# Eliminate extra white spaces
+v.buying.w.c <- tm_map(v.buying.w.c, stripWhitespace)
+
+dtm.v.b <- TermDocumentMatrix(v.buying.w.c)
+m.v.b <- as.matrix(dtm.v.b)
+v.v.b <- sort(rowSums(m.v.b),decreasing=TRUE)
+d.v.b <- data.frame(word = names(v.v.b),freq=v.v.b)
+head(d.v.b, 10)
+
+set.seed(2021)
+
+dev.off();dev.off()
+wordcloud(words = d.v.b$word, freq = d.v.b$freq, min.freq = 10,
+          max.words=200, rangesizefont = c(15, 15), random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+
+# vote selling 
+v.selling.w.c <- Corpus(VectorSource(v.selling.word.cloud))
+
+toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+
+# Convert the text to lower case
+v.selling.w.c <- tm_map(v.selling.w.c, content_transformer(tolower))
+# Remove numbers
+v.selling.w.c <- tm_map(v.selling.w.c, removeNumbers)
+# Remove english common stopwords
+v.selling.w.c <- tm_map(v.selling.w.c, removeWords, stopwords("english"))
+v.selling.w.c <- tm_map(v.selling.w.c, removeWords, c("that", "and", "the", "paper", "explain", "see", "also", "one", "two", "different", "span", "example", "however", "important", "hence", "argue", "since", "https", "well", "with", "are", "for" )) 
+# Remove punctuations
+v.selling.w.c <- tm_map(v.selling.w.c, removePunctuation)
+# Eliminate extra white spaces
+v.selling.w.c <- tm_map(v.selling.w.c, stripWhitespace)
+
+dtm.v.s <- TermDocumentMatrix(v.selling.w.c)
+m.v.s <- as.matrix(dtm.v.s)
+v.v.s <- sort(rowSums(m.v.s),decreasing=TRUE)
+d.v.s <- data.frame(word = names(v.v.s),freq=v.v.s)
+head(d.v.s, 10)
+
+set.seed(2021)
+
+dev.off();dev.off()
+wordcloud(words = d.v.s$word, freq = d.v.s$freq, min.freq = 2,
+          max.words=200, rangesizefont = c(1, 1), random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
 
 
 ################
