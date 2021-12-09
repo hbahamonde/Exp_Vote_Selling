@@ -586,7 +586,7 @@ dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
 p_load(gridExtra,lattice)
 m1.dep.var = histogram(~dat.v.s$voter.offer.p, 
                        aspect = 1,
-                       xlab = "Amount of Vote-Selling Offer (points)"
+                       xlab = "Amount of Vote-Selling Offer (%)"
 )
 
 # m2.dep.var = histogram(~as.factor(dat.v.b$competitive.offers.party), 
@@ -858,6 +858,8 @@ boxplot(Payoff~Role*Game,
 #### META: Histogram
 #######################
 
+## ----meta
+
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(tidyverse,readxl)
 
@@ -884,7 +886,7 @@ histogram.meta.plot = ggplot(meta.d, aes(x=Year, fill = Literature)) + geom_hist
         legend.key.size = unit(0.9,"cm"),
         legend.spacing.x = unit(0.7, 'cm'),
         strip.text.x = element_text(size = 15))
-
+## ----
 
 
 png(filename="histogram_meta_plot.png", 
@@ -902,15 +904,6 @@ dev.off()
 #######################
 #### META: Word cloud
 #######################
-
-p_load(ggwordcloud,ggplot2)
-set.seed(2020)
-ggplot(meta.d, aes(label = Abstract)) +
-  geom_text_wordcloud() + 
-  theme_minimal() + 
-  facet_wrap(~Literature)
-  
-  
 p_load(tm, SnowballC, wordcloud, RColorBrewer)
 
 # declare text data
@@ -949,25 +942,23 @@ v.v.b <- sort(rowSums(m.v.b),decreasing=TRUE)
 d.v.b <- data.frame(word = names(v.v.b),freq=v.v.b)
 head(d.v.b, 10)
 
-set.seed(2021)
 
-dev.off();dev.off()
-wordcloud.buying = wordcloud(words = d.v.b$word, freq = d.v.b$freq, min.freq = 10,
+dev.off()
+
+png(filename="/Users/hectorbahamonde/research/Exp_Vote_Selling/wordcloud_buying.png", 
+    type = "cairo",
+    width     = 5,
+    height    = 5,
+    units     = "in",
+    res       = 10,
+    pointsize = 100)
+
+set.seed(2021)
+wordcloud(words = d.v.b$word, freq = d.v.b$freq, min.freq = 10,
           max.words=200, rangesizefont = c(15, 15), random.order=FALSE, rot.per=0.35, 
           colors=brewer.pal(8, "Dark2"))
 
-
-png(filename="wordcloud_buying.png", 
-    type="cairo",
-    units="in", 
-    width=9, 
-    height=9, 
-    pointsize=10, 
-    res=1000)
-
-wordcloud.buying
-
-dev.off(); dev.off()
+dev.off()
 ###############
 # vote selling 
 ###############
