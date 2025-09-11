@@ -173,7 +173,7 @@ headpunct=:
 \author[1]{
 
 \textsc{Hector Bahamonde}
-\thanks{\href{mailto:hibano@utu.fi}{hibano@utu.fi}; \href{http://www.hectorbahamonde.com}{\texttt{www.HectorBahamonde.com}}.}}
+\thanks{\href{mailto:hector.bahamonde@utu.fi}{hector.bahamonde@utu.fi}; \href{http://www.hectorbahamonde.com}{\texttt{www.HectorBahamonde.com}}.}}
 
 
 
@@ -295,7 +295,7 @@ options(scipen = 99999999999)
     % 5. Discussion.
 
 
-
+% possible outlet journal: https://link.springer.com/journal/11109 PB
 
 
 
