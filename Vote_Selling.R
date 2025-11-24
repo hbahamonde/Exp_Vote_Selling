@@ -614,7 +614,7 @@ dev.off()
 m1 = lm(voter.offer.p ~ ideo.distance*vote.intention.party.per + pivotal.voter, dat.v.s)
 ## ----
 
-options(scipen=9999999)
+options(scipen=999)
 summary(m1)
 
 # Clustered Std Errors and Model info
@@ -1021,6 +1021,6 @@ close(fileConn)
 
 
 
-## ---- abstract.length ----
+## ---- a.length ----
 abstract.c.l = sapply(strsplit(abstract.c, " "), length)
 ## ----

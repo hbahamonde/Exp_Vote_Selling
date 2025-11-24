@@ -219,7 +219,7 @@ read_chunk('/Users/hectorbahamonde/research/Exp_Vote_Selling/Vote_Selling.R') # 
 chooseCRANmirror(graphics=FALSE, ind=1)
 if (!require("pacman")) install.packages("pacman"); library(pacman)
 p_load(knitr)
-options(scipen = 99999999999)
+options(scipen = 9999)
 
 @
 
@@ -231,7 +231,7 @@ options(scipen = 99999999999)
 
 @
 
-<<abstract.length, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+<<a.length, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
 
 @
 
