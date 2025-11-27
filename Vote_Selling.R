@@ -575,36 +575,50 @@ dat.v.s$pivotal.voter = as.factor(dat.v.s$pivotal.voter)
 
 # voter.offer to %
 dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
+
+# load vote buying df from paper 1 manipulations
+load("/Users/hectorbahamonde/research/Exp_Vote_Selling/vote_buying_df.RData")
+
 ## ----
 
 ######################################################################### 
 # **************            D  E P   V A R                 **************
 #########################################################################
 
-
+## ---- dep.var
 # plotting dep variable plot BY HAND
-p_load(gridExtra,lattice)
-m1.dep.var = histogram(~dat.v.s$voter.offer.p, 
-                       aspect = 1,
-                       xlab = "Amount of Vote-Selling Offer (%)"
+p_load(gridExtra, lattice)
+
+# Vote-selling dependent variable
+m1.dep.var <- histogram(
+  ~ dat.v.s$voter.offer.p,
+  aspect = 1,
+  xlab   = "Vote-Selling Offer (voters)",
+  ylab   = "Percent of Total Budget"
 )
 
-# m2.dep.var = histogram(~as.factor(dat.v.b$competitive.offers.party), 
-#                       aspect = 1,
-#                       xlab = "Competitive Vote-Buying Offer"
-#                       )
+# Vote-buying dependent variable
+m2.dep.var <- histogram(
+  ~ dat.v.b$offer.made.party.p,
+  aspect = 1,
+  nint  = 7,
+  xlab   = "Vote-Buying Offers (parties)",
+  ylab   = "Percent of Total Budget"
+)
 
-png(filename="depvarplot.png", 
-    type="cairo",
-    units="in", 
-    width=5, 
-    height=5, 
-    pointsize=10, 
-    res=1000)
+# Save 2-panel figure
+png(filename = "/Users/hectorbahamonde/research/Exp_Vote_Selling/depvarplot.png",
+    type      = "cairo",
+    units     = "in",
+    width     = 8,     # wider for two plots
+    height    = 4.5,
+    pointsize = 10,
+    res       = 1000)
 
-m1.dep.var
-#grid.arrange(m1.dep.var,m2.dep.var, ncol=2)
+grid.arrange(m1.dep.var, m2.dep.var, ncol = 2)
+
 dev.off()
+## ----
 
 ######################################################################### 
 # ************** M      O       D       E       L       S **************
@@ -666,38 +680,42 @@ coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = 
 # DAintfun(m1, c("vote.intention.party.per", "ideo.distance"), theta=-45, phi=20)
 ### 2
 
-## ---- int:plot:d
-p_load(sjPlot,sjmisc,ggplot2)
+## ---- int.plot.d
+p_load(sjPlot, sjmisc, ggplot2)
 theme_set(theme_sjplot())
-m1plot = plot_model(m1, 
-           type = "int",  # int / pred
-           robust = T,
-           ci.lvl = 0.90,
-           #vcov.fun = "vcovCL",
-           #vcov.args=list(cluster=dat.v.s$participant.code.dyad),
-           title = "Partial Conditional Effect of Ideological Distance and\nVote Share On Vote-Selling Offer Made by Voters",
-           axis.title = c("Ideological Distance","Predicted Amount of Vote-Selling Offer\nMade by Voter (%)"),
-           legend.title = "Vote Intention (%)"
-           ) + 
-  legend_style(pos = "bottom")
-## ----
 
-png(filename="m1plot.png", 
-    type="cairo",
-    units="in", 
-    width=5.5, 
-    height=5, 
-    pointsize=10, 
-    res=1000)
+m1plot <- plot_model(
+  m1, 
+  type = "int",
+  robust = TRUE,
+  ci.lvl = 0.90,
+  title = "Partial Conditional Effect of Ideological Distance and\nVote Share On Vote-Selling Offer Made by Voters",
+  axis.title = c("Ideological Distance",
+                 "Predicted Amount of Vote-Selling Offer\nMade by Voter (%)"),
+  legend.title = "Vote Intention (%)"
+) +
+  legend_style(pos = "bottom") +
+  #coord_fixed(ratio = 1) +
+  theme(
+    panel.border = element_rect(color = "black", fill = NA, size = 1),
+    panel.background = element_blank()
+  )
 
-m1plot
-#grid.arrange(m1.dep.var,m2.dep.var, ncol=2)
+png(
+  filename = "/Users/hectorbahamonde/research/Exp_Vote_Selling/m1plot.png",
+  type = "cairo",
+  units = "in",
+  width = 5.5,
+  height = 5,
+  pointsize = 10,
+  res = 1000
+)
+
+print(m1plot)
 dev.off()
-
-
-## ---- int:plot:p
-m1plot
 ## ----
+
+
 
 
 ######################################################################### 
@@ -705,7 +723,7 @@ m1plot
 #########################################################################
 
 
-## ---- payoffs:plot:d
+## ---- payoffs.plot
 # Voters
 voters.payoff.v.b = data.frame(
   Payoff = c(
@@ -799,47 +817,58 @@ payoffs.d = data.frame(
 
 # plot
 p_load(ggplot2)
-payoffs.p = ggplot(payoffs.d,
-                   aes(Game,
-                       y=Payoff,
-                       ymin=Lower,
-                       ymax=Upper)) +
-  geom_pointrange(size = 1.5)+ 
-  facet_wrap(~Role) +
-  theme(axis.text.y = element_text(size=15), 
-        axis.text.x = element_text(size=15), 
-        axis.title.y = element_text(size=15), 
-        axis.title.x = element_text(size=15), 
-        legend.text=element_text(size=15), 
-        legend.title=element_text(size=15),
-        plot.title = element_text(size=3),
-        #legend.position="bottom",
-        legend.key.size = unit(0.9,"cm"),
-        legend.spacing.x = unit(0.7, 'cm'),
-        strip.text.x = element_text(size = 15))
-## ----
 
-png(filename="payoffs_plot.png", 
-    type="cairo",
-    units="in", 
-    width=9, 
-    height=5, 
-    pointsize=10, 
-    res=1000)
+payoffs.p <- ggplot(
+  payoffs.d,
+  aes(
+    Game,
+    y = Payoff,
+    ymin = Lower,
+    ymax = Upper
+  )
+) +
+  geom_pointrange(size = 1.5) +
+  facet_wrap(~ Role) +
+  theme(
+    axis.text.y = element_text(size = 15),
+    axis.text.x = element_text(size = 15),
+    axis.title.y = element_text(size = 15),
+    axis.title.x = element_text(size = 15),
+    legend.text = element_text(size = 15),
+    legend.title = element_text(size = 15),
+    plot.title = element_text(size = 3),
+    legend.key.size = unit(0.9, "cm"),
+    legend.spacing.x = unit(0.7, "cm"),
+    strip.text.x = element_text(size = 15),
+    
+    # Updated to remove deprecated warning
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+    panel.background = element_blank()
+  )
 
-payoffs.p
-#grid.arrange(m1.dep.var,m2.dep.var, ncol=2)
+png(
+  filename = "/Users/hectorbahamonde/research/Exp_Vote_Selling/payoffs_plot.png",
+  type = "cairo",
+  units = "in",
+  width = 9,
+  height = 5,
+  pointsize = 10,
+  res = 1000
+)
+
+print(payoffs.p)   # << required for knitr + device
+
 dev.off()
-
-
-## ----payoffs:plot:p
-payoffs.p
 ## ----
 
 
 
 
-## ----t:test
+
+
+
+
+## ----ttest_payoffs
 t.test = t.test(voters.payoff.v.b$Payoff,voters.payoff.v.s$Payoff, 
        conf.level = 0.95,
        alternative = "greater") # substantively significant (10%)
