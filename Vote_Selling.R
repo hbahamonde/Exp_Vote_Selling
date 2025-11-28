@@ -887,8 +887,7 @@ boxplot(Payoff~Role*Game,
 #### META: Histogram
 #######################
 
-## ----meta
-
+## ----meta_analyses
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(tidyverse,readxl)
 
@@ -900,25 +899,27 @@ meta.d.v.s = read_excel("/Users/hectorbahamonde/research/Exp_Vote_Selling/vote_b
 meta.d = rbind(meta.d.v.b, meta.d.v.s)
 
 # plot
-histogram.meta.plot = ggplot(meta.d, aes(x=Year, fill = Literature)) + geom_histogram(binwidth=1, colour="white") +
+histogram.meta.plot <- ggplot(meta.d, aes(x = Year, fill = Literature)) +
+  geom_histogram(binwidth = 1, colour = "white") +
   ylab("Frequency") + xlab("Year of Publication") +
-  theme_bw() + 
-  #facet_wrap(~Literature) +
-  theme(axis.text.y = element_text(size=15), 
-        axis.text.x = element_text(size=15), 
-        axis.title.y = element_text(size=15), 
-        axis.title.x = element_text(size=15), 
-        legend.text=element_text(size=15), 
-        legend.title=element_text(size=0),
-        plot.title = element_text(size=3),
-        legend.position="bottom",
-        legend.key.size = unit(0.9,"cm"),
-        legend.spacing.x = unit(0.7, 'cm'),
-        strip.text.x = element_text(size = 15))
-## ----
+  theme_bw() +
+  theme(
+    axis.text.y  = element_text(size = 15), 
+    axis.text.x  = element_text(size = 15), 
+    axis.title.y = element_text(size = 15), 
+    axis.title.x = element_text(size = 15), 
+    legend.text  = element_text(size = 15), 
+    legend.title = element_text(size = 0),
+    plot.title   = element_text(size = 3),
+    legend.position   = "bottom",
+    legend.key.size   = unit(0.9, "cm"),
+    legend.spacing.x  = unit(0.7, "cm"),
+    strip.text.x      = element_text(size = 15),
+    aspect.ratio      = 1        # <- square panel
+  )
 
 
-png(filename="histogram_meta_plot.png", 
+png(filename="/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot.png", 
     type="cairo",
     units="in", 
     width=9, 
@@ -926,8 +927,9 @@ png(filename="histogram_meta_plot.png",
     pointsize=10, 
     res=1000)
 
-histogram.meta.plot
+print(histogram.meta.plot)
 dev.off()
+## ----
 
 
 #######################
@@ -1041,7 +1043,7 @@ dev.off()
 ## ---- abstract ----
 fileConn <- file ("abstract.txt")
 abstract.c = as.character(c(
-  "The clientelism literature has advanced a number of important questions. Unfortunately, most of it addresses the issue from the party's side (vote-buying). In this paper we bridge this gap by bringing the voters back in,  particularly by incorporating the vote-buying and vote-selling dynamics into the same framework. After formalizing a basic theory of vote-buying and vote-selling, we implemented an economic experiment to study different strategic behaviors. Our empirical results suggest that parties buy votes from their core constituencies, while voters sell their votes to the opponent winning party. Voters consistently derive more utility when parties take the initiative in the vote-buying game."
+  "The clientelism literature has produced substantial insights into how parties target voters, but it remains heavily unbalanced toward the demand side of the exchange. Much less is known about the strategic behavior of vote sellers. This paper brings voters back into the analysis by integrating vote buying and vote selling within a common theoretical and empirical framework. We develop a simple formal model that contrasts party-initiated and voter-initiated exchanges and derives distinct core---swing voter predictions for each case. When parties initiate the transaction, they minimize costs by buying votes from ideologically proximate (core) supporters. When voters initiate the exchange, incentive structures reverse: voters anticipate which party has the highest electoral stake and strategically sell their votes to the opponent expected to win. To evaluate these predictions, we implement an economic laboratory experiment that mirrors the formal model's structure. The results provide strong empirical support for both mechanisms and show that initiative shapes utilities: voters consistently earn higher payoffs when parties initiate vote buying, whereas parties fare at least as well when voters initiate vote selling. These findings highlight the importance of modeling the supply side of clientelism to understand how the distribution of surplus varies across institutional settings."
   ))
 writeLines(abstract.c, fileConn)
 close(fileConn)

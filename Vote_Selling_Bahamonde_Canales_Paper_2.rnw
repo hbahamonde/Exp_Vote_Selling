@@ -186,7 +186,7 @@ headpunct=:
 \textsc{Andrea Canales}
 \thanks{\href{mailto:andrea.canales@uoh.cl}{andrea.canales@uoh.cl}; 
 \href{http://sites.google.com/view/andrea-canales-g}{\texttt{http://sites.google.com/view/andrea-canales-g}}. \\
-Authors are listed in alphabetical order. We thank O'Higgins University for funding this project, and the participants of the colloquium at the Centre for Experimental Social Sciences (CESS) at Universidad de Santiago (Chile). Javiera Tobar, Cristopher Reyes and Basti\'an Garrido provided excellent research assistance.}}
+Authors are listed in alphabetical order. We thank O'Higgins University for funding this project. We also thank the participants of the colloquium at the Centre for Experimental Social Sciences (CESS) at Universidad de Santiago (Chile), 2026 LASA Congress (Paris), XIII NOLAN Conference (Stockholm), and the INVEST XI Scientific Seminar (Turku). Javiera Tobar, Cristopher Reyes and Basti\'an Garrido provided excellent research assistance.}}
 
 
 % Share with: Rick Lau, Ana de la O, Virginia Oliveros, Dave Redlawsk, Bob Kaufman, Jack Levi, Barbara Vis (https://www.barbaravis.nl/publications/)
@@ -203,8 +203,7 @@ Authors are listed in alphabetical order. We thank O'Higgins University for fund
 \maketitle % Insert title
 
 \thispagestyle{empty}
-
-
+\pagenumbering{gobble}
 
 %----------------------------------------------------------------------------------------
 % ABSTRACT
@@ -254,6 +253,11 @@ options(scipen = 9999)
 
 @
 
+<<meta_analyses, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+
+@
+
+
 
 <<abstract, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
 
@@ -269,7 +273,7 @@ options(scipen = 9999)
 
 
 
-%\newpage
+\newpage
 \begin{abstract}
 \input{abstract.txt}\unskip
 \end{abstract}
@@ -327,28 +331,32 @@ options(scipen = 9999)
 
 
 
-\clearpage
-\newpage
-\pagenumbering{arabic}
-
-
+\clearpage 
+\pagenumbering{arabic} 
 \setcounter{page}{1}
 
 \section{The Neglected Voter in Clientelism Research}\label{sec:literature}
 
-Non-programmatic linkages \parencite{Kitschelt2000} are reciprocal \parencite{Auyero2000,Inan2012a}. That is, the clientelist exchange usually happens between parties \emph{and} voters, where the former provide particularistic benefits and the latter provide electoral support \parencite{Nichter2008,Nichter2014}. Yet most quantitative scholars have overlooked voters' preferences, thus failing to describe the available strategies of vote sellers. The literature often focuses only on parties and how they target individuals. As we note in this paper, the clientelism literature is heavily unbalanced, showing a huge interest in vote buying relative to vote selling. Hence, while the literature has advanced a number of important questions (see \cite{Hicken2011} for an excellent review), most accounts of clientelism tackle the issue from the party's side. Most of what we know about core--swing dynamics in clientelism therefore comes from settings where parties initiate the exchange and decide whom to target. In this paper we take the complementary perspective and ask how these dynamics look when voters initiate the exchange and strategically decide to whom to sell.
+Non-programmatic linkages \parencite{Kitschelt2000} are reciprocal \parencite{Auyero2000,Inan2012a}. That is, the clientelist exchange usually happens between parties \emph{and} voters, where the former provide particularistic benefits and the latter provide electoral support \parencite{Nichter2008,Nichter2014}. Yet most quantitative scholars have overlooked voters' preferences, thus failing to describe the available strategies of vote sellers. We believe the literature often focuses only on parties and how they target individuals. As we note in this paper, the clientelism literature is heavily unbalanced, showing a huge interest in vote buying relative to vote selling (\autoref{fig:Experimental_Flow}). Hence, while the literature has advanced a number of important questions (see \cite{Hicken2011} for an excellent review), most accounts of clientelism tackle the issue from the party's side. In fact, most of what we know about core--swing dynamics in clientelism therefore comes from settings where parties initiate the exchange and decide whom to target. \emph{But what if the logic of clientelism reverses when initiative shifts? Do voters, acting as strategic sellers, exploit parties' electoral vulnerabilities in ways that invert core-swing targeting predictions? And how does the distribution of surplus change when voters---not parties---set the terms of exchange?} In this paper we take this complementary perspective and ask how these dynamics look when voters initiate the exchange and strategically decide to whom to sell.
 
-We contend that omitting the voter's side not only limits our understanding of the phenomenon as a whole but also may seriously threaten our inferences. This issue is particularly problematic because there are only a few quantitative papers that address vote selling. For instance, \textcite{Hicken2015,Hicken2018} study vote selling in the Philippines, while \textcite{Bahamonde2020a} studies vote selling in the United States. This suggests a lack of interest in the quantitative study of vote selling, even though, as we explain in this paper, a number of theoretical and empirical problems arise when the systematic study of vote sellers is omitted.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot.png}
+  \caption{Annual frequency of Web of Science publications whose abstracts include the terms ``vote buying'' and ``vote selling''.}
+  \label{fig:Experimental_Flow}
+\end{figure}
 
-One important consequence of this deficit is that we do not know whether the dynamics of vote selling and vote buying are systematically different. A simple question has gone largely unanswered: \emph{Which setting---vote buying or vote selling---is more convenient for either side (parties and voters)?} Ethnographers have raised similar issues. For example, \textcite[152]{Hagene2015} notes that many clientelist relationships are ``client-initiated.'' \textcite[55--57]{Tosoni2007} explores instances where slum dwellers in Mexico strategically approach brokers to solve collective needs, while \textcite{Gay1999} describes how neighborhood associations in Brazilian \emph{favelas} attract resources in exchange for electoral support. These accounts suggest that voters and community leaders play an active role in initiating and structuring exchanges. Yet we still know little about \emph{what strategies voters and parties follow in these different settings, and whether these strategies lead to systematic differences in utilities}.
+We contend that omitting the voter's side not only limits our understanding of the phenomenon as a whole but also may seriously threaten our inferences. This issue is particularly problematic because there are only a few quantitative papers that address vote selling. For instance, \textcite{Hicken2015,Hicken2018} study vote selling in the Philippines, while \textcite{Bahamonde2020a} studies vote selling in the United States. This might suggest a lack of interest in the quantitative study of vote selling, even though, as we explain in this paper, a number of theoretical and empirical problems arise when the systematic study of vote sellers is omitted.
 
-At the same time, many studies that do include voters are still embedded in a vote-buying framework. For instance, \textcite{Gonzalez-Ocantos2012,GonzalezOcantos2014,KiewietDeJonge2015} show that voters systematically lie when asked directly about vote \emph{buying}. These contributions clarify measurement problems, but they do not tell us much about preferences, dynamics, or strategies that are specific to vote sellers. Implicitly, voters are often treated as passive receivers of clientelism. In this paper we adopt a different view: voters are active agents seeking profit during campaigns, and bringing them back into the analysis is necessary to understand how clientelism actually works.
+One important consequence of this deficit is that we do not know whether the dynamics of vote selling and vote buying are systematically different. A simple question has gone largely unanswered: \emph{Which setting---vote buying or vote selling---is more convenient for either side (parties and voters)?} Ethnographers have raised similar issues. For example, \textcite[152]{Hagene2015} notes that many clientelist relationships are ``client-initiated.'' \textcite[55--57]{Tosoni2007} explores instances where slum dwellers in M\'exico strategically approach brokers to solve collective needs, while \textcite{Gay1999} describes how neighborhood associations in Brazilian \emph{favelas} attract resources in exchange for electoral support. These accounts suggest that voters and community leaders play an active role in initiating and structuring exchanges. Yet we still know little about \emph{what strategies voters and parties follow in these different settings, and whether these strategies lead to systematic differences in utilities}.
+
+At the same time, many studies that do include voters are still embedded in a vote-buying framework. For instance, \textcite{Gonzalez-Ocantos2012,GonzalezOcantos2014,KiewietDeJonge2015} show that \emph{voters} systematically lie when asked directly about vote \emph{buying}. These contributions clarify a number of important problems, but they do not tell us much about preferences, dynamics, or strategies that are specific to vote sellers. Implicitly, voters are often treated as passive receivers of clientelism. In this paper we adopt a different view: voters are active agents seeking profit during campaigns, and bringing them back into the analysis is necessary to understand how clientelism actually works.
 
 Conceptually, clientelism is not so different from any other market: there is an arena (campaigns), buyers (parties), and sellers (voters).\footnote{Other arenas beyond campaigns clearly exist. \textcite{Hagene2015} provides an excellent discussion of the differences between ``vote buying'' and ``clientelism.'' The former is short term (elections), while the latter may be sustained in the long term and accompanied by affective, personal, and problem-solving elements. For simplicity, we focus on the short-term, electoral aspect here.} Classic demand and supply arguments then suggest that we must understand both sides of the exchange. However, most of the literature has concentrated on the demand side---party targeting, resource allocation, and monitoring---while forgetting about the supplier. Our starting point is that a full account of clientelism requires modeling and measuring the supply side as well: when voters choose to sell, to whom, and at what price.
 
-This perspective also reframes long-standing debates about targeting. The canonical question is whether parties target core constituencies or swing voters \parencite{Carlin2015}. On the one hand, \textcite{Cox1986} and \textcite[7]{Zarazaga2015a} argue that constituencies that are well known to clientelist parties receive more resources. On the other hand, \textcite{Lindbeck1987,Dixit1996,Dahlberg2002,Stokes2005} contend that allocating resources to voters who would support the party anyway is wasteful, so parties should instead focus on swing voters. Yet both sides of this debate are typically framed from the party's perspective. We know far less about how different kinds of voters position themselves in clientelistic markets, who initiates exchanges, and how that interacts with partisan targeting.
+This perspective also reframes long-standing debates about targeting. One canonical question is whether parties target core constituencies or swing voters \parencite{Carlin2015}. On the one hand, \textcite{Cox1986} and \textcite[7]{Zarazaga2015a} argue that constituencies that are well known to clientelist parties receive more resources. On the other hand, \textcite{Lindbeck1987,Dixit1996,Dahlberg2002,Stokes2005} contend that allocating resources to voters who would support the party anyway is wasteful, so parties should instead focus on swing voters. Yet both sides of this debate are typically framed from the party's perspective. We know far less about how different kinds of voters position themselves in clientelistic markets, who initiates exchanges, and how that interacts with partisan targeting.
 
-Taken together, this literature provides a detailed picture of how parties target core and swing voters, but it remains largely silent about how core and swing vote sellers behave when they can initiate exchanges. Core-swing distinctions are usually derived from the party's optimization problem, leaving the supplier side under-theorized. Yet prior research shows that voters' collective characteristics can meaningfully shift the logic of targeting: when voters are embedded in dense or homogeneous groups, brokers adjust their strategies because group-level behavior alters the expected returns from individual versus collective targeting \parencite{Bahamonde2018}. Once voters' pricing decisions are modeled directly, the familiar core--swing logic changes: instead of asking which voters parties can buy at minimal cost, we ask which parties voters can most profitably sell to. This shift in perspective reveals how core and swing \emph{vote sellers} position themselves in the clientelistic market and how their strategic choices differ from the patterns implied by party-initiated exchanges.
+Taken together, the literature provides a detailed picture of how parties target core and swing voters, but it remains largely silent about how core and swing vote sellers behave when they can initiate exchanges. Core-swing distinctions are usually derived from the party's optimization problem, leaving the supplier side under-theorized. Yet prior research shows that voters' collective characteristics can meaningfully shift the logic of targeting: when voters are embedded in dense or homogeneous groups, brokers adjust their strategies because group-level behavior alters the expected returns from individual versus collective targeting \parencite{Bahamonde2018}. Once voters' pricing decisions are modeled directly, the familiar core--swing logic changes: instead of asking which voters parties can buy at minimal cost, we ask which parties voters can most profitably sell to. This shift in perspective reveals how core and swing \emph{vote sellers} position themselves in the clientelistic market and how their strategic choices differ from the patterns implied by party-initiated exchanges.
 
 
 
