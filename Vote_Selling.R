@@ -581,6 +581,122 @@ load("/Users/hectorbahamonde/research/Exp_Vote_Selling/vote_buying_df.RData")
 
 ## ----
 
+
+############################################################
+# *************   MODELING H1: CORE TARGETING   ************
+############################################################
+
+## ---- hyp.one.vote.selling
+
+# Dependent variable: percentage of budget offered
+dat.v.b$offer.p <- (dat.v.b$offer.made.party * 100) / dat.v.b$budget
+
+# Sanity check: distribution
+# table(dat.v.b$offer.made.party)
+
+# Because offers are mostly 0 or Δ, we use:
+# (1) A linear probability model for any offer
+# (2) A truncated linear model for positive offers
+
+# 1. Probability a party makes ANY offer > 0
+dat.v.b$any_offer <- ifelse(dat.v.b$offer.made.party > 0, 1, 0)
+
+m_H1_prob <- glm(
+  any_offer ~ ideo.distance2 + vote.intention.party.2 + pivotal.voter,
+  family = binomial(link="logit"),
+  data = dat.v.b
+)
+
+# summary(m_H1_prob)
+
+p_load(sjPlot, sjmisc, ggplot2)
+theme_set(theme_sjplot())
+
+H1plot <- plot_model(
+  m_H1_prob,
+  type      = "pred",
+  terms     = "ideo.distance2 [all]",
+  ci.lvl    = 0.90,
+  title     = "Effect of Ideological Distance on\nProbability of Any Vote-Buying Offer",
+  axis.title = c(
+    "Ideological Distance",
+    "Predicted Probability of Any Offer"
+  )
+) +
+  legend_style(pos = "bottom") +
+  #coord_fixed(ratio = 1) +
+  theme(
+    panel.border     = element_rect(color = "black", fill = NA, size = 1),
+    panel.background = element_blank()
+  )
+
+png(
+  filename = "/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_ideo_distance_plot.png",
+  type      = "cairo",
+  units     = "in",
+  width     = 5.5,
+  height    = 5,
+  pointsize = 10,
+  res       = 1000
+)
+
+print(H1plot)
+dev.off()
+
+# 2. Among those who offer >0, does ideological proximity predict offer size?
+vb_pos <- subset(dat.v.b, offer.made.party > 0)
+
+m_H1_size <- lm(
+  offer.p ~ ideo.distance2 + vote.intention.party.2 + pivotal.voter,
+  data = vb_pos
+)
+
+#summary(m_H1_size)
+
+
+p_load(sjPlot, sjmisc, ggplot2)
+theme_set(theme_sjplot())
+
+H1plot_2 <- plot_model(
+  m_H1_size,
+  type      = "pred",
+  terms     = "ideo.distance2",  # use all observed values
+  ci.lvl    = 0.90,
+  title     = "Effect of Ideological Distance on\nSize of Vote-Buying Offer",
+  axis.title = c(
+    "Ideological Distance",
+    "Predicted Size of Offer (% of Budget)"
+  )
+) +
+  legend_style(pos = "bottom") +
+  #coord_fixed(ratio = 1) +  # square-ish panel
+  theme(
+    panel.border     = element_rect(color = "black", fill = NA, size = 1),
+    panel.background = element_blank()
+  )
+
+
+p_load(gridExtra)
+
+# Create combined PNG with SIZE on the left and PROBABILITY on the right
+png(
+  filename = "/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_combined.png",
+  type      = "cairo",
+  units     = "in",
+  width     = 8,
+  height    = 4.5,
+  res       = 1000
+)
+
+grid.arrange(
+  H1plot_2,  # <-- SIZE FIRST (left)
+  H1plot,    # <-- PROBABILITY SECOND (right)
+  ncol = 2
+)
+
+dev.off()
+## ----
+
 ######################################################################### 
 # **************            D  E P   V A R                 **************
 #########################################################################
