@@ -692,7 +692,7 @@ m1plot <- plot_model(
   title = "Partial Conditional Effect of Ideological Distance and\nVote Share On Vote-Selling Offer Made by Voters",
   axis.title = c("Ideological Distance",
                  "Predicted Amount of Vote-Selling Offer\nMade by Voter (%)"),
-  legend.title = "Vote Intention (%)"
+  legend.title = "Vote Share (%)"
 ) +
   legend_style(pos = "bottom") +
   #coord_fixed(ratio = 1) +

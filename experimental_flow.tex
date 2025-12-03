@@ -24,13 +24,16 @@
 % GAME 1 PIPELINE (top row)
 % ============================================================
 
-\node[above=1cm of RA,font=\bfseries] (G1title){}; %Game 1: Party-initiated vote buying
+\node[above=1cm of RA,font=\bfseries] (G1title){}; 
 
-\node[box,fill=green!40,right=3.7cm of RA,yshift=0.8cm] (G1P) {{\bf Game 1}\\Parties consider buying votes};
-\node[box,fill=orange!40,right=3.7cm of G1P] (G1V) {Voters consider\\offerings, if any};
-\node[box,fill=orange!40,right=3.7cm of G1V] (G1vote) {Voters\\vote};
+\node[box,fill=green!40,right=2.775cm of RA,yshift=0.8cm] (G1P) {{\bf Game 1}\\Parties consider buying votes};
+\node[box,fill=orange!40,right=2.775cm of G1P] (G1V) {Voters consider\\offerings, if any};
+\node[box,fill=orange!40,right=2.775cm of G1V] (G1vote) {Voters\\vote};
 
+% Arrow from RA to Game 1 (unchanged structure)
 \draw[arr] (RA.east) -- ++(0,0.8) |- (G1P.west);
+
+% Horizontal arrows (now 3/4 length because nodes are closer)
 \draw[arr] (G1P.east) -- (G1V.west);
 \draw[arr] (G1V.east) -- (G1vote.west);
 
@@ -38,13 +41,16 @@
 % GAME 2 PIPELINE (bottom row)
 % ============================================================
 
-\node[below=1cm of RA,font=\bfseries] (G2title){}; % Game 2: Voter-initiated vote selling
+\node[below=1cm of RA,font=\bfseries] (G2title){}; 
 
-\node[box,fill=orange!40,right=3.7cm of RA,yshift=-0.8cm] (G2Vsell) {{\bf Game 2}\\Voters consider selling votes\;\;};
-\node[box,fill=green!40,right=3.7cm of G2Vsell] (G2P) {Parties consider\\offerings, if any};
-\node[box,fill=orange!40,right=3.7cm of G2P] (G2vote) {Voters\\vote};
+\node[box,fill=orange!40,right=2.775cm of RA,yshift=-0.8cm] (G2Vsell) {{\bf Game 2}\\Voters consider selling votes\;\;};
+\node[box,fill=green!40,right=2.775cm of G2Vsell] (G2P) {Parties consider\\offerings, if any};
+\node[box,fill=orange!40,right=2.775cm of G2P] (G2vote) {Voters\\vote};
 
+% Arrow from RA to Game 2 (unchanged structure)
 \draw[arr] (RA.east) -- ++(0,-0.8) |- (G2Vsell.west);
+
+% Horizontal arrows (now 3/4 length because nodes are closer)
 \draw[arr] (G2Vsell.east) -- (G2P.west);
 \draw[arr] (G2P.east) -- (G2vote.west);
 
