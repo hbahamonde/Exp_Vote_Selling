@@ -538,11 +538,12 @@ To introduce electoral risk and pivotality, we displayed a fictional electorate:
 
 \section{Econometric Strategy}\label{sec:methods}
 
-The empirical analysis proceeds by testing the three hypotheses. First, we assess core targeting when parties initiate the exchange (Hypothesis~\ref{hyp:core_targeting}; \autoref{fig:H1_combined}). Second, we analyze how voters price their pivotal vote under voter-initiated exchange (Hypothesis~\ref{hyp:selling_opponent}; \autoref{fig:m1plot}). Third, we evaluate how initiative redistributes surplus between voters and parties (Hypothesis~\ref{hyp:higher_voter_payoffs}; \autoref{fig:payoffs_plot}). Because the vote-selling environment is where core---swing behavior can be studied from the seller's perspective and where pricing decisions vary continuously,\footnote{In the vote-buying game, equilibrium incentives induce parties to concentrate their offers at two theoretically meaningful points---zero and the minimal compensating transfer implied by the ideological gap. This pattern reflects the structure of the game rather than a shortcoming of the data, but it leaves limited scope for estimating a flexible conditional model on the buying side. In the vote-selling game, by contrast, voters face no such theoretical focal points: they may propose \emph{any} admissible price up to each party's full budget, and they make extensive use of this strategy space. As a result, requested prices display substantial and substantively meaningful variation, making the selling environment a richer setting for our econometric analysis. See \autoref{fig:depvarplot}.} it is the focus for our identification strategy. Moreover, this setting allows for a direct empirical test of the comparative statics derived from Proposition~2. 
+The empirical analysis proceeds by testing the three hypotheses. First, we assess core targeting when parties initiate the exchange (Hypothesis~\ref{hyp:core_targeting}; \autoref{fig:H1_combined}). Second, we analyze how voters price their pivotal vote under voter-initiated exchange (Hypothesis~\ref{hyp:selling_opponent}; \autoref{fig:m1plot}). Third, we evaluate how initiative redistributes surplus between voters and parties (Hypothesis~\ref{hyp:higher_voter_payoffs}; \autoref{fig:payoffs_plot}). 
+
 
 \subsection{Determinants of vote-buying offers}
 
-To test Hypothesis~\ref{hyp:core_targeting}, we estimate two models of party behavior in the vote-buying game: one predicting whether a party makes \emph{any} offer, and another predicting the \emph{size} of positive offers.\footnote{We also estimated a logit model for the probability that a party makes \emph{any} offer (\autoref{fig:H1_combined}, right panel). The results are fully consistent with Equation~\ref{eq:buying_main}: ideological proximity strongly predicts offering, and vote share plays a smaller but positive role. Both models are displayed visually in \autoref{fig:H1_combined}.} Both models include ideological distance, vote share, and pivotality as predictors.
+To test Hypothesis~\ref{hyp:core_targeting}, we estimate two models of party behavior in the vote-buying game: one predicting the \emph{size} of positive offers (\autoref{eq:buying_main}) and another predicting whether a party makes \emph{any} offer.\footnote{This logit model has the same predictors but with a binary dependent variable. Its predictions are in \autoref{fig:H1_combined} (right panel).} Both models include ideological distance, vote share, and pivotality as predictors.
 
 For the vote-buying game, we model the size of the offer party $i$ makes to the voter in dyad $d$ as a function of ideological distance, electoral strength, and pivotality:
 
@@ -551,21 +552,24 @@ For the vote-buying game, we model the size of the offer party $i$ makes to the 
 \text{Offer}_{di} = \gamma_0 + \gamma_1 \text{Ideology}_{di} + \gamma_2 \text{VoteShare}_{di} + \gamma_3 \text{Pivotal}_d + u_{di}.
 \end{equation}
 
-Standard errors are clustered at the party--dyad level. This specification corresponds to the continuous model summarized in \autoref{fig:H1_combined} and captures how ideological proximity and electoral stakes shape parties' spending when they initiate the exchange.
+Standard errors are clustered at the party---dyad level.\todo{check} \autoref{fig:H1_combined} shows marginal effects and provides the empirical test of Hypothesis ~\ref{hyp:core_targeting}
+
+
 
 \subsection{Determinants of requested prices in the vote-selling game}
 
-The vote-selling model uses the price that the voter requests from party $i$ in dyad $d$, expressed as a percentage of party $i$'s budget:
+% \footnote{In the vote-buying game, equilibrium incentives induce parties to concentrate their offers at two theoretically meaningful points---zero and the minimal compensating transfer implied by the ideological gap. This pattern reflects the structure of the game rather than a shortcoming of the data, but it leaves limited scope for estimating a flexible conditional model on the buying side. In the vote-selling game, by contrast, voters face no such theoretical focal points: they may propose \emph{any} admissible price up to each party's full budget, and they make extensive use of this strategy space. As a result, requested prices display substantial and substantively meaningful variation, making the selling environment a richer setting for our econometric analysis. See \autoref{fig:depvarplot}.}
 
-\[
+The vote-selling environment is where core---swing behavior can be studied from the seller's perspective, thus making it the focus for our identification strategy. Moreover, this setting allows for a direct empirical test of the comparative statics derived from Proposition~2. The vote-selling model uses the price that the voter requests from party $i$ in dyad $d$, expressed as a percentage of party $i$'s budget.\footnote{This percentage is calculated as follows, \[
 Y_{di} \equiv \frac{a_{di}}{B_{di}} \times 100.
-\]
+\] This transformation makes prices comparable across rounds with different budgets and corresponds directly to the theoretical interpretation of transfers as fractions of parties' electoral stakes $R_i$.}
 
-This transformation makes prices comparable across rounds with different budgets and corresponds directly to the theoretical interpretation of transfers as fractions of parties' electoral stakes $R_i$.
 
-The main explanatory variables are (i) the ideological distance between the voter and party $i$ and (ii) the party's electoral strength, measured as its initial vote share in the fictional electorate. Ideological distance is defined as the absolute difference between the voter's ideological payoff and the party's ideological payoff. Vote share captures how likely a party is to win and is proportional to the electoral stake in the formal model. We also include an indicator for whether the real voter is pivotal in the fictional electorate.
 
-We estimate a linear model with an interaction between ideological distance and electoral strength:
+In \autoref{eq:main}, the main explanatory variables are the ideological distance between the voter and party $i$ and the party's electoral strength, measured as its initial vote share in the fictional electorate. Ideological distance is defined as the absolute difference between the voter's ideological payoff and the party's ideological payoff, and vote share captures how likely a party is to win and is proportional to its electoral stake in the formal model. The specification also includes an indicator for whether the real voter is pivotal in the election, which accounts for the fact that pivotal voters may request systematically higher transfers. 
+
+We also estimate an interaction between ideological distance and electoral strength. The theoretical logic of vote selling implies that the effect of ideology on requested prices depends on how much each party stands to gain from securing the pivotal vote---that is, ideological distance should matter differently for electorally weak versus electorally strong parties, making the interaction term essential for capturing the heterogeneous pricing incentives predicted by the model.
+
 
 \begin{equation}
 \label{eq:main}
@@ -576,7 +580,7 @@ Standard errors are clustered at the voter-dyad level to account for repeated ob
 
 \subsection{Payoffs by role and by game}
 
-To assess whether initiative alters the allocation of surplus (Hypothesis~\ref{hyp:higher_voter_payoffs}), we compare observed payoffs across the two institutional variants. For each round, we compute the total payoff earned by voters and by parties under vote buying and vote selling.\footnote{Party A and Party B roles pooled.} We report mean payoffs and 90 percent confidence intervals using non-parametric confidence intervals for the mean and present the results in \autoref{fig:payoffs_plot}. Because subjects can appear in multiple rounds, we also conduct a one-sided difference-in-means test for voter payoffs across games. Random assignment of institutional variants across rounds ensures that differences in mean payoffs identify the causal effect of initiative on surplus allocation.
+To assess whether initiative alters the allocation of surplus (Hypothesis~\ref{hyp:higher_voter_payoffs}), we compare observed payoffs across the two institutional variants. For each round, we compute the total payoff earned by voters and by parties under vote buying and vote selling.\footnote{Party A and Party B roles pooled.} We report mean payoffs and 90 percent confidence intervals using non-parametric confidence intervals for the mean and present the results in \autoref{fig:payoffs_plot}. 
 
 
 \section{Results}\label{sec:results}
