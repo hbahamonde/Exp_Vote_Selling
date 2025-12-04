@@ -607,37 +607,60 @@ m_H1_prob <- glm(
   data = dat.v.b
 )
 
-# summary(m_H1_prob)
 
-p_load(sjPlot, sjmisc, ggplot2)
-theme_set(theme_sjplot())
+p_load(sandwich, ggeffects, ggplot2)
 
-H1plot <- plot_model(
+## logit model
+m_H1_prob <- glm(
+  any_offer ~ ideo.distance2 + vote.intention.party.2 + pivotal.voter,
+  family = binomial(link = "logit"),
+  data   = dat.v.b
+)
+
+## clustered vcov (same as in the table)
+vcov_logit <- sandwich::vcovCL(
   m_H1_prob,
-  type      = "pred",
-  terms     = "ideo.distance2 [all]",
-  ci.lvl    = 0.90,
-  title     = "Effect of Ideological Distance on\nProbability of Any Vote-Buying Offer (logit)",
-  axis.title = c(
-    "Ideological Distance",
-    "Predicted Probability of Any Offer"
-  )
-) +
-  legend_style(pos = "bottom") +
-  #coord_fixed(ratio = 1) +
+  cluster = ~ participant.code,  # adjust to your clustering
+  data    = dat.v.b
+)
+
+## predictions with clustered SEs
+pred_H1 <- ggpredict(
+  m_H1_prob,
+  terms = "ideo.distance2 [all]",
+  vcov  = vcov_logit
+)
+
+theme_set(theme_sjplot())  # keep your sjPlot look
+
+logit_color <- "#B2182B"   # or whatever red you're using for the OLS plot
+
+H1plot <- ggplot(pred_H1, aes(x = x, y = predicted)) +
+  geom_ribbon(
+    aes(ymin = conf.low, ymax = conf.high),
+    fill  = logit_color,
+    alpha = 0.2
+  ) +
+  geom_line(color = logit_color, linewidth = 1) +
+  labs(
+    title = "Effect of Ideological Distance on\nProbability of Any Vote-Buying Offer (logit)",
+    x     = "Ideological distance",
+    y     = "Predicted probability of any offer"
+  ) +
   theme(
-    panel.border     = element_rect(color = "black", fill = NA, size = 1),
+    panel.border     = element_rect(color = "black", fill = NA, linewidth = 1),
     panel.background = element_blank()
   )
 
-png(
-  filename = "/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_ideo_distance_plot.png",
-  type      = "cairo",
-  units     = "in",
+
+pdf(
+  file = "/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_ideo_distance_plot.pdf",
+  #type      = "cairo",
+  #units     = "in",
   width     = 5.5,
-  height    = 5,
-  pointsize = 10,
-  res       = 600
+  height    = 5#,
+  #pointsize = 10,
+  #res       = 600
 )
 
 print(H1plot)
@@ -653,23 +676,27 @@ m_H1_size <- lm(
 
 #summary(m_H1_size)
 
+p_load(sandwich, sjPlot, ggeffects, ggplot2)
 
-p_load(sjPlot, sjmisc, ggplot2)
-theme_set(theme_sjplot())
+vcov_cluster <- function(model) {
+  # assumes participant.code is in model$model
+  sandwich::vcovCL(model, cluster = model$model$participant.code)
+}
+
 
 H1plot_2 <- plot_model(
   m_H1_size,
-  type      = "pred",
-  terms     = "ideo.distance2",  # use all observed values
-  ci.lvl    = 0.90,
-  title     = "Effect of Ideological Distance on\nSize of Vote-Buying Offer (OLS)",
+  type       = "pred",
+  terms      = "ideo.distance2",
+  ci.lvl     = 0.90,
+  vcov.fun   = vcov_cluster,   # <<< clustered SEs here as well
+  title      = "Effect of Ideological Distance on\nSize of Vote-Buying Offer (OLS)",
   axis.title = c(
     "Ideological Distance",
     "Predicted Size of Offer (% of Budget)"
   )
 ) +
   legend_style(pos = "bottom") +
-  #coord_fixed(ratio = 1) +  # square-ish panel
   theme(
     panel.border     = element_rect(color = "black", fill = NA, size = 1),
     panel.background = element_blank()
@@ -711,7 +738,7 @@ m1.dep.var <- histogram(
   ~ dat.v.s$voter.offer.p,
   aspect = 1,
   breaks = 20,
-  xlab   = "Vote-Selling Offer (voters)",
+  xlab   = "Vote-Selling Prices (voters)",
   ylab   = "Percent of Total Budget"
 )
 
@@ -809,7 +836,7 @@ m1plot <- plot_model(
   type = "int",
   robust = TRUE,
   ci.lvl = 0.90,
-  title = "Partial Conditional Effect of Ideological Distance and\nVote Share On Vote-Selling Offer Made by Voters",
+  title = "Partial Conditional Effect of Ideological Distance and\nVote Share On Vote-Selling Prices Made by Voters",
   axis.title = c("Ideological Distance",
                  "Predicted Amount of Vote-Selling Offer\nMade by Voter (%)"),
   legend.title = "Vote Share (%)"
@@ -1053,6 +1080,12 @@ dev.off()
 ## ----
 
 
+
+
+
+
+
+
 #######################
 #### META: Word cloud
 #######################
@@ -1155,6 +1188,63 @@ png(filename="wordcloud_selling.png",
 wordcloud.selling
 
 dev.off()
+
+
+
+################
+#### REG TABLE
+################
+
+
+## ---- reg:table
+p_load(modelsummary, sandwich)
+
+## list of models
+models_H1 <- list(
+  "Offer size (OLS)"      = m_H1_size,
+  "Any offer (logit)"     = m_H1_prob,
+  "Requested price (OLS)" = m1
+)
+
+## clustered SEs (cluster on participant.code from each model's data)
+vcov_cluster <- function(model) {
+  sandwich::vcovCL(model, cluster = model$model$participant.code)
+}
+
+## map coefficient names to paper terminology
+coef_map <- c(
+  "(Intercept)"                            = "Constant",
+  "ideo.distance2"                         = "Ideological distance",
+  "vote.intention.party.2"                 = "Vote share",
+  "pivotal.voter"                          = "Pivotal voter",
+  "ideo.distance"                          = "Ideological distance",
+  "vote.intention.party.per"               = "Vote share",
+  "pivotal.voter1"                         = "Pivotal voter",
+  "ideo.distance:vote.intention.party.per" = "Ideology $\\times$ vote share"
+)
+
+## build LaTeX *tabular* and store as character vector
+H1_table_latex <- modelsummary(
+  models_H1,
+  vcov      = vcov_cluster,      # clustered SEs
+  coef_map  = coef_map,
+  stars     = TRUE,
+  gof_omit  = "IC|RMSE",
+  escape    = FALSE,
+  output    = "latex_tabular"    # <- raw tabular, not tinytable/S4
+)
+
+## change "Custom" to "Clustered (participant)" in the Std.Errors row
+H1_table_latex <- gsub(
+  "Custom",
+  "Clustered",
+  H1_table_latex,
+  fixed = TRUE
+)
+## ----
+
+
+
 
 
 ################
