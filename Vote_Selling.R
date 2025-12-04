@@ -617,7 +617,7 @@ H1plot <- plot_model(
   type      = "pred",
   terms     = "ideo.distance2 [all]",
   ci.lvl    = 0.90,
-  title     = "Effect of Ideological Distance on\nProbability of Any Vote-Buying Offer",
+  title     = "Effect of Ideological Distance on\nProbability of Any Vote-Buying Offer (logit)",
   axis.title = c(
     "Ideological Distance",
     "Predicted Probability of Any Offer"
@@ -637,7 +637,7 @@ png(
   width     = 5.5,
   height    = 5,
   pointsize = 10,
-  res       = 1000
+  res       = 600
 )
 
 print(H1plot)
@@ -662,7 +662,7 @@ H1plot_2 <- plot_model(
   type      = "pred",
   terms     = "ideo.distance2",  # use all observed values
   ci.lvl    = 0.90,
-  title     = "Effect of Ideological Distance on\nSize of Vote-Buying Offer",
+  title     = "Effect of Ideological Distance on\nSize of Vote-Buying Offer (OLS)",
   axis.title = c(
     "Ideological Distance",
     "Predicted Size of Offer (% of Budget)"
@@ -676,16 +676,17 @@ H1plot_2 <- plot_model(
   )
 
 
+
 p_load(gridExtra)
 
 # Create combined PNG with SIZE on the left and PROBABILITY on the right
-png(
-  filename = "/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_combined.png",
-  type      = "cairo",
-  units     = "in",
-  width     = 8,
-  height    = 4.5,
-  res       = 1000
+pdf(
+  file = "/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_combined.pdf",
+  #type      = "cairo",
+  #units     = "in",
+  width     = 10,
+  height    = 4.5#,
+  #res       = 600
 )
 
 grid.arrange(
@@ -709,6 +710,7 @@ p_load(gridExtra, lattice)
 m1.dep.var <- histogram(
   ~ dat.v.s$voter.offer.p,
   aspect = 1,
+  breaks = 20,
   xlab   = "Vote-Selling Offer (voters)",
   ylab   = "Percent of Total Budget"
 )
@@ -717,21 +719,23 @@ m1.dep.var <- histogram(
 m2.dep.var <- histogram(
   ~ dat.v.b$offer.made.party.p,
   aspect = 1,
+  breaks = 20,
   nint  = 7,
   xlab   = "Vote-Buying Offers (parties)",
   ylab   = "Percent of Total Budget"
 )
 
 # Save 2-panel figure
-png(filename = "/Users/hectorbahamonde/research/Exp_Vote_Selling/depvarplot.png",
-    type      = "cairo",
-    units     = "in",
+pdf(file = "/Users/hectorbahamonde/research/Exp_Vote_Selling/depvarplot.pdf",
+    #type      = "cairo",
+    #units     = "in",
     width     = 8,     # wider for two plots
-    height    = 4.5,
-    pointsize = 10,
-    res       = 1000)
+    height    = 4.5#,
+    #pointsize = 10,
+    #res       = 600
+    )
 
-grid.arrange(m1.dep.var, m2.dep.var, ncol = 2)
+grid.arrange(m2.dep.var, m1.dep.var, ncol = 2)
 
 dev.off()
 ## ----
@@ -817,14 +821,14 @@ m1plot <- plot_model(
     panel.background = element_blank()
   )
 
-png(
-  filename = "/Users/hectorbahamonde/research/Exp_Vote_Selling/m1plot.png",
-  type = "cairo",
-  units = "in",
+pdf(
+  file = "/Users/hectorbahamonde/research/Exp_Vote_Selling/m1plot.pdf",
+  #type = "cairo",
+  #units = "in",
   width = 5.5,
-  height = 5,
-  pointsize = 10,
-  res = 1000
+  height = 5#,
+  #pointsize = 10,
+  #res = 600
 )
 
 print(m1plot)
@@ -962,14 +966,14 @@ payoffs.p <- ggplot(
     panel.background = element_blank()
   )
 
-png(
-  filename = "/Users/hectorbahamonde/research/Exp_Vote_Selling/payoffs_plot.png",
-  type = "cairo",
-  units = "in",
+pdf(
+  file = "/Users/hectorbahamonde/research/Exp_Vote_Selling/payoffs_plot.pdf",
+  #type = "cairo",
+  #units = "in",
   width = 9,
-  height = 5,
-  pointsize = 10,
-  res = 1000
+  height = 5#,
+ # pointsize = 10,
+  #res = 600
 )
 
 print(payoffs.p)   # << required for knitr + device
@@ -1035,13 +1039,14 @@ histogram.meta.plot <- ggplot(meta.d, aes(x = Year, fill = Literature)) +
   )
 
 
-png(filename="/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot.png", 
-    type="cairo",
-    units="in", 
+pdf(file="/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot.pdf", 
+    #type="cairo",
+    #units="in", 
     width=9, 
-    height=5, 
-    pointsize=10, 
-    res=1000)
+    height=5#, 
+    #pointsize=10, 
+    #res=600
+    )
 
 print(histogram.meta.plot)
 dev.off()
@@ -1145,7 +1150,7 @@ png(filename="wordcloud_selling.png",
     width=9, 
     height=9, 
     pointsize=10, 
-    res=1000)
+    res=600)
 
 wordcloud.selling
 
