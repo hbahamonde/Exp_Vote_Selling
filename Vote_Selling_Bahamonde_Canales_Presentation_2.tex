@@ -830,7 +830,7 @@ Voters ask more from parties with \textbf{more to lose} {\scriptsize\color{gray}
 
 
 
-\subsection{Modeling Vote buying}
+\subsection{Modeling Vote Buying}
 
 
 \miniframeson
@@ -920,17 +920,17 @@ Voters ask more from parties with \textbf{more to lose} {\scriptsize\color{gray}
 Y_{di}
 =
 \beta_0
-+ \beta_1 \only<2>{\textcolor{red}{\text{Ideology}_{di}}}\only<1,3,4,5>{\text{Ideology}_{di}}
-+ \beta_2 \only<3>{\textcolor{red}{\text{VoteShare}_{di}}}\only<1,2,4,5>{\text{VoteShare}_{di}}
-+ \beta_3 \only<4>{\textcolor{red}{\text{Ideology}_{di} \times \text{VoteShare}_{di}}}\only<1,2,3,5>{\text{Ideology}_{di} \times \text{VoteShare}_{di}}
-+ \beta_4 \only<5>{\textcolor{red}{\text{Pivotal}_d}}\only<1,2,3,4>{\text{Pivotal}_d}
++ \beta_1 \alert<2>{\text{Ideology}_{di}}
++ \beta_2 \alert<3>{\text{VoteShare}_{di}}
++ \beta_3 \alert<4>{\text{Ideology}_{di} \times \text{VoteShare}_{di}}
++ \beta_4 \alert<5>{\text{Pivotal}_d}
 + \varepsilon_{di}
 \]
 
 \begin{itemize}
   \item Dependent variable: requested price as \% of party budget,
   \[
-  Y_{di} = \frac{a_{di}}{B_{di}} \times 100.
+    Y_{di} = \frac{a_{di}}{B_{di}} \times 100.
   \]
   \item Standard errors clustered at the voter level.
 \end{itemize}
@@ -939,61 +939,65 @@ Y_{di}
 
 
 
-\begin{frame}[c]{Requested prices by ideology and electoral strength}
-\centering
-\includegraphics[width=0.6\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/m1plot.png}
-\vspace{0.2cm}
+\subsection{Results: Vote Selling}
 
-{\small Predicted vote-selling prices by ideological distance for weak (20\%) and strong (80\%) parties. Shaded regions: 90\% cluster-robust CIs.}
+\miniframeson
+\begin{frame}[c]{Requested Prices by Ideology and Electoral Strength}
+
+\begin{columns}[c]
+
+  % LEFT COLUMN: FIGURE
+  \column{0.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/m1plot.pdf}
+
+  % RIGHT COLUMN: INTERPRETATION
+  \column{0.5\textwidth}
+
+  \begin{itemize}
+    \item Voters ask for expensive transfers:
+    \begin{itemize}
+      \item When the {\bf weak} party is ideologically close but likely to lose (insurance against losses).
+      \item When the party is {\bf strong} and distant (voters exploit electorally strong parties' higher electoral stakes $R_i$.)
+    \end{itemize}
+  \end{itemize}
+
+\end{columns}
+
 \end{frame}
+ 
 
-\begin{frame}[c]{Interpreting H2}
-\begin{itemize}
-  \item With \textbf{electorally weak} parties:
-  \begin{itemize}
-    \item Requested prices \textbf{decrease} with ideological distance.
-    \item When the weak party is ideologically close, voters ask for relatively high transfers to insure against its likely loss.
-    \item When it is distant, requested prices approach zero.
-  \end{itemize}
-  \item With \textbf{electorally strong} parties:
-  \begin{itemize}
-    \item Requested prices \textbf{increase} with ideological distance.
-    \item When the strong party is distant, voters often escalate demands toward the party's full budget.
-    \item Voters exploit stronger parties' higher electoral stakes $R_i$.
-  \end{itemize}
-  \item This pricing pattern is consistent with \textbf{H2}: when voters initiate, they use vote selling to hedge against electoral risk by demanding more from electorally strong, often ideologically distant parties.
-\end{itemize}
-\end{frame}
 
-\subsection{H3: Who gains from each institution?}
 
-\begin{frame}[c]{Payoffs by role and institutional variant}
-\centering
-\includegraphics[width=0.7\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/payoffs_plot.png}
-\vspace{0.2cm}
 
-{\small Mean payoffs for voters and parties under party-initiated vote buying (VB) and voter-initiated vote selling (VS). Error bars: non-parametric 90\% CIs.}
-\end{frame}
+\subsection{Timing: Institutional Differences}
 
-\begin{frame}[c]{Does initiative change who wins the game?}
-\begin{itemize}
-  \item \textbf{Parties:}
+
+\miniframeson
+\begin{frame}[c]{Payoffs by Role and Institutional Variant}
+
+\begin{columns}[c]
+
+  % LEFT COLUMN: FIGURE
+  \column{0.55\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/payoffs_plot.pdf}
+
+  %\vspace{0.2cm}
+  %{\footnotesize Mean payoffs for voters and parties under party-initiated vote buying (VB) and voter-initiated vote selling (VS). Error bars show non-parametric 90\% confidence intervals.}
+
+  % RIGHT COLUMN: INTERPRETATION
+  \column{0.45\textwidth}
+
   \begin{itemize}
-    \item Party payoffs are similar or slightly higher in VS than in VB.
-    \item Shifting initiative to voters does not reduce party utilities in our setting.
+    \item Party payoffs are similar across vote buying and vote selling.
+    \item Voters earn \textbf{higher average payoffs} when parties begin the exchange.
+    %\item In VB, parties overspend relative to the minimal compensating transfer ({\scriptsize$\Delta$}) under electoral risk.
+    %\item In VS, very high requested prices are often rejected, leaving some voters with only ideological payoffs.
   \end{itemize}
-  \item \textbf{Voters:}
-  \begin{itemize}
-    \item Voters earn \textbf{higher average payoffs} when parties move first (VB) than when voters move first (VS).
-    \item One-sided test of the difference in means is statistically significant (p-value from the t-test in the paper).
-  \end{itemize}
-  \item Interpretation:
-  \begin{itemize}
-    \item In VB, parties often overspend relative to the minimal compensating transfer $\Delta$, especially under electoral risk.
-    \item In VS, very high requested prices are often rejected, leaving some voters with only ideological payoffs.
-    \item Overall, initiative shapes how surplus is split: voters do better when parties initiate, while parties do at least as well when voters initiate.
-  \end{itemize}
-\end{itemize}
+
+\end{columns}
+
 \end{frame}
 
 %====================
@@ -1001,57 +1005,37 @@ Y_{di}
 %====================
 
 \section{Discussion}
-\subsection{What we learn}
 
+\subsection{What we learned}
+
+
+\miniframeson
 \begin{frame}[c]{Main takeaways}
 \begin{itemize}
-  \item Treating vote buying and vote selling as \textbf{institutional variants of the same market} clarifies:
+  \item {\bf Conceptual move}: integrated {\color{red}vote buying} \emph{and} {\color{blue}vote selling} in the same framework.
+  \item {\bf Theory}: formalized a spatial model with one voter and two parties.
+
+    \begin{enumerate}
+            \item {\color{red}Parties moved first}.
+            \item {\color{blue}Voters moved first}.
+
+    \end{enumerate}
+
+
+  
+  \item {\bf Experiment}: based on the formal model, we designed a lab econ experiment.
+
+  
+  \item {\bf Findings}:
   \begin{itemize}
-    \item Who is targeted (core vs strong opponent).
-    \item How much is paid.
-    \item How surplus is allocated between parties and voters.
-  \end{itemize}
-  \item When \textbf{parties initiate} (VB):
-  \begin{itemize}
-    \item Transfers concentrate on core voters.
-    \item Parties tend to overspend under electoral risk.
-    \item Voters capture a larger share of surplus.
-  \end{itemize}
-  \item When \textbf{voters initiate} (VS):
-  \begin{itemize}
-    \item Voters demand higher prices from electorally strong, ideologically distant parties.
-    \item Many of these high demands are rejected, lowering average voter payoffs.
-    \item Parties' payoffs are stable or higher relative to VB.
+    \item[\checkmark] {\color{red}When parties move first}: transfers concentrate on \textbf{party supporters}.
+    \item[\checkmark] {\color{blue}When voters move first}: they \textbf{demand higher prices} from winning parties that are ideologically far away.
+    \item[\checkmark] Voters earn \textbf{higher average payoffs} when parties initiate the exchange.
   \end{itemize}
 \end{itemize}
 \end{frame}
 
-\subsection{Implications and limits}
 
-\begin{frame}[c]{Implications and next steps}
-\begin{itemize}
-  \item Conceptually:
-  \begin{itemize}
-    \item Clientelism is a \textbf{market} with both demand (parties) and supply (voters).
-    \item Initiative is a core institutional rule that helps explain core–swing targeting and surplus allocation.
-  \end{itemize}
-  \item Methodologically:
-  \begin{itemize}
-    \item Experiments that vary who initiates the exchange can uncover mechanisms that are hard to see in observational data.
-  \end{itemize}
-  \item Limitations:
-  \begin{itemize}
-    \item One-shot lab games, no brokers, no repeated interactions or sanctions.
-    \item Bilateral monopoly: two parties and one voter; no networks or groups of sellers.
-  \end{itemize}
-  \item Future work:
-  \begin{itemize}
-    \item Multi-voter and multi-party environments, with brokers and networks.
-    \item Lab-in-the-field and survey experiments varying initiative.
-    \item Linking this institutional perspective to ethnographic evidence on how often exchanges are party- vs voter-initiated.
-  \end{itemize}
-\end{itemize}
-\end{frame}
 
 %====================
 % END

@@ -737,8 +737,8 @@ pdf(
 )
 
 grid.arrange(
-  H1plot_2,  # <-- SIZE FIRST (left)
   H1plot,    # <-- PROBABILITY SECOND (right)
+  H1plot_2,  # <-- SIZE FIRST (left)
   ncol = 2
 )
 
