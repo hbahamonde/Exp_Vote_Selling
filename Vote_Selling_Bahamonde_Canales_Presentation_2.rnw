@@ -25,7 +25,8 @@
 \usepackage{multirow}
 
 \usepackage{tikz}
-\usetikzlibrary{arrows,decorations.pathreplacing,positioning}
+\usetikzlibrary{arrows,decorations.pathreplacing,positioning,shapes.geometric}
+
 
 \usepackage{listings}
 \usepackage{color}
@@ -166,7 +167,7 @@
 \title{\input{title.txt}\unskip}
 \author[shortname]{Hector Bahamonde \inst{1} \and Andrea Canales \inst{2}}
 \institute[shortinst]{\inst{1} University of Turku, Finland \and \inst{2} O$'$Higgins University, Chile}
-\date{10 minute talk}
+\date{\today}
 
 \begin{document}
 
@@ -193,83 +194,180 @@ options(scipen = 999999999)
 %====================
 
 \section{Introduction}
-\subsection{A sequencing story}
+\subsection{Motivation}
+
+
+\miniframeson
+\usetikzlibrary{arrows,decorations.pathreplacing,positioning,calc}
 
 \begin{frame}[c]{Why sequencing matters}
+\begin{columns}[T,totalwidth=\textwidth]
+
+  %%%%% LEFT COLUMN %%%%%
+  \begin{column}{0.55\textwidth}
+    \begin{itemize}
+      \item Friend \textbf{offers} 50€: you might see them as (unexpected) \textbf{gains}.
+      \item You \textbf{demand} 80€ for the same good: now you fear \textbf{losses}.
+    \end{itemize}
+
+    \bigskip
+
+    \begin{itemize}
+      \item[\checkmark] Two different ``mindsets.''
+      \item[\checkmark] Mindset depends on how the \textbf{sequence} flips the frame.
+
+      \bigskip
+      \item[] {\color{blue}My talk is about \textbf{sequencing in clientelism}}.
+    \end{itemize}
+  \end{column}
+
+  %%%%% RIGHT COLUMN %%%%%
+  \begin{column}{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}[node distance=1.4cm]
+      \scriptsize
+
+      % Top: friend offers 50€ → framed as gain
+      \node[circle,draw,minimum size=0.7cm] (you1) {You};
+      \node[circle,draw,minimum size=0.7cm,right=2.3cm of you1] (fr1) {Friend};
+
+      \draw[->,line width=2pt]
+        (fr1) -- node[above]{50€ offer}
+                 node[below,text=ForestGreen]{framed as \textbf{gain}}
+        (you1);
+
+      % Bottom: you demand 80€ → framed as loss
+      \node[circle,draw,minimum size=0.7cm,below=1.8cm of you1] (you2) {You};
+      \node[circle,draw,minimum size=0.7cm,right=2.3cm of you2] (fr2) {Friend};
+
+      \draw[->,line width=2pt]
+        (you2) -- node[above]{80€ ask}
+                 node[below,text=BrickRed]{framed as \textbf{loss}}
+        (fr2);
+
+    \end{tikzpicture}
+
+    \vspace{0.3cm}
+    
+    \begin{exampleblock}{{\scriptsize Who moves first can reshape the deal.}}
+      {\scriptsize Move second, and you risk becoming a \textbf{price taker}.}
+    \end{exampleblock}
+
+  \end{column}
+
+\end{columns}
+\end{frame}
+
+
+
+
+
+\miniframesoff
+\begin{frame}[c]{Sequencing beyond clientelism}
+
 \begin{itemize}
-  \item Two situations:
-  \begin{itemize}
-    \item A buyer walks up to you: ``I will give you 50 euros for that concert ticket.''
-    \item You post the same ticket and say: ``I will sell it for 80 euros; take it or leave it.''
-  \end{itemize}
-  \item Same good, buyer, seller, environment.
-  \item But who moves first changes:
-  \begin{itemize}
-    \item Bargaining power.
-    \item How surplus is split.
-    \item Which trades actually occur.
-  \end{itemize}
-  \item In clientelism, we almost always assume \textbf{parties move first} (vote buying).
-  \item This paper asks: what happens when \textbf{voters move first and sell}? 
+  \item \textbf{Welfare state and unions:} Do we get different welfare states when \emph{unions must first mobilize} before benefits expand, versus when \emph{governments move first} potentially avoiding workers' needs?
+
+  \item \textbf{Intergenerational inequality:} What happens to class reproduction when \emph{parents must invest first} (education, housing, debt) and the state steps in later, versus systems where \emph{the state introduces first} universal support?
+
+  %\item \textbf{Access to medicine and care:} Who lives longer when \emph{patients must ask, apply, and fight} for treatment first, versus systems where \emph{the welfare state moves first} and automatically enrolls, screens, and follows up?
+
+  %\item \textbf{Fertility and family formation:} Would people have more children if \emph{childcare, housing, and income supports arrive before the first baby}, instead of after? In low-natality societies, is the problem \emph{resources}, or the \emph{order in which they arrive}?
 \end{itemize}
 \end{frame}
 
-\subsection{The neglected vote seller}
 
-\begin{frame}[c]{Clientelism research has a lopsided market view}
+\subsection{Definition and geographical relevance}
+
+\miniframeson
+\begin{frame}[c]{}
+
+{\bf Clientelism}: distribution of private rewards to individuals during elections in exchange for electoral support {\scriptsize{\color{gray}(Nichter, 2014)}}.
+\vspace{1cm}
+
+  \includegraphics[scale=0.3, center]{/Users/hectorbahamonde/research/Economic_Experiment_Vote_Selling/Resources_Presentation/vote_buying.jpg}
+
+
+\end{frame}
+
+
+\miniframesoff
+\begin{frame}[c]{}
+
+  \includegraphics[scale=0.27, center]{/Users/hectorbahamonde/research/Exp_Vote_Selling/clientelism_vdem_index_2024.png}
+
+
+\end{frame}
+
+
+\miniframeson
+\subsection{Gaps in the literature}
+
+\begin{frame}[c]{Timing had been Overlooked}
 \begin{itemize}
-  \item Classic quantitative view: clientelism as \textbf{party-initiated demand} for votes.
+  
+
+  \item Ethnographers emphasize {\bf reciprocity}:
   \begin{itemize}
-    \item Who do parties buy from? Core vs swing?
-    \item How does electoral risk shape targeting?
+    \item Voters, neighborhood leaders, and brokers (potential {\bf sellers}) often {\bf begin} exchanges.
+    %\item Many relationships are explicitly \textbf{client-initiated}.
   \end{itemize}
-  \item But ethnographers emphasize reciprocity:
+
+
+  \item Quantitative: show clientelism as \textbf{party-initiated demand} for votes.
   \begin{itemize}
-    \item Voters, neighborhood leaders, and brokers often initiate exchanges.
-    \item Many relationships are explicitly \textbf{client-initiated}.
+    %\item Who do parties buy from? 
+    \item Do parties buy from own supporters or undecided voters?
+    %\item How does electoral risk shape targeting?
   \end{itemize}
-  \item Quantitative work:
+ 
+
+  \item[\checkmark] {\color{blue} Timing had been overlooked in the quantitative literature}:
   \begin{itemize}
-    \item Heavily focused on vote buying.
-    \item Very few studies model vote selling; almost none treat buyers and sellers symmetrically.
+    \item Heavily focused on {\bf vote buying}.
+    \item Very few studies {\bf vote selling}.
+    %\item Almost none treat buyers and sellers symmetrically.
   \end{itemize}
-  \item We argue that understanding clientelism requires putting \textbf{voters as strategic sellers} on equal footing with parties.
+  \item[\checkmark] {\color{blue} We argue that understanding clientelism properly requires putting \textbf{voters as strategic sellers}, just like vote-buying parties}.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[c]{The imbalance in the literature}
+
+\miniframesoff
+\begin{frame}[c]{Vote-Selling Literature is Really Lagging Behind}
 \centering
-\includegraphics[width=0.75\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot.png}
+\includegraphics[width=0.75\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot_wide.pdf}
 \vspace{0.2cm}
 
-{\small Annual frequency of Web of Science publications whose abstracts include the terms ``vote buying'' and ``vote selling''.}
+{\tiny Annual frequency of Web of Science publications whose abstracts include the terms ``vote buying'' and ``vote selling.''}
 \end{frame}
 
-\subsection{This paper}
 
-\begin{frame}[c]{What we do}
+
+\subsection{Our contribution}
+
+\miniframeson
+\begin{frame}[c]{Our Paper and Today's Talk}
 \begin{itemize}
-  \item Conceptual move:
+  \item {\bf Conceptual move}: integrate {\color{red}vote buying} \emph{and} {\color{blue}vote selling} in the same framework.
+  \item {\bf Theory}: formalize a spatial model with one voter and two parties.
+
+    \begin{enumerate}
+            \item {\color{red}Parties moves first}.
+            \item {\color{blue}Voters moves first}.
+
+    \end{enumerate}
+
+
+  
+  \item {\bf Experiment}: based on the formal model, we designed a lab econ experiment.
+
+  
+  \item {\bf Findings}:
   \begin{itemize}
-    \item Treat \textbf{vote buying} and \textbf{vote selling} as two institutional variants of the same clientelistic exchange.
-    \item The key institutional rule is \textbf{who initiates} the transaction.
-  \end{itemize}
-  \item Theory:
-  \begin{itemize}
-    \item Simple spatial model with one pivotal voter and two parties.
-    \item Variant 1: \textbf{party-initiated vote buying}.
-    \item Variant 2: \textbf{voter-initiated vote selling}.
-  \end{itemize}
-  \item Experiment:
-  \begin{itemize}
-    \item Laboratory games that mirror the model.
-    \item Same ideology, budgets, and electoral stakes; only sequencing differs.
-  \end{itemize}
-  \item Today:
-  \begin{itemize}
-    \item Intuition and minimal notation from the model.
-    \item Experimental design and main empirical results.
-    \item What we learn about \textbf{who benefits} when initiative shifts from parties to voters.
+    \item[\checkmark] {\color{red}When parties move first}: transfers concentrate on \textbf{party supporters}.
+    \item[\checkmark] {\color{blue}When voters move first}: they \textbf{demand higher prices} from winning parties that are ideologically far away.
+    \item[\checkmark] Voters earn \textbf{higher average payoffs} when parties initiate the exchange.
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -279,108 +377,310 @@ options(scipen = 999999999)
 %====================
 
 \section{Theory}
-\subsection{Sequencing as an institution}
 
-\begin{frame}[c]{Two institutional variants of the same exchange}
+\subsection{Formal model}
+
+
+%====================
+% THEORY (clean, non-overlay version)
+%====================
+
+\miniframeson
+\begin{frame}[c]{A minimal political environment}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% LEFT: intuition
+\begin{column}{0.55\textwidth}
+\begin{itemize}[<+->]
+  \item Politics lives on a simple \textbf{left--right line}. {\scriptsize \color{gray}\(\gamma \in \Gamma = \{1,\dots,100\}\)}
+  \item Two parties positioned on that line.\\
+  {\scriptsize \color{gray}\(i \in \{A,B\}\), at \(\gamma_A,\gamma_B\)}
+  \item Parties care about \textbf{winning the election}.\\
+  {\scriptsize \color{gray} \(W_i\); electoral stake \(R_i = \pi W_i\)}
+  \item Voters care about \textbf{ideological proximity}.\\
+  {\scriptsize \color{gray}ideal point \(x_j\), utility \(u_j(\gamma_i)\)}
+\end{itemize}
+
+\medskip
+\onslide<5->{
+\begin{block}{Key idea}
+Voters have a \textbf{preferred party} {\scriptsize\color{gray}(\(i^\ast\))}
+\end{block}
+}
+\end{column}
+
+% RIGHT: spatial intuition
+\begin{column}{0.45\textwidth}
 \centering
-\begin{tikzpicture}[node distance=1.7cm,>=stealth,thick]
-\node (vb) [rectangle,draw,rounded corners,align=center,fill=blue!5] {Game 1: Party-initiated \\ vote buying (VB)};
-\node (vs) [rectangle,draw,rounded corners,align=center,fill=green!5,right=4.5cm of vb] {Game 2: Voter-initiated \\ vote selling (VS)};
+\begin{tikzpicture}[scale=0.9,baseline=(axis)]
 
-\node (vb1) [below=of vb] {Parties $A,B$ choose offers $s_A,s_B$};
-\node (vb2) [below=of vb1] {Voter observes $(s_A,s_B)$ and votes};
+  % --- FIXED BOUNDING BOX (same in all frames) ---
+  \path (-0.5,-1.0) (5.5,1.0);
 
-\node (vs1) [below=of vs] {Voter chooses minimum prices $(a_A,a_B)$};
-\node (vs2) [below=of vs1] {Parties accept or reject, then voter chooses};
+  % axis anchor (used for baseline)
+  \coordinate (axis) at (2.5,0);
 
-\draw[->] (vb) -- (vb1);
-\draw[->] (vb1) -- (vb2);
-\draw[->] (vs) -- (vs1);
-\draw[->] (vs1) -- (vs2);
+  % axis
+  \draw[->] (0,0) -- (5,0);
+  \node[below] at (0,0) {\scriptsize Left};
+  \node[below] at (5,0) {\scriptsize Right};
+
+  % parties
+  \onslide<2->{
+    \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize A};
+    \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize B};
+  }
+
+  % voter (circle to avoid 'diamond' errors)
+  \onslide<4->{
+    \node[circle,draw,fill=gray!20] at (2.3,0) {\scriptsize V};
+  }
+
 \end{tikzpicture}
+\end{column}
 
-\vspace{0.4cm}
-\begin{itemize}
-  \item \textbf{Same}: one pivotal voter, two parties, payoffs, budgets, electoral risk.
-  \item \textbf{Different}: only \textbf{who moves first}, and thus who has bargaining leverage.
-\end{itemize}
+\end{columns}
 \end{frame}
 
-\subsection{Key notation (light version)}
 
-\begin{frame}[c]{Players, preferences, and stakes}
-\begin{itemize}
-  \item Parties $i \in \{A,B\}$ and one pivotal voter $j$.
-  \item One-dimensional policy space: $\gamma \in \{1,\dots,100\}$ with $\gamma_A < \gamma_B$.
-  \item Voter ideal point $x_j$; ideological utility if party $i$ wins:
-  \[
-  u_j(\gamma_i) = D - |x_j - \gamma_i|,\quad D>0.
-  \]
-  \item Preferred (core) party:
-  \[
-    i^\ast = \arg\max_{i \in \{A,B\}} u_j(\gamma_i).
-  \]
-  \item Ideological advantage of the core party:
-  \[
-    \Delta = u_j(\gamma_{i^\ast}) - u_j(\gamma_{-i^\ast}) > 0.
-  \]
-  \item $\Delta$ is the minimum compensating transfer needed to flip the vote.
+
+\miniframesoff
+\begin{frame}[c]{Ideology creates an advantage}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% LEFT
+\begin{column}{0.55\textwidth}
+\begin{itemize}[<+->]
+  \item Ideological advantage {\scriptsize \color{gray}\(\Delta\)}
+  \item The voter gets more {\scriptsize \color{gray}\(\Delta\)} utility from the closer party {\scriptsize \color{gray}\(u_j(\gamma_i)\)}
 \end{itemize}
+
+\medskip
+\onslide<3->{
+\begin{block}{Implication}
+\(\Delta\) is how much compensation (minimal transfer) the voter needs to switch sides.
+\end{block}
+}
+\end{column}
+
+% RIGHT
+\begin{column}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9,baseline=(axis)]
+
+  % --- FIXED BOUNDING BOX (same in all frames) ---
+  \path (-0.5,-1.0) (5.5,1.0);
+
+  % axis anchor
+  \coordinate (axis) at (2.5,0);
+
+  % axis
+  \draw[->] (0,0) -- (5,0);
+  \node[below] at (0,0) {\scriptsize Left};
+  \node[below] at (5,0) {\scriptsize Right};
+
+  % parties
+  \onslide<1->{
+    \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize A};
+    \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize B};
+  }
+
+  % voter
+  \onslide<2->{
+    \node[circle,draw,fill=gray!20] at (2.3,0) {\scriptsize V};
+  }
+
+  % distances
+  \onslide<3->{
+    \draw[<->,thick] (1,0.4) -- (2.3,0.4);
+    \node at (1.65,0.65) {\scriptsize small distance};
+
+    \draw[<->,thick] (2.3,-0.4) -- (4,-0.4);
+    \node at (3.15,-0.7) {\scriptsize large distance};
+  }
+
+\end{tikzpicture}
+\end{column}
+
+\end{columns}
 \end{frame}
 
-\begin{frame}[c]{Electoral risk and transfers}
-\begin{itemize}
-  \item Voter is pivotal with probability $\pi>0$.
-  \item Party $i$ values winning at $W_i>0$; its electoral stake is
-  \[
-    R_i = \pi W_i.
-  \]
-  \item Think of $R_i$ as the maximum the party is willing to pay for the pivotal vote.
-  \item Transfers:
-  \begin{itemize}
-    \item Vote buying: parties offer $s_i \ge 0$.
-    \item Vote selling: voter requests $a_i \ge 0$.
-  \end{itemize}
-  \item Voter utility from voting for $i$ and receiving transfer $t_i$:
-  \[
-    U_j(i,t_i) = u_j(\gamma_i) + t_i.
-  \]
+
+
+
+\miniframesoff
+\begin{frame}[c]{Elections create stakes}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% LEFT
+\begin{column}{0.55\textwidth}
+\begin{itemize}[<+->]
+  \item Sometimes, both parties run in tight races {\scriptsize \color{gray}(high pivotality \(\pi\))}.
+  \item That voter is \textbf{pivotal} {\scriptsize \color{gray}(with probability \(\pi>0\))}.
 \end{itemize}
+
+\medskip
+\onslide<3->{
+\begin{block}{Intuition}
+  \(R_i\) = how much winning is worth, changing the voter's price.
+\end{block}
+}
+\end{column}
+
+% RIGHT
+\begin{column}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9,baseline=(axis)]
+
+  % --- FIXED BOUNDING BOX (same in all frames) ---
+  \path (-0.5,-1.0) (5.5,1.0);
+
+  % axis anchor
+  \coordinate (axis) at (2.5,0);
+
+  % axis
+  \draw[->] (0,0) -- (5,0);
+  \node[below] at (0,0) {\scriptsize Left};
+  \node[below] at (5,0) {\scriptsize Right};
+
+  % parties
+  \onslide<1->{
+    \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize A};
+    \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize B};
+  }
+
+  % voter
+  \onslide<2->{
+    \node[circle,draw,fill=gray!20] at (2.3,0) {\scriptsize V};
+  }
+
+  % stakes
+  \onslide<3->{
+    \node[above] at (1,0.6) {\scriptsize $R_A$};
+    \node[above] at (4,0.6) {\scriptsize $R_B$};
+  }
+
+\end{tikzpicture}
+\end{column}
+
+\end{columns}
 \end{frame}
 
-\subsection{Core logic of the model}
 
-\begin{frame}[c]{Game 1: Party-initiated vote buying}
-\begin{itemize}
-  \item Parties observe $(x_j,\gamma_A,\gamma_B,R_A,R_B)$ and choose $s_i$ simultaneously.
-  \item Voter observes $(s_A,s_B)$ and chooses a party.
-  \item In a symmetric benchmark with $R_A=R_B=R$ and $R>\Delta$:
-  \[
-    s_{i^\ast}^{VB} = \Delta,\qquad s_{-i^\ast}^{VB} = 0.
-  \]
-  \item So:
-  \begin{itemize}
-    \item The ideologically preferred party buys the vote at the minimal compensating transfer.
-    \item The opponent usually does not buy.
-    \item Transfers concentrate on \textbf{core} supporters.
-  \end{itemize}
+\miniframesoff
+\begin{frame}[t]{When parties move first: vote buying}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% LEFT
+\begin{column}{0.55\textwidth}
+\begin{itemize}[<+->]
+  \item When parties begin, they make offers in the vote-buying game {\scriptsize \color{gray}\(s_A, s_B\)}.
+  \item The voter compares ideology \(\,+\) offers and chooses a party\\
+  {\scriptsize \color{gray}\(i \in \{A,B\}\) to maximize \(U_j(i,s_i)\)}
 \end{itemize}
+
+\medskip
+\onslide<3->{
+\begin{block}{Key result}
+It is cheapest to buy the vote from the \textbf{core voter} {\scriptsize \color{gray}(\(i^\ast\), with advantage \(\Delta\))}.
+\end{block}
+}
+\end{column}
+
+% RIGHT
+\begin{column}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9,baseline=(axis.base)]
+  % FIXED bounding box
+  \path[use as bounding box] (0,-1.0) rectangle (5,1.0);
+
+  % axis
+  \coordinate (axis) at (2.5,0);
+  \draw[->] (0,0) -- (5,0);
+  \node[below] at (0,0) {\scriptsize Left};
+  \node[below] at (5,0) {\scriptsize Right};
+
+  % parties
+  \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize A};
+  \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize B};
+
+  % voter
+  \node[circle,draw,fill=gray!20] at (2.3,0) {\scriptsize V};
+
+  % offer from core party (assume A is core)
+  \onslide<2->{
+    \draw[->,thick] (1,0.8) -- (2.3,0.2);
+    \node[above] at (1.8,0.8) {\scriptsize Party A makes minimal offer {\scriptsize \color{gray}\(\approx \Delta\)}};
+  }
+
+\end{tikzpicture}
+\end{column}
+
+\end{columns}
 \end{frame}
 
-\begin{frame}[c]{Game 2: Voter-initiated vote selling}
-\begin{itemize}
-  \item Voter proposes $(a_A,a_B)$.
-  \item Party $i$ accepts only if $a_i \le R_i$.
-  \item Let $W$ be the \textbf{electorally stronger party} with $R_W>R_{-W}$.
-  \item When $W$ is not the core party ($W \neq i^\ast$):
-  \begin{itemize}
-    \item There is a range of prices where both parties accept, but the voter prefers $W$.
-    \item Voter can set $a_W$ close to $R_W$, extracting more from the electorally strong opponent.
-  \end{itemize}
-  \item Intuition: strong parties have higher stakes and higher willingness to pay; initiative lets voters try to exploit that.
+
+
+
+\miniframesoff
+\begin{frame}[t]{When voters move first: vote selling}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% LEFT
+\begin{column}{0.55\textwidth}
+\begin{itemize}[<+->]
+  \item The voter requests vote-selling prices in the vote-selling game {\scriptsize \color{gray}\(a_A, a_B\)}.
+  \item Parties accept or reject depending on their stakes {\scriptsize \color{gray}(\(R_i\); accepting when \(a_i \le R_i\))}.
 \end{itemize}
+
+\medskip
+\onslide<3->{
+\begin{block}{Implication}
+Voters ask more from parties with \textbf{more to lose} {\scriptsize\color{gray}(big \(R_i\))}.
+\end{block}
+}
+\end{column}
+
+% RIGHT
+\begin{column}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9,baseline=(axis.base)]
+  % FIXED bounding box
+  \path[use as bounding box] (0,-1.0) rectangle (5,1.0);
+
+  % axis
+  \coordinate (axis) at (2.5,0);
+  \draw[->] (0,0) -- (5,0);
+  \node[below] at (0,0) {\scriptsize Left};
+  \node[below] at (5,0) {\scriptsize Right};
+
+  % parties: let B be electorally stronger
+  \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize A};
+  \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize B};
+
+  % voter
+  \node[circle,draw,fill=gray!20] at (2.3,0) {\scriptsize V};
+
+  % requests
+  \onslide<3->{
+    \draw[->,thick] (2.3,0.8) -- (4,0.2);
+    \node[above] at (3.4,0.8) {\scriptsize Voter sends a pricier offer to party B {\scriptsize\color{gray}(\(a_B \approx R_B\))}};
+  }
+
+\end{tikzpicture}
+\end{column}
+
+\end{columns}
 \end{frame}
 
+
+
+
+
+\subsection{Hypotheses}
+
+
+\miniframeson
 \begin{frame}[c]{Hypotheses}
 \begin{itemize}
   \item \textbf{H1 (Core Targeting Under Party Initiative):}
@@ -403,30 +703,41 @@ options(scipen = 999999999)
 %====================
 
 \section{Experimental design}
+
 \subsection{Setup and roles}
 
+
+\miniframeson
 \begin{frame}[c]{Laboratory implementation}
 \begin{itemize}
   \item \textbf{Subjects and implementation}
   \begin{itemize}
-    \item 102 adult participants in a Chilean laboratory, implemented in \texttt{oTree}.
-    \item Show-up fee plus performance-based earnings in experimental points.
+    \item Following the formal model, we designed a lab experiment in \texttt{oTree}.
+    \item Recruited 102 adult participants.
+    \item Payed them according to the quality of their decisions.
   \end{itemize}
   \item \textbf{Roles}
   \begin{itemize}
-    \item Each game: three real players (Party A, Party B, Voter).
-    \item Each subject plays three independent games; for every game we fully re-randomize roles, ideology, budgets, and fictional vote shares.
+    \item Each game: three (real) players (Party A, Party B, Voter).
+    \item Each subject played the game three times.
+    \item Every time we executed a new randomization block. 
   \end{itemize}
-  \item \textbf{Information (common knowledge)}
+  \item \textbf{What was randomized every time}
   \begin{itemize}
-    \item Voter's ideological payoffs if A or B wins.
-    \item Party budgets.
-    \item Fictional vote shares that determine whether the real voter is pivotal.
+    \item Role (party, voter).
+    \item Voter's ideological payoffs if {\bf A} or {\bf B} wins.
+    \item Party budgets (to buy votes).
+    \item If the voter is pivotal.
   \end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[c]{Experimental flow}
+
+\subsection{Randomization}
+
+
+\miniframeson
+\begin{frame}[c]{Experimental Flow}
 \centering
 \includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/experimental_flow.pdf}
 
@@ -434,116 +745,155 @@ options(scipen = 999999999)
 {\small Two institutional variants in an otherwise identical strategic environment.}
 \end{frame}
 
-\subsection{Ideology and electoral risk}
-
-\begin{frame}[c]{Ideology, budgets, and pivotality}
-\begin{itemize}
-  \item \textbf{Ideology}
-  \begin{itemize}
-    \item Voter sees how many points she gets if A wins vs B wins.
-    \item This implements $u_j(\gamma_A)$, $u_j(\gamma_B)$, and the ideological gap $\Delta$.
-  \end{itemize}
-  \item \textbf{Party budgets}
-  \begin{itemize}
-    \item Drawn at random and identical for both parties within a game.
-    \item Constrain feasible offers and requested prices.
-  \end{itemize}
-  \item \textbf{Electoral risk}
-  \begin{itemize}
-    \item Fictional electorate of 3 or 5 additional voters.
-    \item Vote shares for A and B imply safe vs close races.
-    \item The real subject voter can be pivotal or not.
-  \end{itemize}
-\end{itemize}
-\end{frame}
-
 %====================
 % EMPIRICAL RESULTS
 %====================
 
 \section{Empirical results}
-\subsection{Behavior in the two games}
+\subsection{Dependent Variable}
 
-\begin{frame}[c]{Vote-buying offers vs vote-selling requests}
+
+\miniframeson
+\begin{frame}[c]{Plotting the Dependent Variable: Vote-buying vs vote-selling prices}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% LEFT COLUMN: HISTOGRAMS
+\begin{column}{0.6\textwidth}
 \centering
-\includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/depvarplot.png}
-\vspace{0.2cm}
+\includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/depvarplot.pdf}
 
-{\small Distributions of vote-buying offers (left) and vote-selling requests (right) as a share of party budgets.}
-\end{frame}
+%\vspace{0.1cm}
+%{\scriptsize Distributions of vote-buying offers (left) and vote-selling requests (right), as a share of party budgets.}
+\end{column}
 
-\begin{frame}[c]{What the distributions suggest}
+% RIGHT COLUMN: INTERPRETATION
+\begin{column}{0.4\textwidth}
 \begin{itemize}
-  \item \textbf{Vote buying (VB):}
+  \item The two histograms describe \textbf{very different worlds}:
   \begin{itemize}
-    \item Offers cluster at zero and at a small interior value around the compensating transfer $\Delta$.
-    \item Consistent with the equilibrium where the core party buys and the opponent often offers nothing.
+    \item When \textbf{parties move first}.
+    \item When \textbf{voters move first}.
   \end{itemize}
-  \item \textbf{Vote selling (VS):}
-  \begin{itemize}
-    \item Requested prices are widely dispersed.
-    \item Many voters request very small transfers from at least one party.
-    \item Others request amounts close to the party budget, especially when bargaining with electorally strong parties.
-  \end{itemize}
-  \item This motivates focusing on \textbf{pricing behavior} in VS to study how voters respond to ideology and electoral strength.
+
+  \medskip
+
+  \item \textbf{What explains the differences of these two games?}
 \end{itemize}
+\end{column}
+
+\end{columns}
 \end{frame}
 
-\subsection{H1: Core targeting under party initiative}
 
+
+\subsection{Modeling Vote buying}
+
+
+\miniframeson
 \begin{frame}[c]{Modeling vote-buying offers}
+
 \begin{itemize}
-  \item Unit: party–voter dyad in the vote-buying game.
-  \item We estimate:
+  \item {\bf What explains the variance of the vote-buying offers?} Estimate OLS:
+\end{itemize}
+
+\[
+\text{Offer}_{di}
+=
+\gamma_0
++ \gamma_1 \only<2>{\textcolor{red}{\text{Ideology}_{di}}}\only<1,3,4>{\text{Ideology}_{di}}
++ \gamma_2 \only<3>{\textcolor{red}{\text{VoteShare}_{di}}}\only<1,2,4>{\text{VoteShare}_{di}}
++ \gamma_3 \only<4>{\textcolor{red}{\text{Pivotal}_d}}\only<1,2,3>{\text{Pivotal}_d}
++ u_{di}
+\]
+
+\begin{itemize}
+  \item Also a logit model for the probability of making \emph{any} offer.
+  \item  Standard errors clustered at the party level.
+\end{itemize}
+
+\end{frame}
+
+
+
+\subsection{Results: Vote Buying}
+
+\miniframeson
+\begin{frame}[c]{Results: Vote-Buying Offers and Core Targeting}
+
+\begin{columns}[c]
+
+  % LEFT COLUMN: FIGURES (fixed height!)
+  \column{0.55\textwidth}
+  \centering
+
+  \begin{overlayarea}{\textwidth}{5cm}
+
+    \only<1>{
+      \includegraphics[width=0.8\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_ideo_distance_plot.pdf}
+    }
+
+    \only<2>{
+      \includegraphics[width=0.8\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_ols_presentation.pdf}
+    }
+
+    \only<3>{
+      \includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_combined.pdf}
+    }
+
+  \end{overlayarea}
+
+  % RIGHT COLUMN: INTERPRETATION (already fixed)
+  \column{0.45\textwidth}
+
+  \begin{overlayarea}{\textwidth}{4cm}
+    \begin{itemize}
+      \item<1-> As ideological distance increases, parties are \textbf{less likely} to make any offer at all.
+      \item<2-> If they offer, parties pay \textbf{larger} transfers to more distant voters.
+      \item<3-> So: parties target followers cheaply (right), but pay a premium to buy distant votes (left).
+    \end{itemize}
+  \end{overlayarea}
+
+\end{columns}
+
+\end{frame}
+
+
+
+
+
+
+\subsection{Modeling Vote Selling}
+
+
+\miniframeson
+\begin{frame}[c]{Modeling vote-selling prices}
+
+\begin{itemize}
+  \item {\bf What explains how voters price their vote?} Estimate OLS:
+\end{itemize}
+
+\[
+Y_{di}
+=
+\beta_0
++ \beta_1 \only<2>{\textcolor{red}{\text{Ideology}_{di}}}\only<1,3,4,5>{\text{Ideology}_{di}}
++ \beta_2 \only<3>{\textcolor{red}{\text{VoteShare}_{di}}}\only<1,2,4,5>{\text{VoteShare}_{di}}
++ \beta_3 \only<4>{\textcolor{red}{\text{Ideology}_{di} \times \text{VoteShare}_{di}}}\only<1,2,3,5>{\text{Ideology}_{di} \times \text{VoteShare}_{di}}
++ \beta_4 \only<5>{\textcolor{red}{\text{Pivotal}_d}}\only<1,2,3,4>{\text{Pivotal}_d}
++ \varepsilon_{di}
+\]
+
+\begin{itemize}
+  \item Dependent variable: requested price as \% of party budget,
   \[
-    \text{Offer}_{di} = \gamma_0 + \gamma_1 \text{Ideology}_{di} + \gamma_2 \text{VoteShare}_{di} + \gamma_3 \text{Pivotal}_d + u_{di},
+  Y_{di} = \frac{a_{di}}{B_{di}} \times 100.
   \]
-  using a linear model for positive offers.
-  \item Complementary logit model for the probability of making \emph{any} offer.
-  \item Standard errors clustered at the party level.
+  \item Standard errors clustered at the voter level.
 \end{itemize}
+
 \end{frame}
 
-\begin{frame}[c]{Results: parties target ideologically close voters}
-\centering
-\includegraphics[width=0.75\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_combined.png}
-\vspace{0.2cm}
 
-{\small Predicted offer size (left) and probability of any offer (right) as a function of ideological distance. Shaded regions: 95\% cluster-robust CIs.}
-\end{frame}
-
-\begin{frame}[c]{Interpreting H1}
-\begin{itemize}
-  \item As ideological distance increases:
-  \begin{itemize}
-    \item Parties offer \textbf{smaller} transfers.
-    \item They are also less likely to make any offer at all.
-  \end{itemize}
-  \item When parties initiate the exchange, transfers concentrate on \textbf{ideologically proximate (core) voters}.
-  \item This provides experimental support for \textbf{H1: Core Targeting Under Party Initiative}.
-\end{itemize}
-\end{frame}
-
-\subsection{H2: Pricing the vote under voter initiative}
-
-\begin{frame}[c]{Modeling requested prices (VS)}
-\begin{itemize}
-  \item Unit: voter–party dyad in the vote-selling game.
-  \item Dependent variable:
-  \[
-    Y_{di} = \frac{a_{di}}{B_{di}} \times 100,
-  \]
-  requested price as a percentage of the party budget.
-  \item Covariates:
-  \begin{itemize}
-    \item Ideological distance $\text{Ideology}_{di}$.
-    \item Party vote share $\text{VoteShare}_{di}$ (electoral strength).
-    \item Interaction $\text{Ideology}_{di} \times \text{VoteShare}_{di}$.
-    \item Indicator for whether the real voter is pivotal.
-  \end{itemize}
-  \item Linear model with standard errors clustered by voter.
-\end{itemize}
-\end{frame}
 
 \begin{frame}[c]{Requested prices by ideology and electoral strength}
 \centering

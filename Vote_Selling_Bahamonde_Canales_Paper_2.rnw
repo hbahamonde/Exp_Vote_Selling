@@ -595,11 +595,11 @@ Here, $\text{Offer}_{di}$ is the (strictly positive) transfer the party proposes
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.75\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_combined.pdf}
-  \caption{Predicted size (left panel) and probability (right panel) of vote-buying offers as a function of ideological distance. Predictions obtained from \autoref{eq:buying_main} and the corresponding logit model for any offer (see \autoref{tab:H1_regressions}). Shaded regions show 95\% cluster--robust confidence intervals.}
+  \caption{Predicted size of vote-buying offers conditional on a positive offer (left panel) and probability of making any offer (right panel) as a function of ideological distance.  Predictions obtained from \autoref{eq:buying_main} and the corresponding logit model for any offer (see \autoref{tab:H1_regressions}). Shaded regions show 95\% cluster--robust confidence intervals.}
   \label{fig:H1_combined}
 \end{figure}
 
-Both models show the same pattern: as ideological distance increases, parties offer smaller transfers (left panel) and, when they do offer, they become less likely to do so (right panel). This provides direct empirical support for \autoref{hyp:core_targeting}: when parties initiate the exchange, transfers concentrate on ideologically proximate (core) voters.
+The two models capture distinct margins of party behavior. As ideological distance increases, parties become less likely to make any offer at all (right panel). Conditional on making an offer, however, parties pay larger transfers to ideologically more distant voters (left panel), reflecting the higher compensation required to overturn ideological preferences. This provides direct empirical support for \ref{hyp:core_targeting}: when parties initiate the exchange, transfers concentrate on ideologically proximate (core) voters, primarily through the extensive margin of whether parties choose to buy votes at all.
 
 
 %The logit model suggests that as ideological distance increases, parties become somewhat less likely to make any offer (right panel). The OLS estimates for offer size are imprecise and do not show a clear monotonic pattern

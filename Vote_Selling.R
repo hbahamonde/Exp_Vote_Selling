@@ -699,7 +699,27 @@ H1plot_2 <- plot_model(
   legend_style(pos = "bottom") +
   theme(
     panel.border     = element_rect(color = "black", fill = NA, size = 1),
-    panel.background = element_blank()
+    panel.background = element_blank() +
+    coord_fixed(ratio = 1)
+  )
+
+H1plot_2_sq <- plot_model(
+  m_H1_size,
+  type       = "pred",
+  terms      = "ideo.distance2",
+  ci.lvl     = 0.90,
+  vcov.fun   = vcov_cluster,   # clustered SEs
+  title      = "Effect of Ideological Distance on\nSize of Vote-Buying Offer (OLS)",
+  axis.title = c(
+    "Ideological Distance",
+    "Predicted Size of Offer (% of Budget)"
+  )
+) +
+  legend_style(pos = "bottom") +
+  theme(
+    panel.border     = element_rect(color = "black", fill = NA, size = 1),
+    panel.background = element_blank(),
+    aspect.ratio     = 1        # <- THIS makes the panel square
   )
 
 
@@ -723,6 +743,25 @@ grid.arrange(
 )
 
 dev.off()
+
+
+# Create just the ols plot for presentation
+pdf(
+  file = "/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_ols_presentation.pdf",
+  #type      = "cairo",
+  #units     = "in",
+  width     = 5,
+  height    = 5#,
+  #res       = 600
+)
+
+
+print(H1plot_2_sq)
+dev.off()
+
+
+
+
 ## ----
 
 ######################################################################### 
@@ -1045,6 +1084,10 @@ meta.d.v.s = read_excel("/Users/hectorbahamonde/research/Exp_Vote_Selling/vote_b
 # rbind
 meta.d = rbind(meta.d.v.b, meta.d.v.s)
 
+# relabel
+meta.d$Literature <- gsub("Vote-Buying", "Vote Buying", meta.d$Literature)
+meta.d$Literature <- gsub("Vote-Selling", "Vote Selling", meta.d$Literature)
+
 # plot
 histogram.meta.plot <- ggplot(meta.d, aes(x = Year, fill = Literature)) +
   geom_histogram(binwidth = 1, colour = "white") +
@@ -1077,6 +1120,40 @@ pdf(file="/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot.p
 
 print(histogram.meta.plot)
 dev.off()
+
+# wide plot for presentation
+# plot
+histogram.meta.plot.wide <- ggplot(meta.d, aes(x = Year, fill = Literature)) +
+  geom_histogram(binwidth = 1, colour = "white") +
+  ylab("Frequency") + xlab("Year of Publication") +
+  theme_bw() +
+  theme(
+    axis.text.y  = element_text(size = 15), 
+    axis.text.x  = element_text(size = 15), 
+    axis.title.y = element_text(size = 15), 
+    axis.title.x = element_text(size = 15), 
+    legend.text  = element_text(size = 15), 
+    legend.title = element_text(size = 0),
+    plot.title   = element_text(size = 3),
+    legend.position   = "bottom",
+    legend.key.size   = unit(0.9, "cm"),
+    legend.spacing.x  = unit(0.7, "cm"),
+    strip.text.x      = element_text(size = 15)
+  )
+
+
+pdf(file="/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot_wide.pdf", 
+    #type="cairo",
+    #units="in", 
+    width=9, 
+    height=5#, 
+    #pointsize=10, 
+    #res=600
+)
+
+print(histogram.meta.plot.wide)
+dev.off()
+
 ## ----
 
 
