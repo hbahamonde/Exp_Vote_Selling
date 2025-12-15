@@ -447,7 +447,7 @@
   {\scriptsize \color{gray}\(i \in \{A,B\}\), at \(\gamma_A,\gamma_B\)}
   \item Parties care about \textbf{winning the election}.\\
   {\scriptsize \color{gray} \(W_i\); electoral stake \(R_i = \pi W_i\)}
-  \item Voters care about {\bf not losing the election} and also live on that space.\\
+  \item Voters care about {\bf winning the election} and also live on that space.\\
   {\scriptsize \color{gray}Utility \(u_j(\gamma_i)\)}
 \end{itemize}
 
@@ -763,7 +763,7 @@ Voters will ask more from parties with \textbf{more to lose} {\scriptsize\color{
 
 
 \miniframeson
-\begin{frame}[c]{Laboratory implementation}
+\begin{frame}[c]{Laboratory Implementation}
 \begin{itemize}
   \item \textbf{Participants and implementation}
   \begin{itemize}
@@ -907,7 +907,7 @@ Voters will ask more from parties with \textbf{more to lose} {\scriptsize\color{
   \begin{overlayarea}{\textwidth}{4cm}
     \begin{itemize}
       \item<1-> As ideological distance increases, parties are \textbf{less likely} to make any offer at all.
-      \item<2-> If they offer, parties pay \textbf{larger} transfers to more distant voters.
+      \item<2-> If they offer, parties pay \textbf{more} to more distant voters.
       \item<3-> So: parties target followers cheaply (left), but pay more to buy distant voters (right).
     \end{itemize}
   \end{overlayarea}
@@ -931,7 +931,7 @@ Voters will ask more from parties with \textbf{more to lose} {\scriptsize\color{
 \end{itemize}
 
 \[
-Y_{di}
+\text{Price}_{di}
 =
 \beta_0
 + \beta_1 \alert<2>{\text{Ideology}_{di}}
@@ -974,7 +974,7 @@ Y_{di}
         \medskip
 
 
-      \item When the party is winning but distant (voters exploit electorally strong parties' higher electoral stakes {\scriptsize\color{gray}$R_i$}.)
+      \item More transfers when the party is winning but distant (voters exploit electorally strong parties' higher electoral stakes {\scriptsize\color{gray}$R_i$}.)
     \end{itemize}
 
 
@@ -1049,7 +1049,7 @@ Y_{di}
   
   \item {\bf Findings}:
   \begin{itemize}
-    \item[\checkmark] {\color{red}When parties move first}: transfers concentrate on \textbf{party supporters}.
+    \item[\checkmark] {\color{red}When parties move first}: transfers go to \textbf{party supporters}.
     \item[\checkmark] {\color{blue}When voters move first}: they \textbf{demand higher prices} from winning parties that are ideologically far away.
     \item[\checkmark] Voters \textbf{make more} when parties initiate the exchange.
   \end{itemize}
