@@ -492,33 +492,33 @@ In the party-initiated vote-buying game, whenever purchasing the pivotal vote is
 
 Party $i$ accepts if and only if
 \begin{equation}
-a_i \;\le\; R_i,
+a_i \;<\; R_i,
 \end{equation}
-so $R_i$ is party $i$'s maximum willingness to pay.
+so $R_i$ is party $i$'s maximum willingness to pay. Equivalently, the voter can set requests arbitrarily close to each party's willingness to pay by choosing $a_i = R_i - \varepsilon$ for some $\varepsilon>0$.
 
-Let $W$ denote the electorally stronger party, so $R_W > R_{-W}$, and consider the empirically relevant case where $W \neq i^\ast$.
+Let $k \in \{A,B\}$ denote the electorally stronger party, so $R_k > R_{-k}$, and consider the empirically relevant case where $k \neq i^\ast$. (Here, $W_i$ denotes party $i$'s utility of winning, whereas $k$ indexes the party with higher electoral stakes $R_i$.)
 
-If both parties accept, the voter chooses $W$ whenever
+If both parties accept, the voter chooses $k$ whenever
 \begin{equation}
-u_j(\gamma_W) + a_W \;\ge\; u_j(\gamma_{i^\ast}) + a_{i^\ast}
+u_j(\gamma_k) + a_k \;\ge\; u_j(\gamma_{i^\ast}) + a_{i^\ast}
 \quad\Longleftrightarrow\quad
-a_W - a_{i^\ast} \;\ge\; \Delta.
+a_k - a_{i^\ast} \;\ge\; \Delta.
 \end{equation}
 
 There exists a band of prices satisfying
 \begin{equation}
-\Delta \;\le\; a_W - a_{i^\ast} \;\le\; R_W - R_{i^\ast},
+\Delta \;\le\; a_k - a_{i^\ast} \;\le\; R_k - R_{i^\ast},
 \end{equation}
-within which both parties accept but the vote is sold to $W$.
+within which both parties accept but the vote is sold to $k$.
 
 The voter maximizes her material payoff by setting
 \begin{equation}
-a_W^{VS} = R_W,
+a_k^{VS} = R_k - \varepsilon, \qquad \varepsilon > 0,
 \end{equation}
-with $a_{i^\ast}$ chosen low enough to satisfy the above inequality.
+with $a_{i^\ast}$ chosen low enough to satisfy the inequality above.
 
 \begin{proposition}[Selling to the Opponent Winning Party]\label{prop:selling_strong}
-If the electorally stronger party $W$ is ideologically distant ($W \neq i^\ast$ and $R_W > R_{i^\ast}$), then in the vote-selling game there exists an equilibrium in which both parties accept the voter's proposals but the vote is sold to $W$. Vote selling thus directs transfers toward the opponent expected to win the election.
+If the electorally stronger party $k$ is ideologically distant ($k \neq i^\ast$ and $R_k > R_{i^\ast}$), then in the vote-selling game there exists an equilibrium in which both parties accept the voter's proposals but the vote is sold to $k$. Vote selling thus directs transfers toward the opponent expected to win the election.
 \end{proposition}
 
 
