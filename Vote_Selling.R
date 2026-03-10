@@ -631,6 +631,7 @@ pred_H1 <- ggpredict(
   vcov  = vcov_logit
 )
 
+p_load(sjPlot)
 theme_set(theme_sjplot())  # keep your sjPlot look
 
 logit_color <- "#B2182B"   # or whatever red you're using for the OLS plot
@@ -699,8 +700,8 @@ H1plot_2 <- plot_model(
   legend_style(pos = "bottom") +
   theme(
     panel.border     = element_rect(color = "black", fill = NA, size = 1),
-    panel.background = element_blank() +
-    coord_fixed(ratio = 1)
+    panel.background = element_blank(),
+    aspect.ratio     = 1        # <- THIS makes the panel square
   )
 
 H1plot_2_sq <- plot_model(
@@ -1330,9 +1331,7 @@ H1_table_latex <- gsub(
 
 ## ---- abstract ----
 fileConn <- file ("abstract.txt")
-abstract.c = as.character(c(
-  "The clientelism literature has produced substantial insights into how parties target voters, but it remains heavily unbalanced toward the demand side of the exchange. Much less is known about the strategic behavior of vote sellers. This paper brings voters back into the analysis by integrating vote buying and vote selling within a common theoretical and empirical framework. We develop a simple formal model that contrasts party-initiated and voter-initiated exchanges and derives distinct core---swing voter predictions for each case. When parties initiate the transaction, they minimize costs by buying votes from ideologically proximate (core) supporters. When voters initiate the exchange, incentive structures reverse: voters anticipate which party has the highest electoral stake and strategically sell their votes to the opponent expected to win. To evaluate these predictions, we implement an economic laboratory experiment that mirrors the formal model's structure. The results provide strong empirical support for both mechanisms, suggesting that initiative shapes utilities: voters consistently earn higher payoffs when parties initiate vote buying, whereas parties fare at least as well when voters initiate vote selling. These findings highlight the importance of modeling the supply side of clientelism to understand how the distribution of surplus varies across institutional settings."
-  ))
+abstract.c = as.character(c("The clientelism literature has produced substantial insights into how parties target voters, but it remains heavily unbalanced toward the demand side of the exchange. Much less is known about the strategic behavior of vote sellers. This paper brings voters back into the analysis by integrating vote buying and vote selling within a common theoretical and empirical framework. We develop a simple formal model that contrasts party-initiated and voter-initiated exchanges and derives distinct core---swing voter predictions for each case. When parties initiate the transaction, they minimize costs by buying votes from ideologically proximate (core) supporters. When voters initiate the exchange, incentive structures reverse: voters anticipate which party has the highest electoral stake and strategically sell their votes to the opponent expected to win. To evaluate these predictions, we implement an economic laboratory experiment that mirrors the formal model's structure. The results provide clear support for the targeting mechanisms and evidence broadly consistent with the payoff implications: voters tend to earn higher payoffs when parties initiate vote buying, whereas parties fare at least as well when voters initiate vote selling. These findings highlight the importance of modeling the supply side of clientelism to understand how the distribution of surplus varies across institutional settings."))
 writeLines(abstract.c, fileConn)
 close(fileConn)
 ## ----
