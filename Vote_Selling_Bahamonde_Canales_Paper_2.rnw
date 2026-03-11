@@ -761,3 +761,4 @@ cat(H1_table_latex)
 
 \end{document}
 
+https://ajps.org/guidelines-for-manuscripts/manuscript-preparation/
