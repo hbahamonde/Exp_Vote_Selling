@@ -1,6 +1,6 @@
-\documentclass[onesided]{article}
+\documentclass[12pt]{article} 
 \usepackage[T1]{fontenc}
-\linespread{1.5} % Line spacing - Palatino needs more space between lines
+ % Line spacing - Palatino needs more space between lines
 \usepackage{microtype} % Slightly tweak font spacing for aesthetics
 
 \usepackage[hmarginratio=1:1,columnsep=20pt]{geometry} % Document margins
@@ -68,7 +68,7 @@
 \usepackage[]{authblk}
 \usepackage{setspace}
 \usepackage{array}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{hyperref}     %desactivar para link rojos
 \usepackage{graphicx}
 \usepackage{dcolumn} % for R tables
@@ -207,7 +207,7 @@ headpunct=:
 \textsc{Andrea Canales}
 \thanks{\href{mailto:andrea.canales@uoh.cl}{andrea.canales@uoh.cl}; 
 \href{http://sites.google.com/view/andrea-canales-g}{\texttt{http://sites.google.com/view/andrea-canales-g}}. \\
-{\color{blue}\bf Authors are listed in alphabetical order and both collaborated equally to this paper}. This study received ethical approval from the Oxford-Nuffield Centre for Experimental Social Sciences (CESS) Ethics Committee (Project VE\_0001). We thank O'Higgins University for funding this project. We thank Katri Sieberg, Denise Laroze and Mauricio Lopez for their comments and suggestions. We also thank the participants of the 2019 colloquium at the Oxford-Nuffield Centre for Experimental Social Sciences (Santiago), the 2025 INVEST XI Scientific Seminar (Helsinki), the 2026 Resilience of Liberal Democracy in Finland (RESLIDE) workshop (\AA{}bo), the 2026 LASA Congress (Paris), and the 2026 XIII NOLAN Conference (Stockholm). Javiera Tobar, Cristopher Reyes and Basti\'an Garrido provided excellent research assistance. All errors are our own.}}
+{\color{blue}\bf Authors are listed in alphabetical order and both collaborated equally to this paper}. We used GPT-5.5 Thinking, OpenAI, in May 2026 for language editing, clarity, formatting, and organizational suggestions. All substantive arguments, theoretical claims, formal modeling choices, empirical analyses, interpretation of results, and final text remain the authors' responsibility. This study received ethical approval from the Oxford-Nuffield Centre for Experimental Social Sciences (CESS) Ethics Committee (Project VE\_0001). We thank O'Higgins University for funding this project. We thank Katri Sieberg, Denise Laroze and Mauricio Lopez for their comments and suggestions. We also thank the participants of the 2019 colloquium at the Oxford-Nuffield Centre for Experimental Social Sciences (Santiago), the 2025 INVEST XI Scientific Seminar (Helsinki), the 2026 Resilience of Liberal Democracy in Finland (RESLIDE) workshop (\AA{}bo), the 2026 LASA Congress (Paris), and the 2026 XIII NOLAN Conference (Stockholm). Javiera Tobar, Cristopher Reyes and Basti\'an Garrido provided excellent research assistance. All errors are our own.}}
 
 
 % Share with: Rick Lau, Ana de la O, Virginia Oliveros, Dave Redlawsk, Bob Kaufman, Jack Levi, Barbara Vis (https://www.barbaravis.nl/publications/)
@@ -312,16 +312,15 @@ options(scipen = 9999)
 
 \vspace*{0.3cm}
 \centerline{{\bf Abstract length}: \Sexpr{abstract.c.l} words.}
-\vspace*{0.3cm}
 
 
-
+\vspace{1cm}
 \centerline{\bf Please consider downloading the last version of the paper \href{https://github.com/hbahamonde/Exp_Vote_Selling/raw/main/Vote_Selling_Bahamonde_Canales_Paper_2.pdf}{\texttt{{\color{red}here}}}.}
 
-\vspace*{0.3cm}
+\vspace{1cm}
 \centerline{\bf {\color{red}Rough draft PLEASE DO NOT CIRCULATE}.}
 
-
+\vspace{1cm}
 \centerline{\providecommand{\keywords}[1]{\textbf{\textit{Keywords---}} #1} % keywords.  
 \keywords{{\input{keywords.txt}\unskip}}}
 
@@ -366,6 +365,8 @@ options(scipen = 9999)
 \pagenumbering{arabic} 
 \setcounter{page}{1}
 
+\doublespacing
+
 \section{The Neglected Voter in Clientelism Research}\label{sec:literature}
 
 Non-programmatic linkages \parencite{Kitschelt2000} are reciprocal \parencite{Auyero2000,Finan2012}. That is, the clientelist exchange usually happens between parties \emph{and} voters, where the former provide particularistic benefits and the latter provide electoral support \parencite{Nichter2008,Nichter2014}. Yet most quantitative scholars have overlooked voters' preferences, thus failing to describe the available strategies of vote sellers. We believe the literature often focuses mostly on parties and how they target individuals. As we note in this paper, the clientelism literature is somewhat unbalanced, showing a huge interest in vote buying relative to vote selling (\autoref{fig:buy_sell_literature}). Hence, while the literature has advanced a number of important questions (see \cite{Hicken2011} for an excellent review), most accounts of clientelism tackle the issue from the party's side. In fact, most of what we know about core--swing dynamics in clientelism therefore comes from settings where parties initiate the exchange and decide whom to target (e.g., \cite{Cox1986,Stokes2005}). \emph{But what if the logic of clientelism reverses when initiative shifts? Do voters, acting as strategic sellers, exploit parties' electoral vulnerabilities in ways that invert core-swing targeting predictions? And how does the distribution of surplus change when voters---not parties---set the terms of exchange?} In this paper we take this complementary perspective and ask how these dynamics look when voters initiate the exchange and strategically decide to whom to sell.
@@ -391,9 +392,7 @@ This perspective also reframes long-standing debates about targeting. One canoni
 
 Taken together, the literature provides a detailed picture of how parties target core and swing voters, but it remains somewhat silent about how core and swing vote sellers behave when they can initiate exchanges. Core-swing distinctions are usually derived from the party's optimization problem, leaving the supplier side under-theorized. Yet prior research shows that voters' collective characteristics can meaningfully shift the logic of targeting \parencite{Bahamonde2018}. We believe that once voters' pricing decisions are modeled directly, the familiar core--swing logic changes. In this paper we suggest that instead of only asking which voters parties can buy at minimal cost, we also ask which parties voters can most profitably sell to. This shift in perspective reveals how core and swing \emph{vote sellers} position themselves in the clientelistic market and how their strategic choices differ from the patterns implied by party-initiated exchanges. Finally, there is a growing methodological consensus that experimental methods are particularly well suited to address such questions. Following \textcite{Aldrich2011,McDermott2002}, and in line with the view that experiments are a promising tool for the study of democracy and development \parencite{DeLaO2011}, we use an economic experiment to place voters and parties on equal analytical footing. 
 
-% This paper proceeds as follows: the next section develops a theoretical framework that treats vote buying and vote selling as two institutional variants of the same clientelistic exchange and derives hypotheses about targeting, initiative, and surplus allocation; Section~\ref{sec:theory} formalizes these intuitions in a simple spatial model that clarifies when parties buy core voters and when voters sell to electorally strong opponents; Section~\ref{sec:design} describes the experimental design that implements these institutional variants in the laboratory; Section~\ref{sec:methods} outlines our econometric strategy for comparing payoffs across games and modeling voters' requested prices; Section~\ref{sec:results} presents the empirical results, showing that initiative systematically reverses core-swing patterns and redistributes surplus between voters and parties; and the final section discusses the broader implications of our findings, acknowledges the limitations of our laboratory setting, and identifies avenues for future research.
-
-This paper proceeds as follows. \autoref{sec:theory} develops a theoretical framework that treats vote buying and vote selling as two institutional variants of the same clientelistic exchange and derives three hypotheses grounded in two core equilibrium propositions. \autoref{sec:formal_theory} formalizes these intuitions in a simple spatial model that clarifies when parties buy core voters and when voters sell to electorally strong opponents. \autoref{prop:core_buying} characterizes party-initiated vote buying and directly motivates \autoref{hyp:core_targeting}; \autoref{prop:selling_strong} characterizes voter-initiated vote selling and motivates \autoref{hyp:selling_opponent}. The formal model derives these targeting predictions, whereas \autoref{hyp:higher_voter_payoffs} is a behavioral implication of the prospect-theoretic argument developed in \autoref{sec:theory} and assessed empirically in the experiment. \autoref{sec:design} describes the experimental design that implements these institutional variants in the laboratory. \autoref{sec:methods} outlines our econometric strategy for evaluating each hypothesis and presents the empirical results, showing that initiative systematically reverses core--swing patterns and redistributes surplus between voters and parties. \autoref{sec:discussion} discusses the broader implications of our findings, acknowledges the limitations of our laboratory setting, and identifies avenues for future research.
+This paper proceeds as follows. \autoref{sec:theory} develops a theoretical framework that treats vote buying and vote selling as two institutional variants of the same clientelistic exchange and derives three hypotheses about initiative, electoral risk, and surplus allocation. \autoref{sec:formal_theory} formalizes these intuitions in a prospect-theoretic model of clientelistic exchange. The model shows how ideological distance determines the minimum compensating transfer, how electoral loss aversion expands parties' effective willingness to pay, and how initiative shapes both targeting and surplus allocation. \autoref{sec:design} describes the experimental design that implements these institutional variants in the laboratory. \autoref{sec:methods} outlines our econometric strategy for evaluating each hypothesis and presents the empirical results, showing that initiative systematically reverses core--swing patterns and redistributes surplus between voters and parties. \autoref{sec:discussion} discusses the broader implications of our findings, acknowledges the limitations of our laboratory setting, and identifies avenues for future research.
 
 
 \section{Bringing Voters Back In}\label{sec:theory}
@@ -402,131 +401,192 @@ Clientelistic exchanges are best understood as strategic interactions in a marke
 
 We draw on the institutional literature \parencite{North1981,North1990} to conceptualize clientelism as a rule-governed exchange in which outcomes depend critically on who moves first and what choices are available at each stage. Under this view, vote buying and vote selling are two institutional variants of the same underlying transaction that differ only in their sequencing rule---specifically, in whether parties or voters initiate the exchange. This difference in initiative reshapes constraints, bargaining positions, and the timing of commitment, even though preferences, payoffs, and the traded good are identical. Classic core--swing targeting arguments implicitly assume that parties initiate and voters respond. Our framework retains this logic but adds the mirror case in which voters initiate and parties respond, allowing us to compare targeting and surplus allocation from both sides of the clientelistic market.
 
-Building on applications of prospect theory to clientelism \parencite{Bahamonde2022b}, we argue that initiative matters not because it mechanically changes parties' willingness to pay, but because it determines whether loss-averse behavior is activated at the moment of commitment. When parties initiate vote buying, they must decide \emph{ex ante} whether to insure against electoral defeat. Parties operating under electoral risk tend to overweight prospective losses relative to comparable gains, which leads them to over-insure by offering more than the minimal compensating transfer required to secure pivotal support. This behavioral tendency inflates the material benefits voters receive.
+Building on applications of prospect theory to clientelism \parencite{Bahamonde2022b}, we argue that initiative matters not because it mechanically changes parties' willingness to pay, but because it changes when parties must confront the possibility of electoral loss and when they can screen costly transfers. When parties initiate vote buying, they must decide \emph{ex ante} whether to insure against electoral defeat. If parties overweight prospective losses relative to comparable gains, electoral risk can lead them to offer more than the minimal compensating transfer required to secure support. This behavioral tendency should inflate the material benefits voters receive.
 
-By contrast, when voters initiate vote selling, the strategic environment is inverted. Voters propose prices to parties, but parties evaluate these proposals before committing to insure against defeat. Although loss aversion still characterizes party preferences, the absence of an initial commitment means that rejecting a costly proposal does not activate the same salient loss frame. As a result, parties can decline high prices without experiencing rejection as a loss, limiting voters' ability to extract surplus.
+By contrast, when voters initiate vote selling, the strategic environment is inverted. Voters propose prices to parties, but parties evaluate these proposals before committing resources. Even if parties are loss averse, this screening stage allows them to reject costly prices before converting electoral risk into an actual transfer. As a result, voter initiative can generate high requested prices, but it also exposes voters to rejection when their demands exceed parties' effective willingness to pay.
 
-This logic yields clear implications for targeting. In party-initiated vote buying, parties must choose whom to approach. Because the ideological distance between a voter and her less-preferred party increases the compensating transfer required to overturn partisan preferences, it is cheaper to buy the pivotal vote from a core supporter than from an opponent. This reproduces the classic core-targeting intuition: minimal-cost vote buying directs transfers toward ideologically proximate voters \parencite{Cox1986,Zarazaga2015a}.
+This logic yields clear implications for targeting. In party-initiated vote buying, parties must choose whom to approach. Because the ideological distance between a voter and her less-preferred party increases the compensating transfer required to overturn partisan preferences, it is cheaper to buy support from a core supporter than from an opponent. This reproduces the classic core-targeting intuition: minimal-cost vote buying directs transfers toward ideologically proximate voters \parencite{Cox1986,Zarazaga2015a}.
 
 Reversing the order of moves changes how voters position themselves in the clientelistic market. Building on prospect theory \parencite{Tversky1992a}, we posit that electorally advantaged parties evaluate even small risks of defeat as losses and overweight them. Low-probability defeats are therefore treated as potentially catastrophic, triggering strong insurance motives \parencite[184]{Levy1992a}. From the voter's perspective, this makes electorally strong parties particularly attractive counterparts. Importantly, this is not because initiative increases willingness to pay \emph{per se}, but because voters can strategically exploit pre-existing loss aversion when they are allowed to set prices.
 
-Initiative also shapes utilities by determining who captures the surplus generated by loss-averse behavior. When parties initiate vote buying, loss aversion operates at the moment of commitment, leading parties to overspend and allowing voters to capture a larger share of the surplus. When voters initiate vote selling, by contrast, parties can screen and reject costly proposals before committing to insure against defeat, leaving some voters with only ideological payoffs. Together, these patterns imply that voters earn higher expected payoffs when parties move first, whereas parties fare at least as well---and often better---when voters initiate the exchange.
+Initiative also shapes utilities by determining who captures the surplus generated by loss-averse behavior. When parties initiate vote buying, loss aversion operates at the moment of commitment, leading parties to overspend and allowing voters to capture a larger share of the surplus. When voters initiate vote selling, by contrast, parties can screen and reject costly proposals before committing to insure against defeat, leaving some voters with only ideological payoffs. Together, these patterns imply that voters should earn higher expected payoffs when parties move first, whereas parties should fare at least as well---and often better---when voters initiate the exchange, provided that party-initiated offers include a positive insurance premium and voter-initiated requests are rejected with sufficient frequency.
 
-The three hypotheses below make these contrasts explicit by pairing the party-initiated logic of core targeting with a voter-initiated logic of selling to electorally strong opponents, and by comparing payoffs across the two institutional variants.
+The three hypotheses below make these contrasts explicit by pairing the party-initiated logic of core targeting with a voter-initiated logic of requesting higher prices from electorally strong opponents, and by comparing payoffs across the two institutional variants.
 
 \begin{hyp}[Core Targeting Under Party Initiative]\label{hyp:core_targeting}
 When parties initiate the exchange, transfers concentrate on ideologically proximate voters. Parties primarily buy votes from their core constituencies rather than from ideologically distant opponents.
 \end{hyp}
 
-\begin{hyp}[Selling to the Opponent Winning Party]\label{hyp:selling_opponent}
-When voters initiate the exchange, they are more likely to sell their votes to the party expected to win the election, even if that party is ideologically distant, provided that its electoral stake is sufficiently large to sustain an acceptable transfer.
+\begin{hyp}[Selling to Electorally Strong Parties]\label{hyp:selling_opponent}
+When voters initiate the exchange, they request higher prices from parties with larger effective willingness to pay, especially electorally strong parties whose risk of losing makes the negotiated vote valuable. This pricing effect is strongest when the party is ideologically distant and electorally strong.
 \end{hyp}
 
 \begin{hyp}[Higher Voter Payoffs Under Party Initiative]\label{hyp:higher_voter_payoffs}
-Because parties systematically overweight prospective electoral losses, initiating vote buying places them in a loss frame that induces them to insure against defeat by overspending on pivotal support, even in electorally favorable contexts. When voters initiate vote selling, by contrast, parties evaluate proposed prices before committing to buying insurance and can reject costly offers without activating the same loss-averse response. As a result, voters capture higher expected payoffs under party-initiated vote buying than under voter-initiated vote selling.
+When parties initiate vote buying, electoral risk can induce them to offer an insurance premium above the minimum compensating transfer required to secure support. When voters initiate vote selling, by contrast, parties evaluate proposed prices before committing resources and can reject costly requests. As a result, voters should receive higher expected payoffs under party-initiated vote buying than under voter-initiated vote selling when party offers include a positive insurance premium and rejection is sufficiently common in the voter-initiated game.
 \end{hyp}
 
 
 
 
 
-\section{A Formal Model of Vote Buying and Vote Selling}\label{sec:formal_theory}
+\section{A Prospect-Theoretic Model of Vote Buying and Vote Selling}
+\label{sec:formal_theory}
 
-To formalize the targeting mechanisms outlined above, we develop a simple spatial model of clientelistic exchange that admits two institutional variants: a party-initiated vote-buying game and a voter-initiated vote-selling game. The structure closely parallels the experimental design.\footnote{The experimental implementation preserves the model's core comparative-statics logic by holding fixed ideology, budgets, transfer opportunities, and move order while varying electoral strength through deterministic vote shares. The correspondence is exact in configurations in which the subject voter is pivotal to the electoral outcome. In nonpivotal configurations, the experiment extends the model by allowing electoral risk to vary more broadly; these rounds therefore provide a test of whether the same directional logic persists when the voter's vote is not decisive.}
+In this section we formalize the argument in a simple spatial model of clientelistic exchange. The model has two purposes. First, it identifies the ideological cost of buying a vote: parties must compensate voters for supporting a less-preferred alternative. Second, it incorporates the prospect-theoretic claim that parties evaluate possible electoral defeat as a loss relative to a reference point, which increases their willingness to insure against adverse electoral outcomes. The key comparison is institutional: in vote buying, parties initiate the exchange and commit resources before observing the voter's final choice; in vote selling, voters set prices and parties can accept or reject those prices before committing resources.
 
-\paragraph{Players, preferences, and electoral stakes.}
+\subsection{Players, ideology, and transfers}
 
-There are two parties, $i \in \{A,B\}$, and a single pivotal voter $j$. The policy space is one-dimensional, $\gamma \in \Gamma = \{1,\dots,100\}$, with $\gamma_A < \gamma_B$. The voter has an ideal point $x_j$ drawn independently from the same distribution. If party $i$ wins, the voter receives ideological utility
-\begin{equation}
-u_j(\gamma_i) \;=\; D - \lvert x_j - \gamma_i \rvert,
-\end{equation}
-with $D$ large enough to keep utilities non-negative. Let
-\begin{equation}
-i^\ast \;=\; \arg\max_{i \in \{A,B\}} u_j(\gamma_i)
-\end{equation}
-denote the voter's preferred (core) party.
+There are two parties, \(L\) and \(R\), with policy positions \(\gamma_L\) and \(\gamma_R\) on a one-dimensional policy space \(\Gamma=\{1,\dots,100\}\). Voter \(j\) has ideal point \(x_j\). If party \(i\) wins and implements policy \(\gamma_i\), voter \(j\)'s ideological utility is
 
-The voter is pivotal with probability $\pi>0$. Party $i$ values winning at $W_i>0$, so the expected benefit of securing the pivotal vote is:
-\begin{equation}
-R_i \;=\; \pi W_i.
-\end{equation}
-We interpret $R_i$ as party $i$'s electoral stake or risk.
+\begin{align}
+u_j(\gamma_i)=D-|x_j-\gamma_i|,
+\end{align}
 
-Transfers consist of non-negative private benefits. Transfers offered by parties in the vote-buying game are denoted $s_i$, and minimum acceptable transfers requested by the voter in the vote-selling game are denoted $a_i$.
+\noindent where \(D\) is sufficiently large to keep ideological utility non-negative. If voter \(j\) supports party \(i\) and receives transfer \(t_i \geq 0\), total voter utility is
 
-The voter's total utility from voting for party $i$ and receiving transfer $t_i$ is:
-\begin{equation}
-U_j(i,t_i) \;=\; u_j(\gamma_i) + t_i.
-\end{equation}
+\begin{align}
+U_j(i,t_i)=u_j(\gamma_i)+t_i.
+\end{align}
 
-%----------------------------------------------------------
-\subsection*{Game 1: Party-Initiated Vote Buying}
+Let \(i^\ast\) denote the voter's preferred party:
 
-\begin{enumerate}
-\item Nature draws $(x_j,\gamma_A,\gamma_B)$ and $(R_A,R_B)$ and reveals them to all players.
-\item Each party $i$ simultaneously chooses a transfer offer $s_i \in [0,\bar{B}]$.
-\item The voter observes $(s_A,s_B)$ and chooses which party to support.
-\end{enumerate}
+\begin{align}
+i^\ast=\arg\max_{i\in\{L,R\}} u_j(\gamma_i).
+\end{align}
 
-If the voter selects party $i$, she receives $s_i$, and party $i$ receives net payoff $R_i - s_i$. The losing party receives zero.
+The voter's ideological advantage for the preferred party is
 
-Define the ideological advantage of the core party as:
-\begin{equation}
-\Delta \;=\; u_j(\gamma_{i^\ast}) - u_j(\gamma_{-i^\ast}) \;>\; 0.
-\end{equation}
+\begin{align}
+\Delta \equiv u_j(\gamma_{i^\ast})-u_j(\gamma_{-i^\ast})>0.
+\end{align}
 
-This is the minimal compensating transfer needed to overturn the voter's ideological preference.
+Thus, \(\Delta\) is the minimum ideological compensation required to make the voter willing to support the less-preferred party, holding transfers from the preferred party fixed.
 
-In symmetric environments with $R_A = R_B = R$ and $R > \Delta$, standard undercutting arguments imply:
-\begin{equation}
-s^{VB}_{i^\ast} = \Delta, \qquad s^{VB}_{-i^\ast} = 0.
-\end{equation}
+Each party has budget \(B_i>0\). Party \(i\)'s expected electoral stake from securing the negotiated voter is
 
-Thus the core party buys the vote at minimal cost.
+\begin{align}
+R_i=q(v_i,P_d)W_i,
+\end{align}
 
-\begin{proposition}[Core Targeting in Vote Buying]\label{prop:core_buying}
-In the party-initiated vote-buying game, whenever purchasing the pivotal vote is profitable, there exists an equilibrium in which the ideologically preferred party $i^\ast$ buys the vote with the minimal compensating transfer $\Delta$, while the opponent does not buy. Transfers therefore concentrate on core voters.
+\noindent where \(W_i>0\) is the value of winning, \(v_i\) denotes party \(i\)'s electoral position, and \(P_d\) denotes whether the negotiated voter is pivotal in dyad \(d\). The function \(q(v_i,P_d)\in[0,1]\) captures the extent to which securing the voter protects party \(i\) from electoral loss. In the experiment, we operationalize this electoral stake with two observable components: the party's initial vote share and an indicator for whether the negotiated voter is pivotal.
+
+\subsection{Party loss aversion}
+
+Under expected-payoff maximization, party \(i\)'s willingness to pay for the voter is bounded by \(R_i\). A party would not rationally spend more than the expected electoral value of the vote. Our theoretical framework departs from this benchmark by assuming that parties evaluate possible electoral defeat relative to a reference point. Let \(\lambda_i\geq 1\) denote party \(i\)'s loss-aversion parameter, where \(\lambda_i=1\) corresponds to the expected-payoff benchmark and \(\lambda_i>1\) captures the prospect-theoretic claim that losses, evaluated relative to a reference point, loom larger than comparable gains \parencite{Kahneman1979}.
+
+Let \(\ell_i\in[0,1]\) denote the salience of electoral loss for party \(i\). Loss salience is higher when the negotiated vote can plausibly affect the party's electoral outcome: for example, when the voter is pivotal, when the party holds an electorally favorable but vulnerable position, or when failing to secure the vote would turn a likely victory into a possible defeat. Party \(i\)'s prospect-theoretic valuation of securing the negotiated voter is
+
+\begin{align}
+\widetilde{R}_i = \left[1+(\lambda_i-1)\ell_i\right]R_i.
+\end{align}
+
+When \(\lambda_i=1\) or \(\ell_i=0\), this collapses to the expected-payoff valuation \(R_i\). When \(\lambda_i>1\) and electoral loss is salient, the party's perceived value of buying insurance against defeat exceeds the expected-payoff value of the vote.
+
+Because parties cannot spend more than their available resources, define party \(i\)'s effective willingness to pay as
+
+\begin{align}
+\overline{R}_i = \min\{B_i,\widetilde{R}_i\}.
+\end{align}
+
+This term is central to both institutional variants. It is the maximum transfer party \(i\) is willing and able to pay for the negotiated vote.
+
+\subsection{Vote selling: voters set prices}
+
+We first consider the voter-initiated game. The voter observes ideology, budgets, and parties' electoral positions. The voter then proposes a transfer request \(a_i\geq 0\) to each party \(i\). Each party simultaneously accepts or rejects the requested price. If at least one party accepts, the voter supports the accepting party that maximizes \(u_j(\gamma_i)+a_i\). If no party accepts, the voter votes according to ideology.
+
+Party \(i\) accepts a request \(a_i\) only if the requested transfer does not exceed its effective willingness to pay:
+
+\begin{align}
+a_i \leq \overline{R}_i.
+\label{eq:selling_acceptance}
+\end{align}
+
+Anticipating this acceptance rule, the voter chooses requests subject to the parties' participation constraints. The highest feasible request from party \(i\) is therefore \(\overline{R}_i\). Hence, the voter can extract more from parties with larger effective willingness to pay.
+
+\begin{proposition}[Voter-initiated pricing]
+\label{prop:selling_strong}
+In the voter-initiated game, the highest acceptable price the voter can request from party \(i\) is \(\overline{R}_i\). The voter sells to the party that maximizes
+\[
+u_j(\gamma_i)+\overline{R}_i.
+\]
+The voter supports the less-preferred party if and only if
+\[
+\overline{R}_{-i^\ast}-\overline{R}_{i^\ast}\geq \Delta.
+\]
 \end{proposition}
 
-%----------------------------------------------------------
-\subsection*{Game 2: Voter-Initiated Vote Selling}
+\noindent \textbf{Proof.} By \autoref{eq:selling_acceptance}, party \(i\) rejects any request above \(\overline{R}_i\) and accepts any request weakly below \(\overline{R}_i\). Therefore, the voter cannot extract more than \(\overline{R}_i\) from party \(i\). Conditional on acceptance, the voter chooses the party that maximizes ideological utility plus the accepted transfer. The less-preferred party is chosen when its accepted transfer advantage is at least as large as the voter's ideological advantage for the preferred party. \(\square\)
 
-\begin{enumerate}
-\item Nature draws $(x_j,\gamma_A,\gamma_B)$ and $(R_A,R_B)$ and reveals them.
-\item The voter proposes a pair of minimum acceptable transfers $(a_A,a_B)$.
-\item Each party $i$ accepts ($b_i = 1$) or rejects ($b_i = 0$).
-\end{enumerate}
+This proposition generates the vote-selling prediction. Voters demand higher prices from parties with larger effective willingness to pay. Because \(\overline{R}_i\) increases with electoral stakes, pivotality, and loss salience, parties with more to lose from failing to secure the vote become attractive targets for vote sellers. In the experiment, this exposure is captured by the party's initial vote share and by whether the negotiated voter is pivotal. However, ideological distance still matters: the larger \(\Delta\), the more compensation the voter requires to sell to the less-preferred party.
 
-Party $i$ accepts if and only if
-\begin{equation}
-a_i \;<\; R_i,
-\end{equation}
-so $R_i$ is party $i$'s maximum willingness to pay. Equivalently, the voter can set requests arbitrarily close to each party's willingness to pay by choosing $a_i = R_i - \varepsilon$ for some $\varepsilon>0$.
+\subsection{Vote buying: parties set offers}
 
-Let $k \in \{A,B\}$ denote the electorally stronger party, so $R_k > R_{-k}$, and consider the empirically relevant case where $k \neq i^\ast$. (Here, $W_i$ denotes party $i$'s utility of winning, whereas $k$ indexes the party with higher electoral stakes $R_i$.)
+We now consider the party-initiated game. The environment is the same, but the order of moves changes. Parties simultaneously choose offers \(s_i\geq 0\), with \(s_i\leq B_i\). The voter observes both offers and supports the party that maximizes \(u_j(\gamma_i)+s_i\). If neither offer changes the voter's choice, the voter supports the preferred party.
 
-If both parties accept, the voter chooses $k$ whenever
-\begin{equation}
-u_j(\gamma_k) + a_k \;\ge\; u_j(\gamma_{i^\ast}) + a_{i^\ast}
-\quad\Longleftrightarrow\quad
-a_k - a_{i^\ast} \;\ge\; \Delta.
-\end{equation}
+Party \(i\)'s minimum compensating transfer depends on the voter's ideological position and on the rival offer. Given rival offer \(s_{-i}\), party \(i\) can secure the voter only if
 
-There exists a band of prices satisfying
-\begin{equation}
-\Delta \;\le\; a_k - a_{i^\ast} \;\le\; R_k - R_{i^\ast},
-\end{equation}
-within which both parties accept but the vote is sold to $k$.
+\begin{align}
+u_j(\gamma_i)+s_i \geq u_j(\gamma_{-i})+s_{-i}.
+\end{align}
 
-The voter maximizes her material payoff by setting
-\begin{equation}
-a_k^{VS} = R_k - \varepsilon, \qquad \varepsilon > 0,
-\end{equation}
-with $a_{i^\ast}$ chosen low enough to satisfy the inequality above.
+Equivalently, party \(i\)'s minimum required offer is
 
-\begin{proposition}[Selling to the Opponent Winning Party]\label{prop:selling_strong}
-If the electorally stronger party $k$ is ideologically distant ($k \neq i^\ast$ and $R_k > R_{i^\ast}$), then in the vote-selling game there exists an equilibrium in which both parties accept the voter's proposals but the vote is sold to $k$. Vote selling thus directs transfers toward the opponent expected to win the election.\footnote{This result is conditional as it arises only when the stronger party's electoral stake is sufficiently large to support a feasible agreement despite ideological distance.}
+\begin{align}
+c_i(s_{-i}) = \max\{0,\ u_j(\gamma_{-i})+s_{-i}-u_j(\gamma_i)\}.
+\end{align}
+
+For the voter's preferred party \(i^\ast\), this cost is relatively low because the voter already prefers that party ideologically. For the less-preferred party, the cost includes the ideological disadvantage \(\Delta\). Thus, buying support from ideologically proximate voters is cheaper than buying support from opponents.
+
+Parties initiate vote buying only when the perceived value of securing the voter exceeds the minimum compensating transfer. Party \(i\) is willing to make a successful offer whenever
+
+\begin{align}
+c_i(s_{-i}) \leq \overline{R}_i.
+\label{eq:buying_condition}
+\end{align}
+
+When \(\lambda_i=1\), this is the standard expected-payoff condition. When \(\lambda_i>1\) and electoral loss is salient, \(\overline{R}_i\) can exceed \(R_i\), allowing parties to make offers that are larger than the expected-payoff value of the vote. This is the formal counterpart of over-insurance.
+
+\begin{proposition}[Party-initiated targeting]
+\label{prop:core_buying}
+In the party-initiated game, the minimum transfer required to secure the negotiated voter is increasing in ideological distance from the party. Therefore, holding budgets and electoral stakes constant, parties are weakly more likely to buy votes from ideologically proximate voters than from ideologically distant opponents.
 \end{proposition}
+
+\noindent \textbf{Proof.} Party \(i\)'s minimum successful offer is \(c_i(s_{-i})\). This cost is lower when \(u_j(\gamma_i)\) is higher relative to \(u_j(\gamma_{-i})\). For the voter's preferred party, the ideological advantage reduces the transfer required to secure support. For the less-preferred party, the party must compensate the voter for the ideological loss \(\Delta\). Since party \(i\) makes a successful offer only when \(c_i(s_{-i})\leq \overline{R}_i\), lower ideological distance makes successful vote buying more feasible. \(\square\)
+
+This proposition recovers the core-targeting prediction without requiring the preferred party to pay exactly \(\Delta\). The expected-payoff logic explains why proximate voters are cheaper to buy. The prospect-theoretic component explains why parties may still pay more than the minimum compensating transfer when electoral loss is salient.
+
+\subsection{Initiative and surplus}
+
+The two institutional variants differ not in preferences, budgets, or ideology, but in when loss-averse insurance is activated. In the party-initiated game, parties must decide how much to offer before the voter chooses. Because the offer is the moment of commitment, electoral loss is salient when parties choose transfers. Loss-averse parties may therefore offer more than the minimum compensating transfer required to secure support. Let the party-initiated offer be written as
+
+\begin{align}
+s_i = c_i(s_{-i}) + \rho_i,
+\end{align}
+
+\noindent where \(\rho_i\geq 0\) is an insurance premium. This premium is increasing in loss aversion and loss salience:
+
+\begin{align}
+\rho_i = \rho(\lambda_i,\ell_i,R_i),
+\qquad
+\frac{\partial \rho_i}{\partial \lambda_i}\geq 0,
+\quad
+\frac{\partial \rho_i}{\partial \ell_i}\geq 0,
+\quad
+\frac{\partial \rho_i}{\partial R_i}\geq 0.
+\end{align}
+
+By contrast, in the voter-initiated game, the voter names prices and parties decide whether to accept them. Parties can reject costly proposals before committing resources. This screening stage limits the voter's ability to extract the full insurance premium from loss-averse parties. Thus, voter-initiated exchange can generate high requested prices, especially from electorally strong parties, but it also produces rejected offers when requested prices exceed \(\overline{R}_i\).
+
+\begin{proposition}[Initiative and voter payoffs]
+\label{prop:voter_payoffs}
+When parties are loss averse and electoral loss is salient, party-initiated vote buying yields higher voter transfers than the minimum compensating transfer. Voter-initiated vote selling allows voters to request high prices from electorally exposed parties, but parties can reject prices above \(\overline{R}_i\). Therefore, voters receive higher expected payoffs under party-initiated vote buying when the party insurance premium is positive and rejection is sufficiently common in the voter-initiated game.
+\end{proposition}
+
+\noindent \textbf{Proof.} In the party-initiated game, voters receive \(s_i=c_i(s_{-i})+\rho_i\), where \(\rho_i>0\) whenever loss aversion and loss salience induce parties to insure beyond the minimum compensating transfer. In the voter-initiated game, voters can request up to \(\overline{R}_i\), but any request above \(\overline{R}_i\) is rejected and yields no transfer from that party. Thus, party initiative increases voter payoffs through the insurance premium, whereas voter initiative exposes voters to rejection risk. Expected voter payoffs are higher under party initiative when the expected insurance premium exceeds the expected loss from rejected voter requests. \(\square\)
+
+
+
+
 
 
 \section{Experimental Design and Procedures}
@@ -545,7 +605,7 @@ Each subject played three independent games. For every new game we reran the ful
 
 \subsection{Roles, ideology, and electoral risk}
 
-At the beginning of every game, participants were randomly assigned to one of three roles---``Party A,'' ``Party B,'' or ``Voter''---and each round was played among exactly three players, one in each role. The experiment implements two institutional variants of the same clientelistic exchange, identical in every dimension except the sequencing of moves. \autoref{fig:Experimental_Flow} shows the flow of the experiment. In the party-initiated vote-buying game, the two parties simultaneously decide how many points to offer before the voter chooses which party to support; in the voter-initiated vote-selling game, the voter first proposes a pair of minimum acceptable transfers and the parties then simultaneously decide whether to accept. All other elements of the strategic environment---ideological positions, budgets, fictional vote shares, pivotality, and payoff consequences---are held constant across the two variants. Thus, this design isolates the effect of initiative on targeting, pricing, and equilibrium utilities while preserving a common informational structure that matches the formal model.
+At the beginning of every game, participants were randomly assigned to one of three roles---``Party A,'' ``Party B,'' or ``Voter''---and each round was played among exactly three players, one in each role. The experiment implements two institutional variants of the same clientelistic exchange, identical in every dimension except the sequencing of moves. \autoref{fig:Experimental_Flow} shows the flow of the experiment. In the party-initiated vote-buying game, the two parties simultaneously decide how many points to offer before the voter chooses which party to support; in the voter-initiated vote-selling game, the voter first proposes a pair of minimum acceptable transfers and the parties then simultaneously decide whether to accept. All other elements of the strategic environment---ideological positions, budgets, fictional vote shares, pivotality, and payoff consequences---are held constant across the two variants. Thus, this design isolates the effect of initiative on targeting, pricing, and realized payoffs while preserving a common informational structure that matches the formal model.
 
 \begin{figure}[htbp]
   \centering
@@ -554,7 +614,7 @@ At the beginning of every game, participants were randomly assigned to one of th
   \label{fig:Experimental_Flow}
 \end{figure}
 
-Voters were assigned an ``ideological'' position by being told how many points they would earn if party A or party B won the election. For example, a voter might earn 2{,}400 points if party A won but only 200 points if party B won, which makes party A their ``ideologically'' preferred (core) party. Parties also received ideological positions that made them closer or farther from the voter in this payoff space.\footnote{This feature reproduces the one-dimensional spatial structure in our formal model: the difference in points across parties for the voter corresponds to the ideological utility difference $u_j(\gamma_{i^\ast}) - u_j(\gamma_{-i^\ast})$.} Next, both parties received identical budgets, randomly drawn from a set of possible endowments.\footnote{These budgets represent the resources $R_i$ that parties can invest in buying or acquiring votes.} Parties accumulated or lost wealth depending on whether they won the election and on how much they spent on transfers, thus incentivizing optimization over how much to invest in buying votes. Voters similarly gained or lost points depending on which party won, plus any transfers received, thereby creating incentives for optimization in their vote-selling decisions.
+Voters were assigned an ``ideological'' position by being told how many points they would earn if party A or party B won the election. For example, a voter might earn 2{,}400 points if party A won but only 200 points if party B won, which makes party A their ``ideologically'' preferred (core) party. Parties also received ideological positions that made them closer or farther from the voter in this payoff space.\footnote{This feature reproduces the one-dimensional spatial structure in our formal model: the difference in points across parties for the voter corresponds to the ideological utility difference $u_j(\gamma_{i^\ast}) - u_j(\gamma_{-i^\ast})$.} Next, both parties received identical budgets, randomly drawn from a set of possible endowments.\footnote{These budgets represent the resources \(B_i\) that parties can invest in buying or acquiring votes.} Parties accumulated or lost wealth depending on whether they won the election and on how much they spent on transfers, thus incentivizing optimization over how much to invest in buying votes. Voters similarly gained or lost points depending on which party won, plus any transfers received, thereby creating incentives for optimization in their vote-selling decisions.
 
 To introduce electoral risk and pivotality, we displayed a fictional electorate: each party was assigned an initial vote share, expressed as the number of (hypothetical) voters already committed to supporting that party. The total number of fictional voters varied across games (three or five), and the initial allocation of those voters between A and B implied either a safe seat or a close race. The real experimental subject voter in our study could therefore be either pivotal or nonpivotal in this hypothetical electorate.\footnote{In the experiment, the pivotal indicator equals 1 only in minimal-winning configurations: specifically, when the fictional electorate consists of three voters with a 2--1 split, or five voters with a 3--2 split, in favor of the voter's initially preferred party. In all other configurations the voter is nonpivotal (pivotal $=0$), including 3--0, 1--2, 0--3 in three-voter electorates, and 4--1, 1--4, 5--0, or 0--5 in five-voter electorates. Consequently, pivotal $=0$ corresponds to multiple distinct vote shares, whereas pivotal $=1$ is restricted to a narrow set of knife-edge cases.} All of this information (ideology, budgets, contestation, and pivotality) was public knowledge to all participants.
 
@@ -564,12 +624,12 @@ To introduce electoral risk and pivotality, we displayed a fictional electorate:
 
 \paragraph{Game 1: party-initiated vote buying.} In the first variant, parties initiate the transaction. After observing the ideological positions, budgets, and initial vote shares, each party simultaneously decides how many points to offer the voter, choosing any non-negative amount up to its budget. Both parties make their offers without observing the other's choice. Offering zero points is equivalent to not buying votes in that round. The voter then observes both offers (if any) and chooses which party to support. If at least one party makes an offer, voting for that party yields the corresponding transfer plus the ideological payoff associated with that party's victory. If both parties make offers, the voter chooses one (or none). If no party makes an offer, the voter, in expectation, simply votes for the party that gives them higher ideological payoff. After the vote is cast, a hypothetical election is resolved and payoffs are realized.
 
-\paragraph{Game 2: voter-initiated vote selling.} In the second variant, the order of moves is reversed while holding fixed the information structure and payoffs. After observing ideology, budgets, and vote shares, the voter proposes a pair of minimum acceptable transfers, one for each party. Each party submits its decision without observing the other party's decision. These requested prices represent the minimum amount the voter is willing to accept from each party in exchange for their vote.\footnote{Denoted $a_A$ and $a_B$ in the formal model.} Parties then simultaneously decide whether to accept or reject the requested price. A party pays the requested amount only if it accepts the offer and the voter ultimately chooses it. If at least one party accepts, the voter chooses which party to support, taking into account both the requested transfer and their ideological preferences. If no party accepts, the voter again votes solely (and in expectation) on ideology. As before, after the vote is cast the election is resolved and material payoffs are realized.
+\paragraph{Game 2: voter-initiated vote selling.} In the second variant, the order of moves is reversed while holding fixed the information structure and payoffs. After observing ideology, budgets, and vote shares, the voter proposes a pair of minimum acceptable transfers, one for each party. Each party submits its decision without observing the other party's decision. These requested prices represent the minimum amount the voter is willing to accept from each party in exchange for their vote. Parties then simultaneously decide whether to accept or reject the requested price. A party pays the requested amount only if it accepts the offer and the voter ultimately chooses it. If at least one party accepts, the voter chooses which party to support, taking into account both the requested transfer and their ideological preferences. If no party accepts, the voter again votes solely (and in expectation) on ideology. As before, after the vote is cast the election is resolved and material payoffs are realized.
 
 
 \section{Econometric Strategy}\label{sec:methods}
 
-This section links the theoretical predictions in \autoref{prop:core_buying} and \autoref{prop:selling_strong} to the experimental data by testing the three hypotheses outlined above. We proceed in four steps. First, we describe the empirical distributions of vote-buying offers and vote-selling requests to motivate our modeling choices (\autoref{fig:depvarplot}). Second, we test core targeting under party initiative (\autoref{hyp:core_targeting}) by modeling parties' offers in the vote-buying game (\autoref{fig:H1_combined}). Third, we analyze how voters price their pivotal vote under voter-initiated exchange (\autoref{hyp:selling_opponent}) using the vote-selling model with an interaction between ideological distance and electoral strength (\autoref{fig:m1plot}). Finally, we compare observed payoffs across institutional variants to assess how initiative redistributes surplus between voters and parties (\autoref{hyp:higher_voter_payoffs}; \autoref{fig:payoffs_plot}).
+This section links our theoretical predictions to the experimental data by testing the three hypotheses outlined above. We interpret the estimates as behavioral tests of the model's comparative statics, not as direct estimates of equilibrium strategies or structural parameters. We proceed in four steps. First, we describe the empirical distributions of vote-buying offers and vote-selling requests to motivate our modeling choices (\autoref{fig:depvarplot}). Second, we test core targeting under party initiative (\autoref{hyp:core_targeting}) by modeling parties' offers in the vote-buying game (\autoref{fig:H1_combined}). Third, we analyze how voters price their vote under voter-initiated exchange (\autoref{hyp:selling_opponent}) using the vote-selling model with an interaction between ideological distance and electoral strength (\autoref{fig:m1plot}). Finally, we compare observed payoffs across institutional variants to assess whether party initiative generates higher voter payoffs, as expected when party offers include an insurance premium and voter-initiated requests are vulnerable to rejection (\autoref{hyp:higher_voter_payoffs}; \autoref{fig:payoffs_plot}).
 
 \subsection{Distributions of vote-buying offers and vote-selling requests}
 
@@ -582,13 +642,13 @@ This section links the theoretical predictions in \autoref{prop:core_buying} and
   \label{fig:depvarplot}
 \end{figure}
 
-Vote-buying offers cluster heavily at two points: zero (opting not to buy) and a small interior value corresponding to the minimal compensating transfer implied by the ideological distance between the voter and the party. This pattern is consistent with the equilibrium derived in \autoref{prop:core_buying}, where the core party typically offers exactly the compensating transfer $\Delta$ and the opponent often offers nothing. 
+Vote-buying offers cluster heavily at two points: zero (opting not to buy) and a small interior value corresponding to the compensating transfer implied by the ideological distance between the voter and the party. This pattern is consistent with the formal logic in \autoref{sec:formal_theory}: parties are less likely to make offers when ideological distance raises the cost of buying support, while positive offers must compensate voters for the ideological loss associated with supporting a less-preferred party. 
 
 By contrast, vote-selling requests are more dispersed. Many voters request close to zero from at least one party, indicating that ideological benefits alone sometimes suffice to secure their support. At the same time, a substantial share of requests approach or reach the full party budget (especially when bargaining with electorally strong parties, as \autoref{fig:m1plot} suggests). This variation makes the vote-selling environment particularly well suited for testing how ideological distance and electoral stakes jointly shape pricing behavior.
 
 \subsection{Core targeting under party initiative}
 
-To test \autoref{hyp:core_targeting}, we estimate two models of party behavior in the vote-buying game: one predicting the \emph{size} of positive offers (\autoref{eq:buying_main}) and another predicting whether a party makes \emph{any} offer.\footnote{For this specification, we estimate a logit model for the probability that a party makes any offer. Both models suggest the same results. See \autoref{tab:H1_regressions}.} Both specifications include ideological distance, vote share, and pivotality as predictors. The results of both models are summarized in \autoref{fig:H1_combined}.
+To test \autoref{hyp:core_targeting}, we estimate two models of party behavior in the vote-buying game: one predicting the \emph{size} of positive offers (\autoref{eq:buying_main}) and another predicting whether a party makes \emph{any} offer.\footnote{For this specification, we estimate a logit model for the probability that a party makes any offer. Both models suggest the same substantive results. See \autoref{tab:H1_regressions}.} Both specifications include ideological distance, vote share, and pivotality as predictors. The results of both models are summarized in \autoref{fig:H1_combined}.
 
 For the continuous specification, we model the size of the offer that party $i$ makes to the voter in dyad $d$ as a function of ideological distance, electoral strength, and pivotality:
 
@@ -603,26 +663,23 @@ Here, $\text{Offer}_{di}$ is the (strictly positive) transfer the party proposes
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.75\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_combined.pdf}
-  \caption{Predicted size of vote-buying offers conditional on a positive offer (left panel) and probability of making any offer (right panel) as a function of ideological distance.  Predictions obtained from \autoref{eq:buying_main} and the corresponding logit model for any offer (see \autoref{tab:H1_regressions}). Shaded regions show 95\% cluster--robust confidence intervals.}
-  \label{fig:H1_combined}
+\caption{Predicted probability of making any vote-buying offer (left panel) and predicted size of vote-buying offers conditional on a positive offer (right panel) as a function of ideological distance. Predictions obtained from \autoref{eq:buying_main} and the corresponding logit model for any offer (see \autoref{tab:H1_regressions}). Shaded regions show 95\% cluster--robust confidence intervals.}  \label{fig:H1_combined}
 \end{figure}
 
-The two models capture distinct margins of party behavior. As ideological distance increases, parties become less likely to make any offer at all (right panel). Conditional on making an offer, however, parties pay larger transfers to ideologically more distant voters (left panel), reflecting the higher compensation required to overturn ideological preferences. This provides direct empirical support for \ref{hyp:core_targeting}: when parties initiate the exchange, transfers concentrate on ideologically proximate (core) voters, primarily through the extensive margin of whether parties choose to buy votes at all.
+The two models capture distinct margins of party behavior. As ideological distance increases, parties become less likely to make any offer at all (left panel). Conditional on making an offer, however, parties pay larger transfers to ideologically more distant voters (right panel), reflecting the higher compensation required to overturn ideological preferences. Thus, \ref{hyp:core_targeting} is supported primarily on the extensive margin: parties are less likely to target ideologically distant voters, even though successful offers to such voters must be larger when they are made. Because the experiment does not separately identify the minimum compensating transfer and the insurance premium, we use offer size and payoff differences as behavioral implications of this mechanism rather than as direct estimates of \(\rho_i\).
 
-
-%The logit model suggests that as ideological distance increases, parties become somewhat less likely to make any offer (right panel). The OLS estimates for offer size are imprecise and do not show a clear monotonic pattern
 
 \subsection{Who pays how much? Ideology, electoral strength, and the price of a vote}
 
-The vote-selling environment is where core-swing behavior can be studied from the seller's perspective---which is the core of our contribution---and it therefore becomes the focus of our identification strategy. This setting allows us to test one of the key comparative statics implied by \autoref{prop:selling_strong}: that voters should demand higher prices from electorally strong parties, especially when those parties are ideologically distant. The dependent variable in the vote-selling model is the price that the voter requests from party $i$ in dyad $d$, expressed as a percentage of party $i$'s budget.\footnote{Formally,
+The vote-selling environment is where core-swing behavior can be studied from the seller's perspective---which is the core of our contribution---and it therefore becomes the focus of our identification strategy. This setting allows us to test one of the key comparative statics implied in \autoref{sec:formal_theory}: that voters should demand higher prices from parties with greater effective willingness to pay, especially when those parties are ideologically distant and electorally exposed. The dependent variable in the vote-selling model is the price that the voter requests from party $i$ in dyad $d$, expressed as a percentage of party $i$'s budget.\footnote{Formally,
 \[
 Y_{di} \equiv \frac{a_{di}}{B_{di}} \times 100,
 \]
-where $a_{di}$ is the minimum acceptable transfer requested from party $i$ and $B_{di}$ is that party's budget. This transformation makes prices comparable across rounds with different budgets and corresponds directly to the theoretical interpretation of transfers as fractions of parties' electoral stakes $R_i$. $Y_{di}$ is therefore the share of a party's available resources that the voter demands in order to sell her vote. Thus, in the voter-initiated game, the requested price is not merely a stated preference but the voter's binding reservation price for a completed transaction: if party $i$ accepts $a_i$, the exchange is implemented and the voter casts the corresponding vote for that party. The dependent variable therefore captures the terms under which vote selling occurs, not cheap talk.}
+where $a_{di}$ is the transfer requested from party $i$ and $B_{di}$ is that party's budget. This transformation makes prices comparable across rounds with different budgets and expresses each request as a share of the resources available to that party. Thus, $Y_{di}$ is the percentage of party \(i\)'s budget that the voter requests in the voter-initiated game.}
 
-In \autoref{eq:main}, the main explanatory variables are the ideological distance between the voter and party $i$ and the party's electoral strength, measured as its initial vote share in the fictional electorate. Ideological distance is defined as the absolute difference between the voter's ideological payoff and the party's ideological payoff, and vote share captures how likely a party is to win and is proportional to its electoral stake in the formal model. The specification also includes an indicator for whether the real voter is pivotal in the election, which accounts for the fact that pivotal voters may request systematically higher transfers, and a constant term that captures the baseline level of requested prices when all covariates are at zero.
+In \autoref{eq:main}, the main explanatory variables are the ideological distance between the voter and party $i$ and the party's electoral position, measured as its initial vote share in the fictional electorate. Ideological distance is defined as the absolute difference between the voter's ideological payoff and the party's ideological payoff. Vote share captures the party's electoral position, while the pivotality indicator captures whether the negotiated voter can directly affect the electoral outcome. Together, these variables operationalize the electoral-stake term \(R_i\) in the formal model. The specification also includes an indicator for whether the real voter is pivotal in the election, which accounts for the fact that pivotal voters may request systematically higher transfers, and a constant term that captures the baseline level of requested prices when all covariates are at zero.
 
-The theoretical logic of vote selling further implies that the effect of ideology on requested prices depends on how much each party stands to gain from securing the pivotal vote---that is, ideological distance should matter differently for electorally weak versus electorally strong parties. To capture this heterogeneity, we include an interaction between ideological distance and electoral strength (see \autoref{tab:H1_regressions}).\footnote{Following \textcite[77]{Brambor2006}, we do not interpret the coefficients of the constitutive terms in \autoref{tab:H1_regressions} as they lack substantive meaning.} This interaction term allows the slope of ideological distance to vary across different levels of vote share, which is essential for recovering the heterogeneous pricing incentives predicted by \autoref{prop:selling_strong}.
+The theoretical logic of vote selling further implies that the effect of ideology on requested prices depends on how much each party stands to gain from securing the negotiated vote---that is, ideological distance should matter differently for electorally weak versus electorally strong parties. To capture this heterogeneity, we include an interaction between ideological distance and electoral strength (see \autoref{tab:H1_regressions}).\footnote{Following \textcite[77]{Brambor2006}, we do not interpret the coefficients of the constitutive terms in \autoref{tab:H1_regressions} as they lack substantive meaning.} This interaction term allows the slope of ideological distance to vary across different levels of vote share.
 
 We therefore estimate the following linear model:
 
@@ -641,13 +698,13 @@ Standard errors are clustered by voter participant to account for repeated obser
   \label{fig:m1plot}
 \end{figure}
 
-Two findings emerge. First, when bargaining with electorally weak parties, requested prices decline as ideological distance increases. When the weak party is ideologically close, voters demand relatively high transfers to insure against the risk that the weak party might lose the election. As ideological distance grows, the ideological payoff from supporting that party falls, and voters request lower prices; for large distances, the predicted request approaches zero. Second, when bargaining with electorally strong parties, the relationship reverses: requested prices increase with ideological distance. When the strong party is ideologically proximate, voters request moderate transfers. But as ideological distance widens, voters sharply escalate their demands, often approaching the maximum amount the party can afford. This reflects the fact that strong parties have a higher stake in securing the pivotal vote and therefore a higher maximum willingness to pay \parencite{Bahamonde2022b}.\footnote{As captured by $R_i$ in \autoref{sec:formal_theory}.}
+Two findings emerge. First, when bargaining with electorally weak parties, requested prices decline as ideological distance increases. When the weak party is ideologically close, voters can request relatively high transfers because supporting that party imposes little ideological cost. As ideological distance grows, the ideological payoff from supporting that party falls, and voters request lower prices; for large distances, the predicted request approaches zero. Second, when bargaining with electorally strong parties, the relationship reverses: requested prices increase with ideological distance. When the strong party is ideologically proximate, voters request moderate transfers. But as ideological distance widens, voters sharply escalate their demands, often approaching the maximum amount the party can afford. This reflects the fact that strong parties have a higher stake in securing the negotiated vote and therefore, when the budget constraint does not bind, a higher effective willingness to pay \parencite{Bahamonde2022b}.\footnote{In the formal model, electoral strength enters \(R_i\), which in turn raises effective willingness to pay \(\overline{R}_i\) when the budget constraint does not bind.}
 
-The point estimate on the pivotal-voter indicator is positive but highly imprecise, and we do not find clear evidence that pivotal voters systematically request higher transfers (\autoref{tab:H1_regressions}). Taken together, these results provide empirical support for \autoref{hyp:selling_opponent}. When voters initiate the exchange, they strategically exploit variation in parties' electoral stakes, requesting higher prices from electorally strong (and often ideologically distant) parties. Vote selling therefore reallocates transfers toward electorally strong opponents in the configurations where their electoral stake is large enough to sustain agreement, as predicted in the formal model.
+The point estimate on the pivotal-voter indicator is positive but highly imprecise, and we do not find clear evidence that pivotal voters systematically request higher transfers (\autoref{tab:H1_regressions}). Taken together, these results provide empirical support for \autoref{hyp:selling_opponent}. When voters initiate the exchange, they strategically exploit variation in parties' electoral stakes, requesting higher prices from electorally strong (and often ideologically distant) parties. Vote selling therefore shifts requested prices toward electorally strong opponents in the configurations where their electoral stake is large enough to make agreement plausible, as predicted in the formal model.
 
 \subsection{Who benefits when the rules change? Payoffs across institutional variants}
 
-Finally, we examine how initiative shapes the distribution of surplus between voters and parties across the two institutional variants (\autoref{hyp:higher_voter_payoffs}). For each round, we compute the total payoff earned by voters and by parties under vote buying and vote selling.\footnote{Party A and Party B roles are pooled because they are symmetric in the design.} We then calculate design-based mean payoffs and non-parametric 90 percent confidence intervals for the mean in each institutional setting. Because subjects can appear in multiple rounds, we also conduct a one-sided difference-in-means test for voter payoffs across games. Random assignment of institutional variants across rounds ensures that differences in mean payoffs identify the causal effect of initiative on surplus allocation.
+Finally, we examine how initiative shapes the distribution of surplus between voters and parties across the two institutional variants (\autoref{hyp:higher_voter_payoffs}). For each round, we compute the total payoff earned by voters and by parties under vote buying and vote selling.\footnote{For the party-side comparison, Party A and Party B are pooled because they are symmetric in the design.} We then calculate design-based mean payoffs and non-parametric 90 percent confidence intervals for the mean in each institutional setting. Because subjects can appear in multiple rounds, we also conduct a one-sided difference-in-means test for voter payoffs across games. Random assignment of institutional variants across rounds ensures that differences in mean payoffs identify the causal effect of initiative on surplus allocation.
 
 \autoref{fig:payoffs_plot} compares average payoffs for voters and parties across the two institutional variants. The left panel shows that parties earn similar or slightly higher payoffs in the voter-initiated vote-selling game relative to the party-initiated vote-buying game. The confidence intervals overlap substantially, indicating that parties do not lose from shifting initiative to voters.
 
@@ -657,22 +714,22 @@ Finally, we examine how initiative shapes the distribution of surplus between vo
 \caption{Observed payoffs for voter and party roles under party-initiated vote buying and voter-initiated vote selling, computed as design-based means across experimental rounds with non-parametric 90\% confidence intervals for the mean.}\label{fig:payoffs_plot}
 \end{figure}
 
-The right panel shows a different pattern for voters. Average voter payoffs are higher when parties initiate the exchange. This difference is directionally consistent with the prospect-theoretic argument developed in \autoref{sec:theory}, according to which voters capture more surplus when parties initiate the exchange (\autoref{hyp:higher_voter_payoffs}), although the statistical evidence is modest (p = $\Sexpr{round(as.numeric(t.test$p.value),3)}$, one-sided). These payoff differences match the strategic logic of the games. When parties initiate vote buying, they often overspend relative to the minimal compensating transfer,\footnote{$\Delta$ in the formal model.} particularly under electoral risk. Voters therefore capture a substantial portion of the surplus created in the exchange. When voters initiate vote selling, they frequently request prices that electorally weak parties cannot afford or choose not to pay. Some voter proposals were extremely high relative to parties' randomly assigned budgets. When requested prices exceeded what a party could afford, that party simply rejected the offer, leaving the voter with only the ideological payoff. This increases party payoffs and reduces average voter payoffs. Overall, the results reinforce the paper's central argument: initiative shapes both the direction of transfers and the distribution of surplus. When parties move first, transfers concentrate on core voters and voters capture more of the surplus. When voters move first, they demand higher prices from electorally strong opponents, but the incidence of rejected offers lowers their average utilities while leaving party utilities stable or higher. Initiative is therefore a crucial institutional determinant of who benefits from clientelistic exchange.
+The right panel shows a different pattern for voters. Because the experiment does not directly measure parties' loss-aversion parameters, the payoff comparison should be interpreted as a test of the behavioral implication of the model rather than as direct evidence of the psychological mechanism itself. Average voter payoffs are higher when parties initiate the exchange. This difference is directionally consistent with the prospect-theoretic argument developed in \autoref{sec:theory}, according to which voters capture more surplus when parties initiate the exchange (\autoref{hyp:higher_voter_payoffs}), although the statistical evidence is modest (p = $\Sexpr{round(as.numeric(t.test$p.value),3)}$, one-sided). These payoff differences match the strategic logic of the games. When parties initiate vote buying, observed offers are often larger than the minimal compensating transfer,\footnote{$\Delta$ in the formal model.} particularly under electoral risk. This pattern is consistent with voters capturing a substantial portion of the surplus created in the exchange. When voters initiate vote selling, they frequently request prices that electorally weak parties cannot afford or choose not to pay. Some voter proposals were extremely high relative to parties' randomly assigned budgets. When requested prices exceeded what a party could afford, that party simply rejected the offer, leaving the voter with only the ideological payoff. This increases party payoffs and reduces average voter payoffs. Overall, the payoff results are consistent with the paper's central argument: initiative shapes both the direction of transfers and the distribution of surplus, although the evidence on voter payoffs is statistically modest. When parties move first, transfers concentrate on core voters and voters appear to capture more of the surplus. When voters move first, they request higher prices from electorally strong opponents, but the incidence of rejected offers lowers their average utilities while leaving party utilities stable or higher. Initiative is therefore a crucial institutional determinant of who benefits from clientelistic exchange.
 
 
 \section{Discussion}\label{sec:discussion}
 
-This paper revisits a classic question in the clientelism literature by shifting attention from parties as buyers to voters as strategic sellers. We argued that vote buying and vote selling are best understood as two institutional variants of the same clientelistic exchange, highlighting who moves first and how this sequencing rule structures bargaining power, targeting, and surplus extraction. Building on this institutional perspective, we developed a formal model that links core-swing targeting to initiative, derived comparative statics for party- and voter-initiated exchange, and implemented a laboratory experiment that mirrors the model's structure.
+This paper revisits a classic question in the clientelism literature by shifting attention from parties as buyers to voters as strategic sellers. We argued that vote buying and vote selling are best understood as two institutional variants of the same clientelistic exchange, highlighting who moves first and how this sequencing rule structures bargaining power, targeting, and surplus extraction. Building on this institutional perspective, we developed a prospect-theoretic model of initiative and electoral risk, derived comparative statics for party- and voter-initiated exchange, and implemented a laboratory experiment that mirrors the model's core structure.
 
-Empirically, we find that when parties initiate the exchange, transfers concentrate on core voters, and the payoff patterns are consistent with voters capturing higher payoffs. When voters initiate, however, they tend to sell to electorally strong opponents, request higher prices from those parties, and ultimately leave more surplus on the party side. Taken together, these patterns underscore that initiative is not a procedural detail but a central institutional feature that shapes who benefits from clientelism.
+Empirically, we find that when parties initiate the exchange, transfers concentrate on core voters, and payoff patterns are consistent with voters receiving higher expected payoffs when parties, rather than voters, move first. When voters initiate, however, they request higher prices from electorally strong opponents and ultimately leave more surplus on the party side because some high requests are rejected. Taken together, these patterns underscore that initiative is not a procedural detail but a central institutional feature that shapes who benefits from clientelism.
 
-At the same time, our approach has several important limitations. The experiment relies on a stylized, one-shot interaction among anonymous participants, with a single pivotal voter, simplified information, and short-term payoffs denominated in points. Real-world clientelism unfolds in dense social networks with repeated interactions, reputation, sanctions, and organizational intermediaries, often in settings marked by poverty, uncertainty, and long time horizons. In turn, our design also abstracts from richer strategic dynamics: while our games implement move order in an extensive-form setting, they do not constitute fully dynamic sequential games with multiple stages, repeated play, off-path beliefs, or forward-looking incentives of the kind studied in repeated or stochastic games. These features help enforce agreements in practice but lie outside our experimental framework.
+At the same time, our approach has several important limitations. The experiment relies on a stylized, one-shot interaction among anonymous participants, with a single negotiated voter who may or may not be pivotal, simplified information, and short-term payoffs denominated in points. Real-world clientelism unfolds in dense social networks with repeated interactions, reputation, sanctions, and organizational intermediaries, often in settings marked by poverty, uncertainty, and long time horizons. In turn, our design also abstracts from richer strategic dynamics: while our games implement move order in an extensive-form setting, they do not constitute fully dynamic sequential games with multiple stages, repeated play, off-path beliefs, or forward-looking incentives of the kind studied in repeated or stochastic games. These features help enforce agreements in practice but lie outside our experimental framework.
 
-A further limitation concerns clientelist defection. In reality, many clients accept transfers but either vote differently or fail to mobilize as promised. To maintain experimental control, our design deterministically ties acceptance to delivery: accepting an offer or a price always results in a corresponding vote. This removes a central real-world uncertainty. Future experiments could incorporate probabilistic compliance, moral-hazard structures, noisy or manipulable monitoring technologies, or repeated-play incentives that generate endogenous reputation and strategic retaliation. 
+A further limitation concerns clientelist defection. In reality, many clients accept transfers but either vote differently or fail to mobilize as promised. To maintain experimental control, our design deterministically ties completed exchange to delivery: when an accepted offer or requested price is selected by the voter, the corresponding vote is cast. This removes a central real-world uncertainty. Future experiments could incorporate probabilistic compliance, moral-hazard structures, noisy or manipulable monitoring technologies, or repeated-play incentives that generate endogenous reputation and strategic retaliation. 
 
-Another limitation is the two-party, one-voter structure, which creates a bilateral-monopoly environment: two (potential) buyers bargain with a single (potential) seller. This produces a clean strategic environment but abstracts from richer clientelistic ecosystems where parties face multiple voters, and voters face multiple competing brokers. Extending this framework to two parties and multiple voters would introduce congestion, coordination problems, and competition among sellers. Similarly, introducing more than two parties would turn the vote-selling stage into a multilateral bargaining environment: voters could play parties against each other, and parties could strategically coordinate or differentiate offers. Some extensions resemble ultimatum-like bargaining (when one actor proposes terms to multiple counterparts), while others resemble Bertrand competition or contest models with multiple buyers and heterogeneous stakes. These richer designs would illuminate whether the logic of selling to the electorally strong opponent persists when parties can form expectations about how other buyers will behave, or when voters can strategically sort, coordinate, or defect in groups.
+Another limitation is the two-party, one-voter structure, which creates a bilateral-monopoly environment: two (potential) buyers bargain with a single (potential) seller. This produces a clean strategic environment but abstracts from richer clientelistic ecosystems where parties face multiple voters, and voters face multiple competing brokers. Extending this framework to two parties and multiple voters would introduce congestion, coordination problems, and competition among sellers. Similarly, introducing more than two parties would turn the vote-selling stage into a multilateral bargaining environment: voters could play parties against each other, and parties could strategically coordinate or differentiate offers. Some extensions resemble ultimatum-like bargaining (when one actor proposes terms to multiple counterparts), while others resemble Bertrand competition or contest models with multiple buyers and heterogeneous stakes. These richer designs would illuminate whether the logic of requesting higher prices from electorally strong opponents persists when parties can form expectations about how other buyers will behave, or when voters can strategically sort, coordinate, or defect in groups.
 
-Given these limitations, we caution against strong claims about external validity: our findings identify mechanisms about initiative and bargaining in clientelistic markets, not real-world effect magnitudes, long-run equilibria, or the dynamics of multi-round negotiation. Future research should examine whether the patterns we document extend to field and survey experiments that better approximate real campaigns; incorporate multiple voters, brokers, and networked interactions; and allow for repeated play, trust, monitoring, and reputation. Experimental work using richer extensive-form or multi-stage games could explore how sequential bargaining, dynamic incentives, and off-path beliefs affect targeting and surplus extraction. Cross-national laboratory and lab-in-the-field studies could assess how institutional context, poverty, or risk preferences shape the logic of selling to the electorally strong opponent. Finally, combining our institutional framework with observational data and ethnographic work on broker strategies would help clarify how often party- versus voter-initiated exchanges occur in practice and to what extent the ``house'' really wins when voters attempt to cash in on their pivotal power.
+Given these limitations, we caution against strong claims about external validity: our findings identify mechanisms about initiative, electoral risk, and bargaining in clientelistic markets, not real-world effect magnitudes, long-run equilibria, or the dynamics of multi-round negotiation. Future research should examine whether the patterns we document extend to field and survey experiments that better approximate real campaigns; incorporate multiple voters, brokers, and networked interactions; and allow for repeated play, trust, monitoring, and reputation. Experimental work using richer extensive-form or multi-stage games could explore how sequential bargaining, dynamic incentives, and off-path beliefs affect targeting and surplus extraction. Cross-national laboratory and lab-in-the-field studies could assess how institutional context, poverty, or risk preferences shape the logic of requesting higher prices from electorally strong opponents. Finally, combining our institutional framework with observational data and ethnographic work on broker strategies would help clarify how often party- versus voter-initiated exchanges occur in practice and to what extent the ``house'' really wins when voters attempt to exploit parties' electoral vulnerabilities.
 
 
 \clearpage
