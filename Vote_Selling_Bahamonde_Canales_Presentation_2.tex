@@ -216,8 +216,8 @@
 
 \title{\input{title.txt}\unskip}
 \author[shortname]{Hector Bahamonde \inst{1} \and Andrea Canales \inst{2}}
-\institute[shortinst]{\inst{1} University of Turku, Finland \and \inst{2} O$'$Higgins University, Chile}
-\date{Dec 11th 2026}
+\institute[shortinst]{\inst{1} University of Turku, Finland \and \inst{2} Central Bank of Chile, Chile}
+\date{\today}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
@@ -431,86 +431,38 @@
 \subsection{Formalization}
 
 
-%====================
-% THEORY (clean, non-overlay version)
-%====================
+% ------------------------------------------------------------
+% Theory section: Prospect-theoretic spatial model
+% ------------------------------------------------------------
 
 \miniframeson
-\begin{frame}[c]{A Uni-dimensional Spatial Theory of Voting}
-\begin{columns}[T,totalwidth=\textwidth]
-
-% LEFT: intuition
-\begin{column}{0.55\textwidth}
-\begin{itemize}[<+->]
-  \item Politics lives on a simple \textbf{left--right ideological space}. {\scriptsize \color{gray}\(\gamma \in \Gamma = \{1,\dots,100\}\)}
-  \item There are two parties positioned on that space.\\
-  {\scriptsize \color{gray}\(i \in \{A,B\}\), at \(\gamma_A,\gamma_B\)}
-  \item Parties care about \textbf{winning the election}.\\
-  {\scriptsize \color{gray} \(W_i\); electoral stake \(R_i = \pi W_i\)}
-  \item Voters care about {\bf winning the election} and also live on that space.\\
-  {\scriptsize \color{gray}Utility \(u_j(\gamma_i)\)}
-\end{itemize}
-
-\end{column}
-
-% RIGHT: spatial intuition
-\begin{column}{0.45\textwidth}
-\centering
-\begin{tikzpicture}[scale=0.9,baseline=(axis)]
-
-  % --- FIXED BOUNDING BOX (same in all frames) ---
-  \path (-0.5,-1.0) (5.5,1.0);
-
-  % axis anchor (used for baseline)
-  \coordinate (axis) at (2.5,0);
-
-  % axis
-  \draw[<->] (0,0) -- (5,0);
-  \node[below] at (0,0) {\scriptsize Left};
-  \node[below] at (5,0) {\scriptsize Right};
-
-  % parties
-  \onslide<2->{
-    \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize A};
-    \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize B};
-  }
-
-  % voter (circle to avoid 'diamond' errors)
-  \onslide<4->{
-    \node[circle,draw,fill=gray!20] at (2.3,0) {\scriptsize V};
-  }
-
-\end{tikzpicture}
-
-\onslide<5->{
-\begin{block}{Implication}
-{\scriptsize Voters face a \textbf{tradeoff between ideological utility} {\tiny \color{gray}\(u_j(\gamma_i)\)} \textbf{and electoral risk} {\tiny \color{gray}\(R_i=\pi W_i\)}.}
-\end{block}
-}
-
-
-\end{column}
-
-\end{columns}
-\end{frame}
-
-
-
-\miniframesoff
-\begin{frame}[c]{A Uni-dimensional Spatial Theory of Voting}
+\begin{frame}[c]{A Prospect-Theoretic Spatial Theory of Vote Buying}
 \begin{columns}[T,totalwidth=\textwidth]
 
 % LEFT
 \begin{column}{0.55\textwidth}
 \begin{itemize}[<+->]
-  \item ``Ideological utility'' {\scriptsize \color{gray}\(\Delta\)}
-  \item The voter gets more utility {\scriptsize \color{gray}\(\Delta\)} from a closer party {\scriptsize \color{gray}\(u_j(\gamma_i)\)}
+  \item Voters and parties live on a simple \textbf{left--right space}.\\
+  {\scriptsize\color{gray}
+  Parties \(L,R\) at \(\gamma_L,\gamma_R\); voter \(j\) at \(x_j\).}
+
+  \item The voter prefers the party closer to her ideal point.\\
+  {\scriptsize\color{gray}
+  \(u_j(\gamma_i)=D-|x_j-\gamma_i|\)}
+
+  \item The voter's preferred party is \(i^\ast\).\\
+  {\scriptsize\color{gray}
+  \(i^\ast=\arg\max_i u_j(\gamma_i)\)}
+
+  \item The ideological advantage of the preferred party is \(\Delta\).\\
+  {\scriptsize\color{gray}
+  \(\Delta=u_j(\gamma_{i^\ast})-u_j(\gamma_{-i^\ast})>0\)}
 \end{itemize}
 
 \medskip
-\onslide<3->{
-\begin{block}{Implication}
-\(\Delta\) represents the minimum compensation the voter needs to switch sides.
+\onslide<5->{
+\begin{block}{Core idea}
+{\scriptsize \(\Delta\) is the ideological price of switching sides.}
 \end{block}
 }
 \end{column}
@@ -518,12 +470,8 @@
 % RIGHT
 \begin{column}{0.45\textwidth}
 \centering
-\begin{tikzpicture}[scale=0.9,baseline=(axis)]
-
-  % --- FIXED BOUNDING BOX (same in all frames) ---
-  \path (-0.5,-1.0) (5.5,1.0);
-
-  % axis anchor
+\begin{tikzpicture}[scale=0.9,baseline=(axis.base)]
+  \path[use as bounding box] (-0.4,-1.2) rectangle (5.4,1.3);
   \coordinate (axis) at (2.5,0);
 
   % axis
@@ -533,141 +481,30 @@
 
   % parties
   \onslide<1->{
-    \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize A};
-    \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize B};
+    \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize \(L\)};
+    \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize \(R\)};
   }
 
   % voter
   \onslide<2->{
-    \node[circle,draw,fill=gray!20] at (2.3,0) {\scriptsize V};
+    \node[circle,draw,fill=gray!20] at (2.2,0) {\scriptsize \(j\)};
   }
 
   % distances
-  \onslide<2->{
-    \draw[<->,thick] (1,0.4) -- (2.3,0.4);
-    \node at (1.65,0.65) {\scriptsize small distance};
-
-    \draw[<->,thick] (2.3,-0.4) -- (4,-0.4);
-    \node at (3.15,-0.7) {\scriptsize large distance};
-  }
-
-\end{tikzpicture}
-\end{column}
-
-\end{columns}
-\end{frame}
-
-
-
-
-\miniframesoff
-\iffalse
-\begin{frame}[c]{A Uni-dimensional Spatial Theory of Voting}
-\begin{columns}[T,totalwidth=\textwidth]
-
-% LEFT
-\begin{column}{0.55\textwidth}
-\begin{itemize}[<+->]
-  \item Sometimes, both parties run in tight races. {\scriptsize \color{gray}High pivotality \(\pi\)}
-  \item That voter is \textbf{pivotal} {\scriptsize \color{gray}(with probability \(\pi>0\))}.
-\end{itemize}
-
-\medskip
-\onslide<3->{
-\begin{block}{Implication}
-  \(R_i\) represents how worthy winning is, determining the voter's price.
-\end{block}
-}
-\end{column}
-
-% RIGHT
-\begin{column}{0.45\textwidth}
-\centering
-\begin{tikzpicture}[scale=0.9,baseline=(axis)]
-
-  % --- FIXED BOUNDING BOX (same in all frames) ---
-  \path (-0.5,-1.0) (5.5,1.0);
-
-  % axis anchor
-  \coordinate (axis) at (2.5,0);
-
-  % axis
-  \draw[<->] (0,0) -- (5,0);
-  \node[below] at (0,0) {\scriptsize Left};
-  \node[below] at (5,0) {\scriptsize Right};
-
-  % parties
-  \onslide<1->{
-    \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize A};
-    \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize B};
-  }
-
-  % voter
-  \onslide<2->{
-    \node[circle,draw,fill=gray!20] at (2.3,0) {\scriptsize V};
-  }
-
-  % stakes
   \onslide<3->{
-    \node[above] at (1,0.6) {\scriptsize $R_A$};
-    \node[above] at (4,0.6) {\scriptsize $R_B$};
+    \draw[<->,thick] (1,0.45) -- (2.2,0.45);
+    \node at (1.6,0.75) {\scriptsize closer};
+
+    \draw[<->,thick] (2.2,-0.45) -- (4,-0.45);
+    \node at (3.1,-0.75) {\scriptsize farther};
   }
 
-\end{tikzpicture}
-\end{column}
-
-\end{columns}
-\end{frame}
-\fi
-
-
-
-\miniframesoff
-\begin{frame}[c]{A Uni-dimensional Spatial Theory of Voting}
-\begin{columns}[T,totalwidth=\textwidth]
-
-% LEFT
-\begin{column}{0.55\textwidth}
-\begin{itemize}[<+->]
-  \item {\color{blue}When parties begin}, they make offers {\scriptsize \color{gray}\(s_A, s_B\)}
-  \item The voter compares ideology \(\,+\) offers and chooses a party.\\
-  {\scriptsize \color{gray}\(i \in \{A,B\}\) to maximize \(U_j(i,s_i)\)}
-\end{itemize}
-
-\medskip
-\onslide<3->{
-\begin{block}{Implication}
-It is cheapest to buy a vote from a \textbf{party supporter} {\scriptsize \color{gray}(\(i^\ast\), with advantage \(\Delta\))}.
-\end{block}
-}
-\end{column}
-
-% RIGHT
-\begin{column}{0.45\textwidth}
-\centering
-\begin{tikzpicture}[scale=0.9,baseline=(axis.base)]
-  % FIXED bounding box
-  \path[use as bounding box] (0,-1.0) rectangle (5,1.0);
-
-  % axis
-  \coordinate (axis) at (2.5,0);
-  \draw[<->] (0,0) -- (5,0);
-  \node[below] at (0,0) {\scriptsize Left};
-  \node[below] at (5,0) {\scriptsize Right};
-
-  % parties
-  \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize A};
-  \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize B};
-
-  % voter
-  \node[circle,draw,fill=gray!20] at (2.3,0) {\scriptsize V};
-
-  % offer from core party (assume A is core)
-  \onslide<1->{
-    \draw[->,thick] (1,0.8) -- (2.3,0.2);
-    \node[above] at (1.8,0.8) {\scriptsize Party A makes minimal offer {\scriptsize \color{gray}\(\approx \Delta\)}};
+  % Delta
+  \onslide<4->{
+    \node[align=center] at (2.5,1.15)
+    {\scriptsize ideological advantage\\[-1mm]
+     \scriptsize \(\Delta=u_j(\gamma_L)-u_j(\gamma_R)\)};
   }
-
 \end{tikzpicture}
 \end{column}
 
@@ -676,22 +513,115 @@ It is cheapest to buy a vote from a \textbf{party supporter} {\scriptsize \color
 
 
 
-
 \miniframesoff
-\begin{frame}[t]{A Uni-dimensional Spatial Theory of Voting}
+\begin{frame}[c]{Parties Do Not Only Maximize Expected Payoffs}
 \begin{columns}[T,totalwidth=\textwidth]
 
 % LEFT
 \begin{column}{0.55\textwidth}
 \begin{itemize}[<+->]
-  \item {\color{blue}When the voter begins}, they send offers.\\{\scriptsize \color{gray}\(a_A, a_B\)}
-  \item Parties accept or reject offers.\\ {\scriptsize \color{gray}\(R_i\); accepting when \(a_i \le R_i\)}
+  \item A party values securing the voter because the vote may protect it from losing.\\
+  {\scriptsize\color{gray}
+  \(R_i=q(v_i,P_d)W_i\)}
+
+  \item But parties are \textbf{loss averse}: electoral defeat is evaluated as a loss.\\
+  {\scriptsize\color{gray}
+  \(\lambda_i\geq 1\)}
+
+  \item Loss aversion matters more when electoral loss is salient.\\
+  {\scriptsize\color{gray}
+  \(\ell_i\in[0,1]\)}
+
+  \item So the party's perceived value of securing the voter is inflated.\\
+  {\scriptsize\color{gray}
+  \(\widetilde{R}_i=[1+(\lambda_i-1)\ell_i]R_i\)}
 \end{itemize}
 
 \medskip
-\onslide<3->{
-\begin{block}{Implication}
-Voters will ask more from parties with \textbf{more to lose} {\scriptsize\color{gray}(big \(R_i\))}.
+\onslide<5->{
+\begin{block}{Effective willingness to pay}
+{\scriptsize
+\[
+\overline{R}_i=\min\{B_i,\widetilde{R}_i\}
+\]
+}
+\end{block}
+}
+\end{column}
+
+% RIGHT
+\begin{column}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9,baseline=(base.base)]
+  \path[use as bounding box] (-0.2,-0.7) rectangle (5.2,3.5);
+  \coordinate (base) at (2.5,0);
+
+  % baseline expected value
+  \onslide<1->{
+    \draw[thick] (0.8,0) -- (0.8,1.2);
+    \draw[fill=gray!20] (0.5,0) rectangle (1.1,1.2);
+    \node[below] at (0.8,0) {\scriptsize \(R_i\)};
+    \node[above] at (0.8,1.2) {\scriptsize expected value};
+  }
+
+  % loss aversion expansion
+  \onslide<2->{
+    \draw[fill=orange!25] (2.2,0) rectangle (2.8,1.9);
+    \node[below] at (2.5,0) {\scriptsize \(\widetilde{R}_i\)};
+    \node[above,align=center] at (2.5,1.9)
+      {\scriptsize loss-averse\\[-1mm]\scriptsize valuation};
+    \draw[->,thick] (1.2,1.2) -- (2.1,1.9);
+  }
+
+  % budget cap
+  \onslide<4->{
+    \draw[dashed,thick] (3.4,1.55) -- (5.0,1.55);
+    \node[right] at (5.0,1.55) {\scriptsize budget \(B_i\)};
+    \draw[fill=green!20] (3.8,0) rectangle (4.4,1.55);
+    \node[below] at (4.1,0) {\scriptsize \(\overline{R}_i\)};
+    \node[above,align=center] at (4.1,1.55)
+      {\scriptsize max feasible\\[-1mm]\scriptsize payment};
+  }
+\end{tikzpicture}
+
+\onslide<5->{
+{\scriptsize
+Loss aversion increases willingness to pay, but budgets cap it.
+}
+}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+
+
+\miniframesoff
+\begin{frame}[c]{Vote Buying: Parties Move First}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% LEFT
+\begin{column}{0.55\textwidth}
+\begin{itemize}[<+->]
+  \item Parties choose offers before the voter decides.\\
+  {\scriptsize\color{gray}
+  Offers \(s_L,s_R\)}
+
+  \item The voter chooses the party giving the highest ideology-plus-transfer payoff.\\
+  {\scriptsize\color{gray}
+  \(u_j(\gamma_i)+s_i\)}
+
+  \item To buy the vote, party \(i\) must cover the voter's ideological loss.\\
+  {\scriptsize\color{gray}
+  \(c_i(s_{-i})=\max\{0,u_j(\gamma_{-i})+s_{-i}-u_j(\gamma_i)\}\)}
+
+  \item Buying from a supporter is cheaper than buying from an opponent.
+\end{itemize}
+
+\medskip
+\onslide<5->{
+\begin{block}{Prediction}
+{\scriptsize When parties initiate, they mainly target ideologically proximate voters.}
 \end{block}
 }
 \end{column}
@@ -700,32 +630,300 @@ Voters will ask more from parties with \textbf{more to lose} {\scriptsize\color{
 \begin{column}{0.45\textwidth}
 \centering
 \begin{tikzpicture}[scale=0.9,baseline=(axis.base)]
-  % FIXED bounding box
-  \path[use as bounding box] (0,-1.0) rectangle (5,1.0);
+  \path[use as bounding box] (-0.4,-1.2) rectangle (5.4,1.7);
+  \coordinate (axis) at (2.5,0);
 
   % axis
-  \coordinate (axis) at (2.5,0);
   \draw[<->] (0,0) -- (5,0);
   \node[below] at (0,0) {\scriptsize Left};
   \node[below] at (5,0) {\scriptsize Right};
 
-  % parties: let B be electorally stronger
-  \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize A};
-  \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize B};
+  % parties and voter
+  \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize \(L\)};
+  \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize \(R\)};
+  \node[circle,draw,fill=gray!20] at (2.2,0) {\scriptsize \(j\)};
 
-  % voter
-  \node[circle,draw,fill=gray!20] at (2.3,0) {\scriptsize V};
-
-  % requests
+  % L offer
   \onslide<1->{
-    \draw[->,thick] (2.3,0.8) -- (4,0.2);
-    \node[above] at (3.4,0.8) {\scriptsize Voter sends a pricier offer to party B {\scriptsize\color{gray}(\(a_B \approx R_B\))}};
+    \draw[->,thick,blue!70!black] (1,1.1) -- (2.0,0.25);
+    \node[above,align=center] at (1.45,1.1)
+      {\scriptsize low cost\\[-1mm]\scriptsize \(c_L\)};
   }
 
+  % R offer
+  \onslide<3->{
+    \draw[->,thick,red!70!black] (4,1.1) -- (2.4,0.25);
+    \node[above,align=center] at (3.55,1.1)
+      {\scriptsize higher cost\\[-1mm]\scriptsize \(c_R=c_L+\Delta\)};
+  }
+
+  % condition
+  \onslide<4->{
+    \node[draw,rounded corners,fill=white,align=center] at (2.5,-0.9)
+      {\scriptsize party buys only if\\[-1mm]
+       \scriptsize \(c_i(s_{-i})\leq \overline{R}_i\)};
+  }
 \end{tikzpicture}
 \end{column}
 
 \end{columns}
+\end{frame}
+
+
+
+\miniframesoff
+\begin{frame}[c]{Vote Buying: Loss Aversion Creates an Insurance Premium}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% LEFT
+\begin{column}{0.55\textwidth}
+\begin{itemize}[<+->]
+  \item The minimum offer only makes the voter indifferent.\\
+  {\scriptsize\color{gray}
+  \(c_i(s_{-i})\)}
+
+  \item But loss-averse parties may pay more to insure against defeat.\\
+  {\scriptsize\color{gray}
+  \(s_i=c_i(s_{-i})+\rho_i\)}
+
+  \item The insurance premium grows with loss aversion, loss salience, and electoral stakes.\\
+  {\scriptsize\color{gray}
+  \(\rho_i^\ast=\rho(\lambda_i,\ell_i,R_i)\)}
+
+  \item The premium is feasible only if the party has room to pay it.\\
+  {\scriptsize\color{gray}
+  \(0\leq \rho_i\leq \overline{R}_i-c_i(s_{-i})\)}
+\end{itemize}
+
+\medskip
+\onslide<5->{
+\begin{block}{Implication}
+{\scriptsize Party initiative can raise voter payoffs above the minimum switching price.}
+\end{block}
+}
+\end{column}
+
+% RIGHT
+\begin{column}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9,baseline=(base.base)]
+  \path[use as bounding box] (-0.2,-0.7) rectangle (5.2,3.4);
+  \coordinate (base) at (2.5,0);
+
+  % minimum compensation
+  \onslide<1->{
+    \draw[fill=gray!20] (0.7,0) rectangle (1.5,1.2);
+    \node[below] at (1.1,0) {\scriptsize \(c_i\)};
+    \node[above,align=center] at (1.1,1.2)
+      {\scriptsize minimum\\[-1mm]\scriptsize compensation};
+  }
+
+  % insurance premium
+  \onslide<2->{
+    \draw[fill=orange!25] (2.2,0) rectangle (3.0,1.2);
+    \draw[fill=orange!45] (2.2,1.2) rectangle (3.0,2.0);
+    \node[below] at (2.6,0) {\scriptsize \(s_i\)};
+    \node[right] at (3.05,1.6) {\scriptsize \(\rho_i\)};
+    \node[above,align=center] at (2.6,2.0)
+      {\scriptsize offer with\\[-1mm]\scriptsize insurance};
+  }
+
+  % cap
+  \onslide<4->{
+    \draw[dashed,thick] (3.6,2.4) -- (5.0,2.4);
+    \node[right] at (5.0,2.4) {\scriptsize \(\overline{R}_i\)};
+    \draw[<->,thick] (4.2,1.2) -- (4.2,2.4);
+    \node[right,align=left] at (4.25,1.8)
+      {\scriptsize slack for\\[-1mm]\scriptsize premium};
+  }
+\end{tikzpicture}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+
+
+\miniframesoff
+\begin{frame}[c]{Vote Selling: Voters Move First}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% LEFT
+\begin{column}{0.55\textwidth}
+\begin{itemize}[<+->]
+  \item The voter names a price for each party.\\
+  {\scriptsize\color{gray}
+  Requests \(a_L,a_R\)}
+
+  \item Parties accept only if the price is not too high.\\
+  {\scriptsize\color{gray}
+  \(a_i\leq \overline{R}_i\)}
+
+  \item The highest acceptable price is therefore \(\overline{R}_i\).
+
+  \item The voter sells to the party that gives the best ideology-plus-price payoff.\\
+  {\scriptsize\color{gray}
+  \(\max_i\{u_j(\gamma_i)+\overline{R}_i\}\)}
+\end{itemize}
+
+\medskip
+\onslide<5->{
+\begin{block}{Switching condition}
+{\scriptsize
+The voter sells to the less-preferred party if
+\[
+\overline{R}_{-i^\ast}-\overline{R}_{i^\ast}\geq \Delta.
+\]
+}
+\end{block}
+}
+\end{column}
+
+% RIGHT
+\begin{column}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9,baseline=(axis.base)]
+  \path[use as bounding box] (-0.4,-1.2) rectangle (5.4,1.7);
+  \coordinate (axis) at (2.5,0);
+
+  % axis
+  \draw[<->] (0,0) -- (5,0);
+  \node[below] at (0,0) {\scriptsize Left};
+  \node[below] at (5,0) {\scriptsize Right};
+
+  % parties and voter
+  \node[circle,draw,fill=blue!20] at (1,0) {\scriptsize \(L\)};
+  \node[circle,draw,fill=red!20]  at (4,0) {\scriptsize \(R\)};
+  \node[circle,draw,fill=gray!20] at (2.2,0) {\scriptsize \(j\)};
+
+  % request to L
+  \onslide<1->{
+    \draw[->,thick,blue!70!black] (2.1,0.35) -- (1.15,1.0);
+    \node[above,align=center] at (1.35,1.0)
+      {\scriptsize request\\[-1mm]\scriptsize \(a_L\)};
+  }
+
+  % request to R
+  \onslide<2->{
+    \draw[->,thick,red!70!black] (2.35,0.35) -- (3.85,1.0);
+    \node[above,align=center] at (3.65,1.0)
+      {\scriptsize higher request\\[-1mm]\scriptsize \(a_R\)};
+  }
+
+  % acceptance cap
+  \onslide<3->{
+    \node[draw,rounded corners,fill=white,align=center] at (2.5,-0.9)
+      {\scriptsize accepted only if\\[-1mm]
+       \scriptsize \(a_i\leq \overline{R}_i\)};
+  }
+\end{tikzpicture}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+
+
+\miniframesoff
+\begin{frame}[c]{Vote Selling: Why Strong but Distant Parties Pay More}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% LEFT
+\begin{column}{0.55\textwidth}
+\begin{itemize}[<+->]
+  \item A distant party is costly for the voter to support.\\
+  {\scriptsize\color{gray}
+  Larger \(\Delta\)}
+
+  \item But an electorally exposed party has more to lose.\\
+  {\scriptsize\color{gray}
+  Larger \(R_i\), \(\ell_i\), and therefore \(\overline{R}_i\)}
+
+  \item Loss aversion raises the ceiling on acceptable prices.\\
+  {\scriptsize\color{gray}
+  \(\overline{R}_i=\min\{B_i,[1+(\lambda_i-1)\ell_i]R_i\}\)}
+
+  \item So voters ask more from parties that are both electorally valuable and ideologically costly.
+\end{itemize}
+
+\medskip
+\onslide<5->{
+\begin{block}{Prediction}
+{\scriptsize When voters initiate, high prices target electorally strong but ideologically distant parties.}
+\end{block}
+}
+\end{column}
+
+% RIGHT
+\begin{column}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9,baseline=(base.base)]
+  \path[use as bounding box] (-0.2,-0.8) rectangle (5.4,3.4);
+  \coordinate (base) at (2.5,0);
+
+  % labels
+  \onslide<1->{
+    \node[align=center] at (1.25,3.0) {\scriptsize close party\\[-1mm]\scriptsize low ideological cost};
+    \draw[fill=blue!20] (0.8,0) rectangle (1.7,1.0);
+    \node[below] at (1.25,0) {\scriptsize \(a_{i^\ast}\)};
+  }
+
+  \onslide<2->{
+    \node[align=center] at (3.7,3.0) {\scriptsize distant party\\[-1mm]\scriptsize high electoral risk};
+    \draw[fill=red!20] (3.25,0) rectangle (4.15,2.3);
+    \node[below] at (3.7,0) {\scriptsize \(a_{-i^\ast}\)};
+  }
+
+  % delta threshold
+  \onslide<3->{
+    \draw[<->,thick] (4.35,1.0) -- (4.35,2.3);
+    \node[right] at (4.38,1.65) {\scriptsize must cover \(\Delta\)};
+  }
+
+  % acceptance ceiling
+  \onslide<4->{
+    \draw[dashed,thick] (2.8,2.3) -- (4.6,2.3);
+    \node[right] at (4.6,2.3) {\scriptsize \(\overline{R}_{-i^\ast}\)};
+  }
+\end{tikzpicture}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+
+
+\miniframeson
+\begin{frame}[c]{Formally Derived Hypotheses}
+\begin{itemize}[<+->]
+
+  \item[] \textbf{[H1] Core Targeting Under Party Initiative}
+  \begin{itemize}
+    \item Parties mainly buy from ideologically proximate voters because they are cheaper to secure.\\
+    {\scriptsize\color{gray}
+    Successful buying requires \(c_i(s_{-i})\leq\overline{R}_i\), and \(c_i\) rises with ideological distance.}
+  \end{itemize}
+
+  \medskip
+
+  \item[] \textbf{[H2] Selling to the Opponent Winning Party}
+  \begin{itemize}
+    \item When voters initiate, they demand higher prices from electorally exposed but ideologically distant parties.\\
+    {\scriptsize\color{gray}
+    Switching is attractive when
+    \(\overline{R}_{-i^\ast}-\overline{R}_{i^\ast}\geq\Delta\).}
+  \end{itemize}
+
+  \medskip
+
+  \item[] \textbf{[H3] Higher Voter Payoffs Under Party Initiative}
+  \begin{itemize}
+    \item Party initiative can give voters higher payoffs because loss-averse parties add an insurance premium.\\
+    {\scriptsize\color{gray}
+    \(s_i=c_i(s_{-i})+\rho_i\), with \(\rho_i\) increasing in \(\lambda_i\), \(\ell_i\), and \(R_i\).}
+  \end{itemize}
+
+\end{itemize}
 \end{frame}
 
 
