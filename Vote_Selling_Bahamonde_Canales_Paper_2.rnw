@@ -207,13 +207,13 @@ headpunct=:
 \textsc{Andrea Canales}
 \thanks{\href{mailto:andrea.canales@uoh.cl}{andrea.canales@uoh.cl}; 
 \href{http://sites.google.com/view/andrea-canales-g}{\texttt{http://sites.google.com/view/andrea-canales-g}}. \\
-{\color{blue}\bf Authors are listed in alphabetical order and both collaborated equally to this paper}. We used GPT-5.5 Thinking, OpenAI, in May 2026 for language editing, clarity, formatting, and organizational suggestions. All substantive arguments, theoretical claims, formal modeling choices, empirical analyses, interpretation of results, and final text remain the authors' responsibility. This study received ethical approval from the Oxford-Nuffield Centre for Experimental Social Sciences (CESS) Ethics Committee (Project VE\_0001). We thank O'Higgins University for funding this project. We thank Katri Sieberg, Denise Laroze and Mauricio Lopez for their comments and suggestions. We also thank the participants of the 2019 colloquium at the Oxford-Nuffield Centre for Experimental Social Sciences (Santiago), the 2025 INVEST XI Scientific Seminar (Helsinki), the 2026 Resilience of Liberal Democracy in Finland (RESLIDE) workshop (\AA{}bo), the 2026 LASA Congress (Paris), and the 2026 XIII NOLAN Conference (Stockholm). Javiera Tobar, Cristopher Reyes and Basti\'an Garrido provided excellent research assistance. All errors are our own.}}
+{\color{blue}\bf Authors are listed in alphabetical order and both collaborated equally to this paper}. We thank O'Higgins University for funding this project. We thank Katri Sieberg, Denise Laroze and Mauricio Lopez for their comments and suggestions. We also thank the participants of the 2019 colloquium at the Oxford-Nuffield Centre for Experimental Social Sciences (Santiago), the 2025 INVEST XI Scientific Seminar (Helsinki), the 2026 Resilience of Liberal Democracy in Finland (RESLIDE) workshop (\AA{}bo), the 2026 LASA Congress (Paris), and the 2026 XIII NOLAN Conference (Stockholm). Javiera Tobar, Cristopher Reyes and Basti\'an Garrido provided excellent research assistance. All errors are our own.}}
 
 
 % Share with: Rick Lau, Ana de la O, Virginia Oliveros, Dave Redlawsk, Bob Kaufman, Jack Levi, Barbara Vis (https://www.barbaravis.nl/publications/)
 
 \affil[1]{Senior Researcher, University of Turku, Finland}
-\affil[2]{Assistant Professor, O$'$Higgins University, Chile}
+\affil[2]{Senior Economic Analyst, Central Bank of Chile, Chile}
 
 
 \date{\today}
@@ -303,8 +303,8 @@ options(scipen = 9999)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
 \newpage
+\vspace{2cm}
 \begin{abstract}
 \input{abstract.txt}\unskip
 \end{abstract}
@@ -314,18 +314,33 @@ options(scipen = 9999)
 \centerline{{\bf Abstract length}: \Sexpr{abstract.c.l} words.}
 
 
-\vspace{1cm}
-\centerline{\bf Please consider downloading the last version of the paper \href{https://github.com/hbahamonde/Exp_Vote_Selling/raw/main/Vote_Selling_Bahamonde_Canales_Paper_2.pdf}{\texttt{{\color{red}here}}}.}
+%\vspace{1cm}
+%\centerline{\bf Please consider downloading the last version of the paper \href{https://github.com/hbahamonde/Exp_Vote_Selling/raw/main/Vote_Selling_Bahamonde_Canales_Paper_2.pdf}{\texttt{{\color{red}here}}}.}
 
-\vspace{1cm}
-\centerline{\bf {\color{red}Rough draft PLEASE DO NOT CIRCULATE}.}
+%\vspace{1cm}
+%\centerline{\bf {\color{red}Rough draft PLEASE DO NOT CIRCULATE}.}
 
 \vspace{1cm}
 \centerline{\providecommand{\keywords}[1]{\textbf{\textit{Keywords---}} #1} % keywords.  
 \keywords{{\input{keywords.txt}\unskip}}}
 
+% AI
+\vspace{1cm}
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\small
+{\bf AI Statement}: We used GPT-5.5 Thinking, OpenAI, in May 2026 for language editing, clarity, formatting, and organizational suggestions. All substantive arguments, theoretical claims, formal modeling choices, empirical analyses, interpretation of results, and final text remain the authors' responsibility.
+\end{minipage}
+\end{center}
 
 
+% Ethics
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\small
+{\bf Ethical Statement}: This study received ethical approval from the Oxford-Nuffield Centre for Experimental Social Sciences (CESS) Ethics Committee (Project VE\_0001). IRB approval document available upon request.
+\end{minipage}
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CONTENT (write the paper below)
