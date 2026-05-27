@@ -241,25 +241,79 @@
 \subsection{Motivation}
 
 \miniframesoff
-\begin{frame}[c]{Today we're Gonna Talk about Sequencing}
+\begin{frame}[c]{Today we're Going to Talk about Sequencing}
+
+\begin{columns}[c,totalwidth=\textwidth]
+
+% LEFT: TEXT
+\begin{column}{0.53\textwidth}
 
 \begin{itemize}
   \item {\color{blue}Sequencing creates losers and winners depending on {\bf who plays first}}.
 
-\item \textbf{Welfare state and unions:} Do welfare outcomes differ when \emph{unions mobilize first} versus when \emph{governments act first}?
+  \bigskip
 
-\item \textbf{Intergenerational inequality:} Does inequality persist when \emph{parents invest first} (education, housing), compared to systems where \emph{the state provides support first}?
+  \item[\checkmark] {\color{blue}My talk will be about {\bf sequencing in clientelism}}.
 
-\bigskip
+  \bigskip
 
-      \item[\checkmark] {\color{blue}My talk will be about {\bf sequencing in clientelism}}.
-
-
-
-  %\item \textbf{Access to medicine and care:} Who lives longer when \emph{patients must ask, apply, and fight} for treatment first, versus systems where \emph{the welfare state moves first} and automatically enrolls, screens, and follows up?
-
-  %\item \textbf{Fertility and family formation:} Would people have more children if \emph{childcare, housing, and income supports arrive before the first baby}, instead of after? In low-natality societies, is the problem \emph{resources}, or the \emph{order in which they arrive}?
+  \item \textbf{Does moving first help parties buy cheaper, or help voters sell higher?}
 \end{itemize}
+
+\end{column}
+
+% RIGHT: FIGURE
+\begin{column}{0.47\textwidth}
+\centering
+
+\begin{tikzpicture}[scale=0.9, every node/.style={font=\scriptsize}]
+  \path[use as bounding box] (-0.3,-0.4) rectangle (5.9,5.2);
+
+  % Title
+  \node[align=center,font=\bfseries\small] at (2.8,4.85)
+    {Same exchange, different first mover};
+
+  % Top sequence: party first
+  \onslide<1->{
+    \node[draw,rounded corners,thick,fill=blue!8,
+      minimum width=5.4cm,minimum height=1.55cm] at (2.8,3.65) {};
+
+    \node[circle,draw,fill=blue!20] (p1) at (1.1,3.65) {Party};
+    \node[circle,draw,fill=gray!20] (v1) at (4.5,3.65) {Voter};
+
+    \draw[->,thick,blue!70!black] (p1) -- node[above] {offers first} (v1);
+
+    \node[align=center] at (2.8,3)
+      {\scriptsize Vote buying};
+  }
+
+  % Bottom sequence: voter first
+  \onslide<1->{
+    \node[draw,rounded corners,thick,fill=orange!10,
+      minimum width=5.4cm,minimum height=1.55cm] at (2.8,1.35) {};
+
+    \node[circle,draw,fill=gray!20] (v2) at (1.1,1.35) {Voter};
+    \node[circle,draw,fill=orange!25] (p2) at (4.5,1.35) {Party};
+
+    \draw[->,thick,orange!80!black] (v2) -- node[above] {prices first} (p2);
+
+    \node[align=center] at (2.8,0.7)
+      {\scriptsize Vote selling};
+  }
+
+  % Bottom punchline
+  \onslide<1->{
+    \node[draw,rounded corners,fill=white,thick,align=center,
+      text width=5.3cm] at (2.8,-0.15)
+      {\scriptsize Who moves first changes who captures the surplus.};
+  }
+
+\end{tikzpicture}
+
+\end{column}
+
+\end{columns}
+
 \end{frame}
 
 
@@ -349,14 +403,13 @@
 \end{frame}
 
 
+\iffalse
 \miniframesoff
 \begin{frame}[c]{}
 
   \includegraphics[scale=0.27, center]{/Users/hectorbahamonde/research/Exp_Vote_Selling/clientelism_vdem_index_2024.png}
-
-
 \end{frame}
-
+\fi
 
 \miniframeson
 \subsection{Gaps in the literature}
@@ -365,21 +418,16 @@
 \begin{itemize}
   
 
-  \item {\bf Qualitative}: how \textbf{voters begin} the sequence, and {\bf sell their votes}.
+  \item {\bf Qualitative}: how \textbf{voters begin} the sequence, and {\bf sell their votes} ({\color{blue}vote selling}).
 
-  \item {\bf Quantitative}: how \textbf{parties begin} the sequence, and {\bf buy votes}.\pause
+  \item {\bf Quantitative}: how \textbf{parties begin} the sequence, and {\bf buy votes} ({\color{blue}vote buying}).\pause
 
  \bigskip
 
   \item[\checkmark] {\color{blue} {\bf We argue}: clientelism is a {\bf market}, with both \emph{buyers} {\bf and} \emph{sellers}}.
 
   \item[\checkmark] {\color{blue} {\bf The gap}: the literature has failed to consider the political economy of both vote-buyers \emph{and} vote-sellers}.
-  \begin{itemize}
-    %\item Heavily focuses on {\bf vote buying}.
-    \item Very few studies {\bf vote selling}.
-    %\item Almost none treat buyers and sellers symmetrically.
-  \end{itemize}
-\end{itemize}
+ \end{itemize}
 \end{frame}
 
 
@@ -433,34 +481,27 @@
 
 % ------------------------------------------------------------
 % Theory section: Prospect-theoretic spatial model
+% Simplified version: two bullets per slide
 % ------------------------------------------------------------
 
+\iffalse
 \miniframeson
-\begin{frame}[c]{A Prospect-Theoretic Spatial Theory of Vote Buying}
-\begin{columns}[T,totalwidth=\textwidth]
+\begin{frame}[c]{A Prospect-Theoretic Model of Vote Buying and Vote Selling}\begin{columns}[T,totalwidth=\textwidth]
 
 % LEFT
 \begin{column}{0.55\textwidth}
 \begin{itemize}[<+->]
-  \item Voters and parties live on a simple \textbf{left--right space}.\\
+  \item Voters and parties live on a simple \textbf{left--right space}, so voters prefer the party located closer to their own ideal point.\\
   {\scriptsize\color{gray}
   Parties \(L,R\) at \(\gamma_L,\gamma_R\); voter \(j\) at \(x_j\).}
 
-  \item The voter prefers the party closer to her ideal point.\\
-  {\scriptsize\color{gray}
-  \(u_j(\gamma_i)=D-|x_j-\gamma_i|\)}
-
-  \item The voter's preferred party is \(i^\ast\).\\
-  {\scriptsize\color{gray}
-  \(i^\ast=\arg\max_i u_j(\gamma_i)\)}
-
-  \item The ideological advantage of the preferred party is \(\Delta\).\\
+  \item The voter's preferred party has an ideological advantage, and that advantage is the compensation the voter must receive to switch sides.\\
   {\scriptsize\color{gray}
   \(\Delta=u_j(\gamma_{i^\ast})-u_j(\gamma_{-i^\ast})>0\)}
 \end{itemize}
 
 \medskip
-\onslide<5->{
+\onslide<3->{
 \begin{block}{Core idea}
 {\scriptsize \(\Delta\) is the ideological price of switching sides.}
 \end{block}
@@ -471,7 +512,7 @@
 \begin{column}{0.45\textwidth}
 \centering
 \begin{tikzpicture}[scale=0.9,baseline=(axis.base)]
-  \path[use as bounding box] (-0.4,-1.2) rectangle (5.4,1.3);
+  \path[use as bounding box] (-0.4,-1.1) rectangle (5.4,3.2);
   \coordinate (axis) at (2.5,0);
 
   % axis
@@ -486,12 +527,12 @@
   }
 
   % voter
-  \onslide<2->{
+  \onslide<1->{
     \node[circle,draw,fill=gray!20] at (2.2,0) {\scriptsize \(j\)};
   }
 
   % distances
-  \onslide<3->{
+  \onslide<2->{
     \draw[<->,thick] (1,0.45) -- (2.2,0.45);
     \node at (1.6,0.75) {\scriptsize closer};
 
@@ -500,50 +541,42 @@
   }
 
   % Delta
-  \onslide<4->{
-    \node[align=center] at (2.5,1.15)
-    {\scriptsize ideological advantage\\[-1mm]
-     \scriptsize \(\Delta=u_j(\gamma_L)-u_j(\gamma_R)\)};
-  }
+  \onslide<3->{
+  \draw[decorate,decoration={brace,amplitude=4pt},thick]
+    (1.55,1.15) -- (3.45,1.15);
+  \node[align=center] at (2.5,1.85)
+    {\scriptsize cost of switching\\[-1mm]
+     \scriptsize \(\Delta\)};
+}
 \end{tikzpicture}
 \end{column}
 
 \end{columns}
 \end{frame}
+\fi
 
 
-
-\miniframesoff
-\begin{frame}[c]{Parties Do Not Only Maximize Expected Payoffs}
+\miniframeson
+\begin{frame}[c]{A Prospect-Theoretic Spatial Theory of Vote Buying}
 \begin{columns}[T,totalwidth=\textwidth]
 
 % LEFT
 \begin{column}{0.55\textwidth}
 \begin{itemize}[<+->]
-  \item A party values securing the voter because the vote may protect it from losing.\\
+  \item In our design, parties value buying votes because it might reduce electoral loss.\\
   {\scriptsize\color{gray}
   \(R_i=q(v_i,P_d)W_i\)}
 
-  \item But parties are \textbf{loss averse}: electoral defeat is evaluated as a loss.\\
-  {\scriptsize\color{gray}
-  \(\lambda_i\geq 1\)}
-
-  \item Loss aversion matters more when electoral loss is salient.\\
-  {\scriptsize\color{gray}
-  \(\ell_i\in[0,1]\)}
-
-  \item So the party's perceived value of securing the voter is inflated.\\
+  \item Parties are {\bf loss averse}: the threat of defeat {\bf inflates} how much they are willing to pay for electoral insurance.\\
   {\scriptsize\color{gray}
   \(\widetilde{R}_i=[1+(\lambda_i-1)\ell_i]R_i\)}
 \end{itemize}
 
 \medskip
-\onslide<5->{
-\begin{block}{Effective willingness to pay}
+\onslide<3->{
+\begin{block}{Core idea}
 {\scriptsize
-\[
-\overline{R}_i=\min\{B_i,\widetilde{R}_i\}
-\]
+Loss aversion makes electoral stakes, \(R_i\), look larger (\(\widetilde{R}_i\)).
 }
 \end{block}
 }
@@ -561,7 +594,7 @@
     \draw[thick] (0.8,0) -- (0.8,1.2);
     \draw[fill=gray!20] (0.5,0) rectangle (1.1,1.2);
     \node[below] at (0.8,0) {\scriptsize \(R_i\)};
-    \node[above] at (0.8,1.2) {\scriptsize expected value};
+    \node[above,align=center] at (0.8,1.2) {\scriptsize expected\\[-1mm]\scriptsize stake};
   }
 
   % loss aversion expansion
@@ -569,33 +602,27 @@
     \draw[fill=orange!25] (2.2,0) rectangle (2.8,1.9);
     \node[below] at (2.5,0) {\scriptsize \(\widetilde{R}_i\)};
     \node[above,align=center] at (2.5,1.9)
-      {\scriptsize loss-averse\\[-1mm]\scriptsize valuation};
+      {\scriptsize loss-averse\\[-1mm]\scriptsize stake};
     \draw[->,thick] (1.2,1.2) -- (2.1,1.9);
   }
 
   % budget cap
-  \onslide<4->{
+  \onslide<3->{
     \draw[dashed,thick] (3.4,1.55) -- (5.0,1.55);
     \node[right] at (5.0,1.55) {\scriptsize budget \(B_i\)};
     \draw[fill=green!20] (3.8,0) rectangle (4.4,1.55);
     \node[below] at (4.1,0) {\scriptsize \(\overline{R}_i\)};
     \node[above,align=center] at (4.1,1.55)
-      {\scriptsize max feasible\\[-1mm]\scriptsize payment};
+      {\scriptsize feasible\\[-1mm]\scriptsize ceiling};
   }
 \end{tikzpicture}
-
-\onslide<5->{
-{\scriptsize
-Loss aversion increases willingness to pay, but budgets cap it.
-}
-}
 \end{column}
 
 \end{columns}
 \end{frame}
 
 
-
+\iffalse
 \miniframesoff
 \begin{frame}[c]{Vote Buying: Parties Move First}
 \begin{columns}[T,totalwidth=\textwidth]
@@ -603,25 +630,19 @@ Loss aversion increases willingness to pay, but budgets cap it.
 % LEFT
 \begin{column}{0.55\textwidth}
 \begin{itemize}[<+->]
-  \item Parties choose offers before the voter decides.\\
-  {\scriptsize\color{gray}
-  Offers \(s_L,s_R\)}
+\item When parties move first, offers target voters whose support helps reduce electoral losses.\\
+{\scriptsize\color{gray}
+Parties exaggerate their payments to prevent ``catastrophic'' losses \(\widetilde{R}_i\).}
 
-  \item The voter chooses the party giving the highest ideology-plus-transfer payoff.\\
-  {\scriptsize\color{gray}
-  \(u_j(\gamma_i)+s_i\)}
-
-  \item To buy the vote, party \(i\) must cover the voter's ideological loss.\\
-  {\scriptsize\color{gray}
-  \(c_i(s_{-i})=\max\{0,u_j(\gamma_{-i})+s_{-i}-u_j(\gamma_i)\}\)}
-
-  \item Buying from a supporter is cheaper than buying from an opponent.
+\item Because ideological distance raises the cost of vote buying, parties have stronger incentives to buy from proximate voters.\\
+{\scriptsize\color{gray}
+Successful buying requires \(c_i(s_{-i})\leq\overline{R}_i\).}
 \end{itemize}
 
 \medskip
-\onslide<5->{
-\begin{block}{Prediction}
-{\scriptsize When parties initiate, they mainly target ideologically proximate voters.}
+\onslide<3->{
+\begin{block}{Core idea}
+{\scriptsize {\bf Parties prefer buying from their own supporters} because their ideological switching cost is lower.}
 \end{block}
 }
 \end{column}
@@ -630,7 +651,7 @@ Loss aversion increases willingness to pay, but budgets cap it.
 \begin{column}{0.45\textwidth}
 \centering
 \begin{tikzpicture}[scale=0.9,baseline=(axis.base)]
-  \path[use as bounding box] (-0.4,-1.2) rectangle (5.4,1.7);
+  \path[use as bounding box] (-0.4,-1.1) rectangle (5.4,3.2);
   \coordinate (axis) at (2.5,0);
 
   % axis
@@ -645,21 +666,21 @@ Loss aversion increases willingness to pay, but budgets cap it.
 
   % L offer
   \onslide<1->{
-    \draw[->,thick,blue!70!black] (1,1.1) -- (2.0,0.25);
-    \node[above,align=center] at (1.45,1.1)
+    \draw[->,thick,blue!70!black] (1,1.25) -- (2.0,0.25);
+    \node[above,align=center] at (1,1.25)
       {\scriptsize low cost\\[-1mm]\scriptsize \(c_L\)};
   }
 
   % R offer
-  \onslide<3->{
-    \draw[->,thick,red!70!black] (4,1.1) -- (2.4,0.25);
-    \node[above,align=center] at (3.55,1.1)
+  \onslide<2->{
+    \draw[->,thick,red!70!black] (4,1.25) -- (2.4,0.25);
+    \node[above,align=center] at (4.1,1.25)
       {\scriptsize higher cost\\[-1mm]\scriptsize \(c_R=c_L+\Delta\)};
   }
 
   % condition
-  \onslide<4->{
-    \node[draw,rounded corners,fill=white,align=center] at (2.5,-0.9)
+  \onslide<3->{
+    \node[draw,rounded corners,fill=white,align=center] at (2.5,-1.5)
       {\scriptsize party buys only if\\[-1mm]
        \scriptsize \(c_i(s_{-i})\leq \overline{R}_i\)};
   }
@@ -668,37 +689,29 @@ Loss aversion increases willingness to pay, but budgets cap it.
 
 \end{columns}
 \end{frame}
+\fi
 
-
-
+\iffalse
 \miniframesoff
-\begin{frame}[c]{Vote Buying: Loss Aversion Creates an Insurance Premium}
+\begin{frame}[c]{Party Initiative Creates an Insurance Premium}
 \begin{columns}[T,totalwidth=\textwidth]
 
 % LEFT
 \begin{column}{0.55\textwidth}
 \begin{itemize}[<+->]
-  \item The minimum offer only makes the voter indifferent.\\
-  {\scriptsize\color{gray}
-  \(c_i(s_{-i})\)}
-
-  \item But loss-averse parties may pay more to insure against defeat.\\
+  \item Minimum offers make voters indifferent, but loss-averse parties {\bf pay more} to reduce electoral losses.\\
   {\scriptsize\color{gray}
   \(s_i=c_i(s_{-i})+\rho_i\)}
 
-  \item The insurance premium grows with loss aversion, loss salience, and electoral stakes.\\
+  \item This {\bf extra payment} is an insurance premium, and it increases when electoral defeat is more likely for the party.\\
   {\scriptsize\color{gray}
   \(\rho_i^\ast=\rho(\lambda_i,\ell_i,R_i)\)}
-
-  \item The premium is feasible only if the party has room to pay it.\\
-  {\scriptsize\color{gray}
-  \(0\leq \rho_i\leq \overline{R}_i-c_i(s_{-i})\)}
 \end{itemize}
 
 \medskip
-\onslide<5->{
-\begin{block}{Implication}
-{\scriptsize Party initiative can raise voter payoffs above the minimum switching price.}
+\onslide<3->{
+\begin{block}{Core idea}
+{\scriptsize Party initiative can raise voter payoffs because parties may pay above the minimum switching price.}
 \end{block}
 }
 \end{column}
@@ -707,7 +720,7 @@ Loss aversion increases willingness to pay, but budgets cap it.
 \begin{column}{0.45\textwidth}
 \centering
 \begin{tikzpicture}[scale=0.9,baseline=(base.base)]
-  \path[use as bounding box] (-0.2,-0.7) rectangle (5.2,3.4);
+  \path[use as bounding box] (-0.2,-0.7) rectangle (5.2,3.5);
   \coordinate (base) at (2.5,0);
 
   % minimum compensation
@@ -729,21 +742,21 @@ Loss aversion increases willingness to pay, but budgets cap it.
   }
 
   % cap
-  \onslide<4->{
+  \onslide<3->{
     \draw[dashed,thick] (3.6,2.4) -- (5.0,2.4);
     \node[right] at (5.0,2.4) {\scriptsize \(\overline{R}_i\)};
     \draw[<->,thick] (4.2,1.2) -- (4.2,2.4);
     \node[right,align=left] at (4.25,1.8)
-      {\scriptsize slack for\\[-1mm]\scriptsize premium};
+      {\scriptsize extra\\[-1mm]\scriptsize payment};
   }
 \end{tikzpicture}
 \end{column}
 
 \end{columns}
 \end{frame}
+\fi
 
-
-
+\iffalse
 \miniframesoff
 \begin{frame}[c]{Vote Selling: Voters Move First}
 \begin{columns}[T,totalwidth=\textwidth]
@@ -751,30 +764,19 @@ Loss aversion increases willingness to pay, but budgets cap it.
 % LEFT
 \begin{column}{0.55\textwidth}
 \begin{itemize}[<+->]
-  \item The voter names a price for each party.\\
+  \item When voters move first, they send offers to each party, and each party accepts only if the price is below its willingness to pay.\\
   {\scriptsize\color{gray}
-  Requests \(a_L,a_R\)}
+  Party \(i\) accepts when \(a_i\leq\overline{R}_i\).}
 
-  \item Parties accept only if the price is not too high.\\
+  \item Voters therefore try to extract the highest acceptable price, while still accounting for the ideological cost of supporting each party.\\
   {\scriptsize\color{gray}
-  \(a_i\leq \overline{R}_i\)}
-
-  \item The highest acceptable price is therefore \(\overline{R}_i\).
-
-  \item The voter sells to the party that gives the best ideology-plus-price payoff.\\
-  {\scriptsize\color{gray}
-  \(\max_i\{u_j(\gamma_i)+\overline{R}_i\}\)}
+  The voter compares \(u_j(\gamma_i)+\overline{R}_i\).}
 \end{itemize}
 
 \medskip
-\onslide<5->{
-\begin{block}{Switching condition}
-{\scriptsize
-The voter sells to the less-preferred party if
-\[
-\overline{R}_{-i^\ast}-\overline{R}_{i^\ast}\geq \Delta.
-\]
-}
+\onslide<3->{
+\begin{block}{Core idea}
+{\scriptsize For voters, this turns into a ``higher asking price.''}
 \end{block}
 }
 \end{column}
@@ -783,7 +785,7 @@ The voter sells to the less-preferred party if
 \begin{column}{0.45\textwidth}
 \centering
 \begin{tikzpicture}[scale=0.9,baseline=(axis.base)]
-  \path[use as bounding box] (-0.4,-1.2) rectangle (5.4,1.7);
+  \path[use as bounding box] (-0.4,-1.1) rectangle (5.4,3.2);
   \coordinate (axis) at (2.5,0);
 
   % axis
@@ -798,21 +800,21 @@ The voter sells to the less-preferred party if
 
   % request to L
   \onslide<1->{
-    \draw[->,thick,blue!70!black] (2.1,0.35) -- (1.15,1.0);
-    \node[above,align=center] at (1.35,1.0)
+    \draw[->,thick,blue!70!black] (2.1,0.35) -- (1.15,1.25);
+    \node[above,align=center] at (1,1.25)
       {\scriptsize request\\[-1mm]\scriptsize \(a_L\)};
   }
 
   % request to R
   \onslide<2->{
-    \draw[->,thick,red!70!black] (2.35,0.35) -- (3.85,1.0);
-    \node[above,align=center] at (3.65,1.0)
+    \draw[->,thick,red!70!black] (2.35,0.35) -- (3.85,1.25);
+    \node[above,align=center] at (4,1.25)
       {\scriptsize higher request\\[-1mm]\scriptsize \(a_R\)};
   }
 
   % acceptance cap
   \onslide<3->{
-    \node[draw,rounded corners,fill=white,align=center] at (2.5,-0.9)
+    \node[draw,rounded corners,fill=white,align=center] at (2.5,-1.5)
       {\scriptsize accepted only if\\[-1mm]
        \scriptsize \(a_i\leq \overline{R}_i\)};
   }
@@ -821,35 +823,29 @@ The voter sells to the less-preferred party if
 
 \end{columns}
 \end{frame}
+\fi
 
-
-
+\iffalse
 \miniframesoff
-\begin{frame}[c]{Vote Selling: Why Strong but Distant Parties Pay More}
+\begin{frame}[c]{Why Electorally Strong but Distant Parties Pay More}
 \begin{columns}[T,totalwidth=\textwidth]
 
 % LEFT
 \begin{column}{0.55\textwidth}
 \begin{itemize}[<+->]
-  \item A distant party is costly for the voter to support.\\
+  \item A distant party must compensate the voter of switching sides.\\
   {\scriptsize\color{gray}
-  Larger \(\Delta\)}
+  The switching cost is \(\Delta\).}
 
-  \item But an electorally exposed party has more to lose.\\
-  {\scriptsize\color{gray}
-  Larger \(R_i\), \(\ell_i\), and therefore \(\overline{R}_i\)}
-
-  \item Loss aversion raises the ceiling on acceptable prices.\\
-  {\scriptsize\color{gray}
-  \(\overline{R}_i=\min\{B_i,[1+(\lambda_i-1)\ell_i]R_i\}\)}
-
-  \item So voters ask more from parties that are both electorally valuable and ideologically costly.
+\item But if that distant party is electorally strong, losing the negotiated voter becomes costly, so loss aversion raises its acceptable price ceiling.\\
+{\scriptsize\color{gray}
+\(\overline{R}_i=\min\{B_i,[1+(\lambda_i-1)\ell_i]R_i\}\)}
 \end{itemize}
 
 \medskip
-\onslide<5->{
-\begin{block}{Prediction}
-{\scriptsize When voters initiate, high prices target electorally strong but ideologically distant parties.}
+\onslide<3->{
+\begin{block}{Core idea}
+{\scriptsize Voters ask more from ideologically distant parties but electorally willing to pay.}
 \end{block}
 }
 \end{column}
@@ -858,12 +854,11 @@ The voter sells to the less-preferred party if
 \begin{column}{0.45\textwidth}
 \centering
 \begin{tikzpicture}[scale=0.9,baseline=(base.base)]
-  \path[use as bounding box] (-0.2,-0.8) rectangle (5.4,3.4);
+  \path[use as bounding box] (-0.2,-0.7) rectangle (5.2,3.5);
   \coordinate (base) at (2.5,0);
 
-  % labels
   \onslide<1->{
-    \node[align=center] at (1.25,3.0) {\scriptsize close party\\[-1mm]\scriptsize low ideological cost};
+    \node[align=center] at (1.25,1.7) {\scriptsize close party\\[-1mm]\scriptsize low ideological cost};
     \draw[fill=blue!20] (0.8,0) rectangle (1.7,1.0);
     \node[below] at (1.25,0) {\scriptsize \(a_{i^\ast}\)};
   }
@@ -875,13 +870,13 @@ The voter sells to the less-preferred party if
   }
 
   % delta threshold
-  \onslide<3->{
+  \onslide<2->{
     \draw[<->,thick] (4.35,1.0) -- (4.35,2.3);
-    \node[right] at (4.38,1.65) {\scriptsize must cover \(\Delta\)};
+    \node[right] at (4.38,1.65) {\scriptsize covers \(\Delta\)};
   }
 
   % acceptance ceiling
-  \onslide<4->{
+  \onslide<3->{
     \draw[dashed,thick] (2.8,2.3) -- (4.6,2.3);
     \node[right] at (4.6,2.3) {\scriptsize \(\overline{R}_{-i^\ast}\)};
   }
@@ -890,8 +885,10 @@ The voter sells to the less-preferred party if
 
 \end{columns}
 \end{frame}
+\fi
 
 
+\subsection{Hypotheses}
 
 \miniframeson
 \begin{frame}[c]{Formally Derived Hypotheses}
@@ -899,7 +896,7 @@ The voter sells to the less-preferred party if
 
   \item[] \textbf{[H1] Core Targeting Under Party Initiative}
   \begin{itemize}
-    \item Parties mainly buy from ideologically proximate voters because they are cheaper to secure.\\
+    \item When parties initiate vote buying, they mainly buy from ideologically proximate voters because those voters are cheaper to secure.\\
     {\scriptsize\color{gray}
     Successful buying requires \(c_i(s_{-i})\leq\overline{R}_i\), and \(c_i\) rises with ideological distance.}
   \end{itemize}
@@ -908,17 +905,16 @@ The voter sells to the less-preferred party if
 
   \item[] \textbf{[H2] Selling to the Opponent Winning Party}
   \begin{itemize}
-    \item When voters initiate, they demand higher prices from electorally exposed but ideologically distant parties.\\
-    {\scriptsize\color{gray}
-    Switching is attractive when
-    \(\overline{R}_{-i^\ast}-\overline{R}_{i^\ast}\geq\Delta\).}
+ \item When voters initiate vote selling, they demand higher prices from electorally strong and ideologically distant parties.\\
+{\scriptsize\color{gray}
+High demands are possible when \(\overline{R}_{-i^\ast}\) is large enough to compensate the switching cost \(\Delta\).}
   \end{itemize}
 
   \medskip
 
   \item[] \textbf{[H3] Higher Voter Payoffs Under Party Initiative}
   \begin{itemize}
-    \item Party initiative can give voters higher payoffs because loss-averse parties add an insurance premium.\\
+    \item When parties initiate vote buying, voters can earn more because loss-averse parties may pay an insurance premium above the minimum switching price.\\
     {\scriptsize\color{gray}
     \(s_i=c_i(s_{-i})+\rho_i\), with \(\rho_i\) increasing in \(\lambda_i\), \(\ell_i\), and \(R_i\).}
   \end{itemize}
@@ -929,27 +925,6 @@ The voter sells to the less-preferred party if
 
 
 
-
-\subsection{Hypotheses}
-
-
-\miniframeson
-\begin{frame}[c]{(Formally Derived) Hypotheses}
-\begin{itemize}
-  \item[] \textbf{[H1] Core Targeting Under Party Initiative:}
-  \begin{itemize}
-    \item When parties begin, parties mainly buy from their followers.
-  \end{itemize}
-  \item[]  \textbf{[H2] Selling to the Opponent Winning Party:}
-  \begin{itemize}
-    \item When voters begin, they demand higher prices from electorally strong {\color{gray}(i.e., with more loss aversion)} but ideologically distant parties.
-  \end{itemize}
-  \item[]  \textbf{[H3] Higher Voter Payoffs Under Party Initiative:}
-  \begin{itemize}
-    \item Because parties overspend under electoral risk {\tiny\color{gray} (Bahamonde and Canales, 2022)}, voters make more in vote-buying.
-  \end{itemize}
-\end{itemize}
-\end{frame}
 
 %====================
 % EXPERIMENT
@@ -1166,14 +1141,13 @@ The voter sells to the less-preferred party if
   % RIGHT COLUMN: INTERPRETATION
   \column{0.5\textwidth}
 
-    \begin{itemize}
-      \item More transfers when the party is ideologically close but likely to lose (insurance against losses).
+ \begin{itemize}
+  \item For electorally {\color{red}weak parties}, distance lowers requested prices.
 
-        \medskip
+  \medskip
 
-
-      \item More transfers when the party is winning but distant (voters exploit electorally strong parties' higher electoral stakes {\scriptsize\color{gray}$R_i$}.)
-    \end{itemize}
+  \item For electorally {\color{blue}strong parties}, distance raises requested prices: voters demand compensation for switching sides.
+\end{itemize}
 
 
 \end{columns}
@@ -1190,30 +1164,34 @@ The voter sells to the less-preferred party if
 \miniframeson
 \begin{frame}[c]{Sequencing and Payoffs by Game}
 
-\begin{columns}[c]
+\begin{columns}[c,totalwidth=\textwidth]
 
   % LEFT COLUMN: FIGURE
-  \column{0.55\textwidth}
+  \begin{column}{0.57\textwidth}
   \centering
-  \includegraphics[width=0.9\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/payoffs_plot.pdf}
-
-  %\vspace{0.2cm}
-  %{\footnotesize Mean payoffs for voters and parties under party-initiated vote buying (VB) and voter-initiated vote selling (VS). Error bars show non-parametric 90\% confidence intervals.}
+  \raisebox{0.45cm}{%
+    \includegraphics[width=0.9\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/payoffs_plot.pdf}
+  }
+  \end{column}
 
   % RIGHT COLUMN: INTERPRETATION
-  \column{0.45\textwidth}
+  \begin{column}{0.43\textwidth}
 
   \begin{itemize}
-    \item Parties' payoffs are similar across vote buying and vote selling.
-    \item Voters \textbf{make more} when parties begin the exchange.
-    %\item In VB, parties overspend relative to the minimal compensating transfer ({\scriptsize$\Delta$}) under electoral risk.
-    %\item In VS, very high requested prices are often rejected, leaving some voters with only ideological payoffs.
-  \end{itemize}
-   
+    \item Party payoffs are similar across both games.
 
-    \begin{exampleblock}{{\scriptsize Implication}}
-      {\scriptsize First movers NOT always benefit the same (parties didn't).}
-    \end{exampleblock}
+    \medskip
+
+    \item Voters earn more when parties initiate the exchange.
+  \end{itemize}
+
+  \medskip
+
+\begin{exampleblock}{{\scriptsize Interpretation}}
+  {\scriptsize {\bf Vote buying} lets voters capture more surplus (due to party's loss aversion); {\bf vote selling} generates high demands, but also more rejection.}
+\end{exampleblock}
+
+  \end{column}
 
 \end{columns}
 
@@ -1257,6 +1235,7 @@ The voter sells to the less-preferred party if
 
 \subsection{Why Care}
 
+\iffalse
 \begin{frame}[c]{So What? Why This Matters Beyond Clientelism}
 \begin{itemize}
   \item \textbf{Who moves first is power.} In many settings the side that moves first \emph{usually} captures more benefits---unions vs. governments or parents vs. the welfare state.
@@ -1266,13 +1245,14 @@ The voter sells to the less-preferred party if
   \item[\checkmark] {\color{blue}If we care about inequality or democracy, we shouldn't just ask \emph{who gets how much}, but also \emph{who moves first}}.
 \end{itemize}
 \end{frame}
-
-
+\fi
 %====================
 % END
 %====================
 
-\miniframesoff
+\subsection{End}
+
+\miniframeson
 \begin{frame}[c]{Thank you}
 \begin{center}
 \vspace{-0.5cm}
