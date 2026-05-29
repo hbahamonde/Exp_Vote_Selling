@@ -16,7 +16,7 @@
 
 \usepackage[colorinlistoftodos,prependcaption,textsize=small]{todonotes}
 
-
+\usepackage{etoc}
 \usepackage{tabularray}
 \usepackage{codehigh}
 \usepackage[normalem]{ulem}
@@ -128,6 +128,28 @@ headpunct=:
 \def\xxi{{\pmb \xi}}
 
 
+\usepackage{titletoc}
+
+% for annonymous sections
+\usepackage{xcolor}
+\usepackage{calc}
+
+\newif\ifredact
+
+% \redacttrue   % black boxes ON
+\redactfalse  % black boxes OFF
+
+\newlength{\redactedlength}
+
+\newcommand{\redacted}[1]{%
+  \ifredact
+    \settowidth{\redactedlength}{#1}%
+    \rule[-0.25ex]{\redactedlength}{1.7ex}%
+  \else
+    #1%
+  \fi
+}
+
 
 
 \hypersetup{
@@ -192,8 +214,7 @@ headpunct=:
 
 % TITLE SECTION
 
-\title{\vspace{-15mm}\fontsize{18pt}{7pt}\selectfont\textbf{\input{title.txt}\unskip}} % Article title
-
+\title{\vspace{-15mm}{\fontsize{18pt}{22pt}\selectfont\bfseries\input{title.txt}\unskip}}
 
 \author[1]{
 
@@ -304,6 +325,10 @@ options(scipen = 9999)
 
 
 \newpage
+%\begin{center}
+%{\fontsize{18pt}{24pt}\selectfont\bfseries\input{title.txt}\unskip}
+%\end{center}
+
 \vspace{2cm}
 \begin{abstract}
 \input{abstract.txt}\unskip
@@ -388,7 +413,7 @@ Non-programmatic linkages \parencite{Kitschelt2000} are reciprocal \parencite{Au
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot.pdf}
+  \includegraphics[width=0.8\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot_wide.pdf}
   \caption{Annual frequency of Web of Science publications whose abstracts include the terms ``vote buying'' and ``vote selling.''}
   \label{fig:buy_sell_literature}
 \end{figure}
@@ -637,7 +662,7 @@ The experiment implements these two institutional perspectives in a common strat
 
 \subsection{Subjects, implementation, and incentives}
 
-The experiment was implemented using \texttt{oTree} in a laboratory. A total of 102 adult participants were recruited.\footnote{The study was carried out in Chile, at a laboratory located in Santiago administered jointly by the University of Santiago and Nuffield College, Oxford. Participants were recruited in the university district, received a show-up fee of 2,000 CLP (approximately 2.1 euros), and earned additional performance-based payments. All payoffs during the games were denominated in experimental points, which were converted into Chilean pesos at a fixed exchange rate announced in advance. Sessions took place between April 20 and May 28, 2021.} Each subject played the game three times, for a total sample size of 306. At the start of each session, subjects completed two practice rounds to ensure comprehension; practice-round data were excluded from the analysis. Throughout the experiment, participants interacted with the interface using neutral labels (e.g., ``Party A'' and ``Party B''; see below), and accumulated payoffs in experimental ``points'' that were later converted into real monetary earnings.
+The experiment was implemented using \texttt{oTree} in a laboratory. A total of 102 adult participants were recruited.\footnote{The study was carried out in \redacted{Chile}, at a laboratory located in \redacted{Santiago} administered jointly by \redacted{the University of Santiago} and \redacted{Nuffield College, Oxford}. Participants were recruited in the \redacted{university district}, received a show-up fee of \redacted{2,000 CLP} (approximately \redacted{2.1 euros}), and earned additional performance-based payments. All payoffs during the games were denominated in experimental points, which were converted into \redacted{Chilean pesos} at a fixed exchange rate announced in advance. Sessions took place between \redacted{April 20 and May 28, 2021}.} Each subject played the game three times, for a total sample size of 306. At the start of each session, subjects completed two practice rounds to ensure comprehension; practice-round data were excluded from the analysis. Throughout the experiment, participants interacted with the interface using neutral labels (e.g., ``Party A'' and ``Party B''; see below), and accumulated payoffs in experimental ``points'' that were later converted into real monetary earnings.
 
 
 Each subject played three independent games. For every new game we reran the full randomization: roles, ideological positions, party budgets, and initial vote shares were independently drawn afresh. Thus, while subjects could play multiple games, the strategic environment in each round was independent and unfamiliar ex ante.
@@ -841,10 +866,27 @@ count <- comma(as.numeric(count)) # add comma
 
 
 
-\section{Appendix}
+\clearpage
 \pagenumbering{roman}
 \setcounter{page}{1}
-%\newpage
+
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
+\label{sec:appendix}
+
+\subsection*{Appendix Contents}
+
+\startcontents[appendix]
+\printcontents[appendix]{}{1}{%
+  \setcounter{tocdepth}{2}%
+}
+
+\bigskip
+
+\newpage
+
+\subsection{Vote-buying offers and vote-selling prices}
+\label{app:H1_regressions}
 
 \begin{table}[H]
 \centering

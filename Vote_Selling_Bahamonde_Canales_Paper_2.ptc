@@ -1,0 +1,26 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\babel@toc {american}{}\relax 
+\contentsline {section}{\numberline {I}The Neglected Voter in Clientelism Research}{1}{section.1}%
+\contentsline {section}{\numberline {II}Bringing Voters Back In}{6}{section.2}%
+\contentsline {section}{\numberline {III}A Prospect-Theoretic Model of Vote Buying and Vote Selling}{9}{section.3}%
+\contentsline {subsection}{\numberline {I}Players, ideology, and transfers}{10}{subsection.3.1}%
+\contentsline {subsection}{\numberline {II}Party loss aversion}{11}{subsection.3.2}%
+\contentsline {subsection}{\numberline {III}Vote selling: voters set prices}{13}{subsection.3.3}%
+\contentsline {subsection}{\numberline {IV}Vote buying: parties set offers}{14}{subsection.3.4}%
+\contentsline {subsection}{\numberline {V}Initiative and surplus}{17}{subsection.3.5}%
+\contentsline {section}{\numberline {IV}Experimental Design and Procedures}{19}{section.4}%
+\contentsline {subsection}{\numberline {I}Subjects, implementation, and incentives}{19}{subsection.4.1}%
+\contentsline {subsection}{\numberline {II}Roles, ideology, and electoral risk}{20}{subsection.4.2}%
+\contentsline {subsection}{\numberline {III}Institutional variants: vote buying and vote selling}{22}{subsection.4.3}%
+\contentsline {paragraph}{Game 1: party-initiated vote buying.}{22}{paragraph*.3}%
+\contentsline {paragraph}{Game 2: voter-initiated vote selling.}{23}{paragraph*.4}%
+\contentsline {section}{\numberline {V}Econometric Strategy}{23}{section.5}%
+\contentsline {subsection}{\numberline {I}Distributions of vote-buying offers and vote-selling requests}{24}{subsection.5.1}%
+\contentsline {subsection}{\numberline {II}Core targeting under party initiative}{25}{subsection.5.2}%
+\contentsline {subsection}{\numberline {III}Who pays how much? Ideology, electoral strength, and the price of a vote}{27}{subsection.5.3}%
+\contentsline {subsection}{\numberline {IV}Who benefits when the rules change? Payoffs across institutional variants}{30}{subsection.5.4}%
+\contentsline {section}{\numberline {VI}Discussion}{33}{section.6}%
+\contentsline {section}{Appendix}{i}{section.6}%
+\ttl@starttoc {appendix@1}
+\contentsline {subsection}{\numberline {I}Vote-buying offers and vote-selling prices}{ii}{subsection.6.1}%
+\contentsfinish 
