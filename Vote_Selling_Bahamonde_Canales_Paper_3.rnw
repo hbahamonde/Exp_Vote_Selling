@@ -1,0 +1,843 @@
+\documentclass[12pt]{article} 
+\usepackage[T1]{fontenc}
+ % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,columnsep=20pt]{geometry} % Document margins
+%\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+
+\usepackage{lipsum} % ignore if not needed
+
+\usepackage[colorinlistoftodos,prependcaption,textsize=small]{todonotes}
+
+\usepackage{etoc}
+\usepackage{tabularray}
+\usepackage{codehigh}
+\usepackage[normalem]{ulem}
+\UseTblrLibrary{booktabs}
+\UseTblrLibrary{siunitx}
+\newcommand{\tinytableTabularrayUnderline}[1]{\underline{#1}}
+\newcommand{\tinytableTabularrayStrikeout}[1]{\sout{#1}}
+\NewTableCommand{\tinytableDefineColor}[3]{\definecolor{#1}{#2}{#3}}
+
+
+% to ignore texts: good for thank messages and paper submissions.
+      % \fbox{\phantom{This text will be invisible too, but a box will be printed arround it.}}
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+%\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+
+\usepackage[]{titlesec} % Allows customization of titles
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\usepackage{fancybox, fancyvrb, calc}
+\usepackage[svgnames]{xcolor}
+\usepackage{epigraph}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage{graphics}
+\usepackage{pbox} % \pbox{20cm}{This is the first \\ cell}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{rotating}
+\usepackage{paracol}
+\usepackage{textcomp}
+\usepackage[export]{adjustbox}
+\usepackage{afterpage}
+\usepackage{filecontents}
+\usepackage{color}
+\usepackage{latexsym}
+\usepackage{lscape}       %\begin{landscape} and \end{landscape}
+\usepackage{wasysym}
+\usepackage{dashrule}
+
+\usepackage{framed}
+\usepackage{tree-dvips}
+\usepackage{pgffor}
+\usepackage[]{authblk}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}     %desactivar para link rojos
+\usepackage{graphicx}
+\usepackage{dcolumn} % for R tables
+\usepackage{multirow} % For multirow in tables
+\usepackage{pifont}
+\usepackage{listings}
+
+\usepackage{censor}
+
+% hypothesis / theorem package begin
+\usepackage{amsthm}
+\usepackage{thmtools}
+\declaretheoremstyle[
+spaceabove=6pt, spacebelow=6pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries, notebraces={(}{)},
+bodyfont=\normalfont,
+postheadspace=0.6em,
+headpunct=:
+]{mystyle}
+\declaretheorem[style=mystyle, name=Hypothesis, preheadhook={\renewcommand{\thehyp}{H\textsubscript{\arabic{hyp}}}}]{hyp}
+
+\newtheorem{proposition}{Proposition}
+
+\usepackage{cleveref}
+\crefname{hyp}{hypothesis}{hypotheses}
+\Crefname{hyp}{Hypothesis}{Hypotheses}
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Subsection}
+\providecommand{\propositionautorefname}{Proposition}
+\providecommand{\hypautorefname}{Hypothesis}
+% hypothesis / theorem package end
+
+
+%----------------------------------------------------------------------------------------
+% Other ADDS-ON
+%----------------------------------------------------------------------------------------
+
+% independence symbol \independent
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+
+
+% Les principaux ensembles
+\newcommand{\Abs}[1]{\left\lvert#1\right\rvert}
+\newcommand\N{{\mathbb N}}
+\newcommand\R{{\mathbb R}}
+\newcommand\T{{\mathbb T}}
+\newcommand\C{{\mathbb C}}
+\newcommand\Q{{\mathbb Q}}
+\newcommand\Z{{\mathbb Z}}
+\newcommand\Pp{{\mathbb P}}
+\newcommand\Ee{{\mathbb E}}
+\def\x{{\mathbf x}}
+\def\w{{\mathbf w}}
+\def\xxi{{\pmb \xi}}
+
+
+\usepackage{titletoc}
+
+% for annonymous sections
+\usepackage{xcolor}
+\usepackage{calc}
+
+\newif\ifredact
+
+% \redacttrue   % black boxes ON
+\redactfalse  % black boxes OFF
+
+\newlength{\redactedlength}
+
+\newcommand{\redacted}[1]{%
+  \ifredact
+    \settowidth{\redactedlength}{#1}%
+    \rule[-0.25ex]{\redactedlength}{1.7ex}%
+  \else
+    #1%
+  \fi
+}
+
+
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat's bookmarks
+    pdftoolbar=true,        % show Acrobat's toolbar?
+    pdfmenubar=true,        % show Acrobat's menu?
+    pdffitwindow=true,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={My title},    % title
+    pdfauthor={Author},     % author
+    pdfsubject={Subject},   % subject of the document
+    pdfcreator={Creator},   % creator of the document
+    pdfproducer={Producer}, % producer of the document
+    pdfkeywords={keyword1} {key2} {key3}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=Maroon,          % color of internal links (change box color with linkbordercolor)
+    citecolor=Maroon,        % color of links to bibliography
+    filecolor=Maroon,      % color of file links
+    urlcolor=Maroon           % color of external links
+}
+
+%\usepackage[nodayofweek,level]{datetime} % to have date within text
+
+\newcommand{\LETT}[3][]{\lettrine[lines=4,loversize=.2,#1]{\smash{#2}}{#3}} % letrine customization
+
+
+
+% comments on margin
+  % Select what to do with todonotes: 
+  % \usepackage[disable]{todonotes} % notes not showed
+  % usage: \todo{This is a note at margin}
+
+\usepackage{cooltooltips}
+
+%%% bib begin
+\usepackage[american]{babel}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=authoryear,dashed=false,doi=false,isbn=false,url=false,arxiv=false]{biblatex}
+%\DeclareLanguageMapping{american}{american-apa}
+\addbibresource{/Users/hectorbahamonde/Bibliografia_PoliSci/library.bib} 
+\addbibresource{/Users/hectorbahamonde/Bibliografia_PoliSci/Bahamonde_BibTex2013.bib} 
+
+
+
+
+
+
+% USAGES
+%% use \textcite to cite normal
+%% \parencite to cite in parentheses
+%% \footcite to cite in footnote
+%% the default can be modified in autocite=FOO, footnote, for ex. 
+%%% bib end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [REVISION 2026-11] Paper_3: Public Choice version.
+% Built on Paper_2 (rejected at Political Behavior). Main changes:
+%  - contribution narrowed to a controlled comparison of WHO SETS THE PRICE;
+%  - Andrea's model kept (Delta, R_i, loss aversion, effective WTP) but solved in equilibrium;
+%    the old H3 is replaced by a derived proposer-advantage proposition;
+%  - prospect theory kept as a behavioural extension with testable signatures;
+%  - treatments renamed (price-setting parties / price-setting voter);
+%  - disclosure of Bahamonde & Canales (2022).
+% Numbers come from Vote_Selling.R and Vote_Selling_revision_tests.R (object `rt`).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addbibresource{/Users/hectorbahamonde/research/Exp_Vote_Selling/Vote_Selling_Bahamonde_Canales_Paper_3.bib}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\providecommand{\lemmaautorefname}{Lemma}
+\providecommand{\remarkautorefname}{Remark}
+
+% TITLE SECTION
+\title{\vspace{-15mm}{\fontsize{18pt}{22pt}\selectfont\bfseries\input{title.txt}\unskip}}
+
+\author[1]{
+\textsc{Hector Bahamonde}
+\thanks{\href{mailto:hector.bahamonde@utu.fi}{hector.bahamonde@utu.fi}; \href{http://www.hectorbahamonde.com}{\texttt{www.HectorBahamonde.com}}.}}
+
+\author[2]{
+\textsc{Andrea Canales}
+\thanks{\href{mailto:andrea.canales@uoh.cl}{andrea.canales@uoh.cl};
+\href{http://sites.google.com/view/andrea-canales-g}{\texttt{http://sites.google.com/view/andrea-canales-g}}. \\
+{\color{blue}\bf Authors are listed in alphabetical order and both collaborated equally to this paper}. We thank O'Higgins University for funding this project. We thank Inga Saikkonen, Katri Sieberg, Denise Laroze and Mauricio Lopez for their comments and suggestions. We also thank the participants of the 2019 colloquium at the Oxford-Nuffield Centre for Experimental Social Sciences (Santiago), the 2025 INVEST XI Scientific Seminar (Helsinki), the 2026 Resilience of Liberal Democracy in Finland (RESLIDE) workshop (\AA{}bo), the 2026 LASA Congress (Paris), and the 2026 XIII NOLAN Conference (Stockholm). Javiera Tobar, Cristopher Reyes and Basti\'an Garrido provided excellent research assistance. All errors are our own.}}
+
+\affil[1]{Senior Researcher, University of Turku, Finland}
+\affil[2]{Senior Economic Analyst, Central Bank of Chile, Chile}
+
+\date{\today}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%TC:ignore
+
+<<echo=FALSE, cache=FALSE, warning = FALSE, message = F>>=
+library(knitr)
+read_chunk('/Users/hectorbahamonde/research/Exp_Vote_Selling/Vote_Selling.R')
+read_chunk('/Users/hectorbahamonde/research/Exp_Vote_Selling/Vote_Selling_revision_tests.R')
+@
+
+<<rsetup, include=FALSE>>=
+chooseCRANmirror(graphics=FALSE, ind=1)
+if (!require("pacman")) install.packages("pacman"); library(pacman)
+p_load(knitr)
+options(scipen = 9999)
+@
+
+<<loadings:d:2, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+@
+<<dep.var, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+@
+<<models, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+@
+<<flow.descriptives, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+@
+<<int.plot.d, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+@
+<<payoffs.plot, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+@
+<<ttest_payoffs, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+@
+<<hyp.one.vote.selling, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include = FALSE, cache=FALSE, eval=TRUE>>=
+@
+<<reg:table, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include=FALSE, cache=FALSE, eval=TRUE>>=
+@
+<<revision.tests, echo=FALSE, comment=NA, warning=FALSE, message=FALSE, include=FALSE, cache=FALSE, eval=TRUE>>=
+@
+
+<<nums, echo=FALSE, include=FALSE, cache=FALSE>>=
+VB <- "Vote Buying"; VS <- "Vote Selling"
+P   <- as.data.frame(rt$payoffs)
+pv  <- function(g, piv, col) P[P$game == g & P$pivotal == piv, col]
+nVB <- rt$participants[[VB]]; nVS <- rt$participants[[VS]]; nAll <- nVB + nVS
+sVB <- rt$sessions[[VB]];     sVS <- rt$sessions[[VS]];     sAll <- sVB + sVS
+SM  <- as.data.frame(rt$sample)
+pivVB <- SM$pivotal[SM$game == VB]; pivVS <- SM$pivotal[SM$game == VS]
+vrVB  <- SM$voter.rounds[SM$game == VB]; vrVS <- SM$voter.rounds[SM$game == VS]
+lcVB  <- SM$label.consistent[SM$game == VB]; lcVS <- SM$label.consistent[SM$game == VS]
+acc   <- as.data.frame(rt$vs.acc)
+acc0  <- acc$accept[acc$pivotal == 0]; acc1 <- acc$accept[acc$pivotal == 1]
+req0  <- acc$req[acc$pivotal == 0];    req1 <- acc$req[acc$pivotal == 1]
+nacc0 <- acc$n[acc$pivotal == 0];      nacc1 <- acc$n[acc$pivotal == 1]
+vbpref <- as.data.frame(rt$vb.pref)
+vbP.pref <- vbpref$pct[vbpref$pref_party == 1];   vbP.disp <- vbpref$pct[vbpref$pref_party == 0]
+vbB.pref <- vbpref$bench[vbpref$pref_party == 1]
+vbA.pref <- vbpref$any[vbpref$pref_party == 1];   vbA.disp <- vbpref$any[vbpref$pref_party == 0]
+vspref <- as.data.frame(rt$vs.pref)
+vsZ.pref <- vspref$zero[vspref$pref_party == 1];  vsZ.disp <- vspref$zero[vspref$pref_party == 0]
+mm  <- as.data.frame(rt$mismatch); mmVB <- mm$mismatches[mm$game == VB]; mmVS <- mm$mismatches[mm$game == VS]
+bug <- as.data.frame(rt$bug.vs)
+Gr  <- rt$gap$piv.rule; Gd <- rt$gap$piv.rec; Ga <- rt$gap$all.rule; Gad <- rt$gap$all.rec
+Gn  <- rt$gap$np.rule;  Gnd <- rt$gap$np.rec
+gvp <- subset(rt$gv, pivotal == 1)
+bAnyVB  <- 100 * mean(gvp$Delta[gvp$game == VB] < gvp$M[gvp$game == VB])
+meanM   <- mean(rt$gv$M)
+meanD.p <- mean(gvp$Delta)
+pred.gap.pct <- rt$pred.gap.pct
+over.VB <- pv(VB, 0, "rule") - pv(VB, 0, "benchmark"); over.VS <- pv(VS, 0, "rule") - pv(VS, 0, "benchmark")
+rej1 <- 100 - acc1
+# Label-consistent robustness (voter-clustered)
+ct_cons <- lmtest::coeftest(m1_consistent, vcov = sandwich::vcovCL(m1_consistent,
+             cluster = subset(dat.v.s, label.consistent == 1)$participant.code.dyad, type = "HC1"))
+# Party payoffs, recorded (session-clustered; from Vote_Selling.R)
+pgap <- t.test.payoffs.party
+# Abstract
+abstract3 <- paste0("Formal models of clientelism usually let parties set the price of a vote. We ask what changes when the voter sets it. We solve a game in which two parties with a common budget compete for one voter whose vote is worth something only when it is pivotal, and compare a price-setting-parties protocol (vote buying) with a price-setting-voter protocol (vote selling). The model predicts that handing price-setting power to the voter transfers to the voter a rent equal to the voter's ideological attachment, capped by the budget, and that party loss aversion has no effect when budgets bind. A laboratory experiment in Chile (", nAll, " participants, ", sAll, " sessions) rejects the proposer-advantage prediction: pivotal voters earn about the same under both protocols (difference of ", f0(Gr$est), " points against a predicted ", f0(Gr$bench), "). Two behavioral regularities absorb the predicted rent. Parties pay for votes that cannot change the outcome, and voters who set prices ask for about half of what parties would be willing to pay.")
+abstract3.l <- length(strsplit(abstract3, " ")[[1]])
+writeLines(abstract3, "abstract.txt")
+@
+
+%TC:endignore
+
+\maketitle
+\thispagestyle{empty}
+\pagenumbering{gobble}
+
+%TC:ignore
+\newpage
+\vspace{2cm}
+\begin{abstract}
+\Sexpr{abstract3}
+\end{abstract}
+
+\vspace*{0.3cm}
+\centerline{{\bf Abstract length}: \Sexpr{abstract3.l} words.}
+
+\vspace{1cm}
+\centerline{\textbf{\textit{Keywords---}} \input{keywords.txt}\unskip}
+
+\vspace{1cm}
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\small
+{\bf AI Statement}: We used GPT-5.5 Thinking, OpenAI, in May 2026, and Claude (Anthropic) in November 2026, for language editing, code review, and organizational suggestions. All substantive arguments, theoretical claims, formal modeling choices, empirical analyses, interpretation of results, and final text remain the authors' responsibility.
+\end{minipage}
+\end{center}
+
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\small
+{\bf Ethical Statement}: This study received ethical approval from the Oxford-Nuffield Centre for Experimental Social Sciences (CESS) Ethics Committee (Project VE\_0001). IRB approval document available upon request.
+\end{minipage}
+\end{center}
+
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\small
+{\bf Data Statement}: The sessions in which parties set prices were previously analyzed in \textcite{Bahamonde2022b}, which studies how electoral risk shapes vote-buying offers. The sessions in which the voter sets prices, the comparison between the two protocols, the formal benchmark, and all tests reported here are new to this paper.
+\end{minipage}
+\end{center}
+%TC:endignore
+
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\doublespacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}\label{sec:intro}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Clientelism is an exchange: a party delivers a private benefit and a voter delivers electoral support \parencite{Kitschelt2000,Nichter2008,Hicken2011}. Yet in most theories of that exchange only one side names the terms. In the distributive-politics tradition, parties decide whom to target and how much to give \parencite{Cox1986,Lindbeck1987,Dixit1996,Stokes2005}. In formal models of vote buying, candidates or interest groups bid for votes and voters respond to the bids \parencite{Groseclose1996,Dekel2008,MorganVardy2011,DalBo2007}. The voter's role is to accept or decline.
+
+A growing body of evidence suggests that this division of roles is too narrow. Citizens request benefits from politicians and brokers \parencite{Nichter2014a}, declare their support to signal that they are worth rewarding \parencite{NichterNunnari2022}, choose among competing brokers \parencite{Auerbach2018}, and, when asked, attach explicit prices to their votes \parencite{Hicken2015,Gherghina2026}. Ethnographic work describes clientelist relationships that are initiated by clients rather than patrons \parencite{Hagene2015,Tosoni2007,Gay1999}. If voters can propose terms, a basic public-choice question follows: \emph{does it matter who sets the price of a vote?} Bargaining theory gives a clear answer in general---the side that makes a take-it-or-leave-it proposal captures the surplus---but whether that answer survives in electoral exchange, where the value of a vote depends on whether it can change the outcome, is an open question. Observational data cannot answer it, because the settings in which voters initiate exchange differ from those in which parties do in many other ways.
+
+This paper isolates the price-setting protocol. We study two games that share preferences, budgets, the electorate, information, and payoffs, and differ only in who proposes the price. With \emph{price-setting parties} (vote buying), two parties simultaneously post offers and the voter takes one or none. With a \emph{price-setting voter} (vote selling), the voter posts a price to each party, each party accepts or rejects, and the voter then takes one of the accepted prices or none. In both games a completed transaction binds the vote, and a party pays only if the voter takes its offer.
+
+We first solve both games. Two results organize the analysis. The first is that, in an environment in which a single vote can tip an election, a vote is worth the full value of office to \emph{either} party when it is pivotal and nothing when it is not. When budgets are smaller than the value of office, each party's willingness to pay is simply its budget when the voter is pivotal and zero otherwise. An implication is that party loss aversion---a mechanism often invoked to explain why parties overpay for votes---has no observable consequence under correct beliefs: the budget binds before loss aversion can raise willingness to pay any further. The second result concerns the protocol. With price-setting parties, the two parties engage in asymmetric price competition: the voter's ideologically preferred party wins the vote and pays only what is needed to match the rival's best offer net of the voter's ideological attachment. With a price-setting voter, the voter makes an ultimatum-like demand and extracts the whole budget. The difference---the voter's \emph{proposer advantage}---equals the voter's ideological attachment, capped by the budget. In our parameter draws, the predicted advantage averages \Sexpr{f0(Gr$bench)} points for pivotal voters, about \Sexpr{f0(pred.gap.pct)} percent of the average budget.
+
+We then take the two protocols to the laboratory. In \Sexpr{sAll} sessions in Santiago, Chile, \Sexpr{nAll} participants played either the price-setting-parties game (\Sexpr{sVB} sessions) or the price-setting-voter game (\Sexpr{sVS} sessions), with roles, induced ideological payoffs, budgets, and the fictional electorate redrawn every round. Behavior responds to pivotality in the predicted direction in both games: parties make more and larger offers to pivotal voters, and accept more of their requests. But the central prediction fails. Pivotal voters earn about the same whether they or the parties set the price: the estimated difference is \Sexpr{f0(Gr$est)} points (95\% CI \Sexpr{f0(Gr$lo)} to \Sexpr{f0(Gr$hi)}), and the benchmark of \Sexpr{f0(Gr$bench)} points is rejected ($p$ \Sexpr{fp(Gr$p.bench)}). The design has enough power for this test: the minimum detectable effect is \Sexpr{f0(Gr$mde)} points.
+
+Two behavioral regularities account for the missing rent, one on each side of the market. Parties pay for votes that cannot change the outcome: half of the parties facing a non-pivotal voter make a positive offer, and parties accept \Sexpr{f0(acc0)} percent of positive requests from non-pivotal voters, although the benchmark value of such a vote is zero. Voters, in turn, under-use their power to set prices: pivotal voters request on average \Sexpr{f0(rt$vs.p.req$est)} percent of the budget, and only \Sexpr{f0(rt$vs.p.full$est)} percent ask for all of it. Their caution is not unreasonable, because parties reject \Sexpr{f0(rej1)} percent of pivotal requests that the benchmark says they should accept. The pattern is familiar from ultimatum bargaining, in which responders reject positive offers and proposers anticipate it \parencite{Guth1982,Roth1991,Camerer2003}. Overpayment for worthless votes raises the voter's earnings when parties set prices; underpricing lowers them when the voter does. The two deviations offset.
+
+We return to prospect theory as a candidate explanation for overpayment. If parties act as if a non-pivotal vote might decide the election, loss aversion acquires bite, because the budget no longer binds. But loss aversion makes a sharper prediction: a party that leads before the voter acts, and therefore frames defeat as a loss, should pay more than a trailing party that frames victory as a gain. We find no such asymmetry. Overpayment in our data is better described as a failure to condition on pivotality than as loss-averse insurance.
+
+The paper makes three contributions. First, it offers a tractable model that nests vote buying and vote selling as two price-setting protocols of the same exchange and derives the voter's proposer advantage in closed form. Second, it provides a controlled experimental comparison of the two protocols, which field and survey data cannot provide. Third, it shows that the institutional allocation of price-setting power matters much less in practice than theory predicts, because the behavioral frictions on the two sides of the market move earnings in opposite directions. For students of clientelism, the implication is that voter-initiated exchange need not empower voters. For the public-choice study of political markets, the results caution against inferring the distribution of rents from the formal assignment of bargaining power alone.
+
+The question is a public-choice question in a precise sense. Clientelism is a market in which a public good---the electoral outcome---is traded for private transfers, and the incidence of the rents created by that trade depends on the rules that govern the market as well as on preferences and endowments. Much of the comparative literature treats the rules as given and focuses on the buyer's targeting problem. Our analysis instead holds preferences and endowments fixed and asks how much the allocation of rents depends on a single rule: which side proposes. Because the answer in theory is ``a great deal'' and the answer in our data is ``very little,'' the paper also illustrates a broader point about political markets: formal bargaining power and realized rents can come apart when the participants on each side deviate from equilibrium in predictable ways.
+
+Two disclosures frame what follows. The price-setting-parties sessions were analyzed in \textcite{Bahamonde2022b}, which focuses on electoral risk and the size of vote-buying offers; the price-setting-voter sessions, the comparison between protocols, and the equilibrium benchmark are new. And the benchmark predictions were derived after data collection; the experiment was not pre-registered, and we report all tests we ran. \autoref{sec:literature} positions the paper. \autoref{sec:model} presents the model. \autoref{sec:design} describes the experiment. \autoref{sec:results} reports the results, and \autoref{sec:discussion} concludes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Who Proposes in Clientelist Exchange}\label{sec:literature}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{Voters as initiators.} The study of clientelism has long recognized that exchanges are reciprocal \parencite{Auyero2000,Finan2012}, but most quantitative work examines the party side: whom parties and brokers target, how they monitor compliance, and when vote buying is effective \parencite{Stokes2005,Gans-Morse2013,Vicente2014,Leight2020}. A smaller literature studies citizens as the active party. \textcite{Nichter2014a} show that citizens in Brazil and elsewhere routinely request benefits from politicians, and that politicians fulfil many of those requests. \textcite{NichterNunnari2022} study how citizens declare political support to obtain benefits. \textcite{Auerbach2018} document competition among brokers for clients who choose whom to follow, and \textcite{MichaelAuerbach2020} argue that client requests are central to broker--voter relations. On vote selling proper, \textcite{Hicken2015} measure Filipino voters' willingness to sell in the field, and \textcite{Gherghina2026} find that Romanian voters assign high financial value to their votes; see also \textcite{Bahamonde2020a}. Recent work also shows that voters adjust their participation in clientelist exchange to party competitiveness \parencite{Saikkonen2021a,Gherghina2023}.
+
+Measuring vote selling is itself difficult. Survey respondents underreport clientelist exchanges, and list experiments and other indirect techniques have shown that the true prevalence of vote buying can be much higher than direct questions suggest \parencite{Gonzalez-Ocantos2012,GonzalezOcantos2014,KiewietDeJonge2015}. Most of these instruments, however, ask whether a respondent was offered something, not whether the respondent asked for something or named a price. The laboratory offers a complementary route: it allows us to observe prices proposed by voters directly, together with the parties' responses, in an environment in which the value of a vote to each party is known.
+
+This evidence establishes that voters can and do propose terms. It does not tell us whether proposing terms changes what voters get, because the settings in which voters initiate differ from those in which parties do---in poverty, monitoring capacity, broker networks, and electoral competition. Our design holds all of these fixed and varies only the price-setting protocol.
+
+\paragraph{Formal models of vote buying.} Public-choice models of vote buying treat buyers as the price-setters. In \textcite{Groseclose1996}, two lobbies bid sequentially for legislators' votes, and the second mover buys only as many votes as needed to protect its position. In \textcite{Dekel2008}, two parties bid for voters in general elections, and the party with the higher willingness to pay wins at a price set by its rival's willingness to pay. \textcite{MorganVardy2011} characterize how costly it is to buy a voting body as a function of its size and members' preferences, and \textcite{DalBo2007} shows that a briber who can condition payments on pivotality can control a committee's decision at very low cost, because non-pivotal votes need not be paid. Two ingredients of these models are central to ours: competition between buyers, and the dependence of a vote's value on pivotality. What these models do not consider is the mirror protocol in which the seller names the price. Our model adds that protocol in the simplest environment in which the comparison is meaningful: one voter, two parties with a common budget, and a vote whose value depends on pivotality. The distributive-politics literature on core and swing voters \parencite{Cox1986,Lindbeck1987,Dixit1996,Stokes2005} is also cast in buyer terms; in our model the core-voter logic reappears as a statement about which party wins the voter and how much it pays.
+
+\paragraph{Protocols and rents.} A general lesson of noncooperative bargaining theory is that the protocol---who proposes, who responds, and whether responders compete---determines how a surplus is divided. In legislative bargaining, the agenda setter extracts rents from coalition partners; in auctions, the seller's ability to set a reserve price or to run a take-it-or-leave-it offer determines how much of the buyers' valuation it captures. The clientelism literature has absorbed this lesson only partially. It recognizes that competition between parties raises the price of votes and that monitoring capacity shapes what parties are willing to pay \parencite{Stokes2005,Gans-Morse2013}, but it rarely asks how the identity of the proposer shapes the price. Our model makes the protocol explicit and shows that it matters most for strongly attached voters, the group that party-centered theories regard as the cheapest to buy.
+
+\paragraph{Bargaining and behavior in the laboratory.} The price-setting-voter game has the structure of an ultimatum game with two responders whose acceptances the proposer can play off against each other. Laboratory ultimatum games show that responders reject positive offers and that proposers anticipate rejection by offering responders far more than the subgame-perfect minimum \parencite{Guth1982,Camerer2003}; competition among responders or proposers moves outcomes toward the equilibrium prediction \parencite{Roth1991}. Quantal response equilibrium formalizes such deviations as payoff-sensitive noise \parencite{McKelvey1995}. On the buyer side, prospect theory has been proposed as an account of why parties overspend under electoral risk \parencite{Kahneman1979,Tversky1992a,Levy1992a,Bahamonde2022b}. We use these literatures not as assumptions of the model but as candidate explanations for deviations from it, and we derive the testable signature of each.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{A Model of Price-Setting Power in Clientelist Exchange}\label{sec:model}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Environment}
+
+Two parties, $A$ and $B$, compete in an election, and one voter $j$ can sell a vote. The voter's earnings depend on which party wins, not on how the voter votes: if party $i$ wins and implements policy $\gamma_i$, the voter earns ideological utility $u_i \equiv u_j(\gamma_i) = D - \kappa\,|x_j - \gamma_i|$, where $x_j$ is the voter's ideal point and $D,\kappa>0$. Let $i^\ast = \arg\max_i u_i$ be the voter's preferred party and
+\begin{equation}
+\Delta \equiv u_{i^\ast} - u_{-i^\ast} \geq 0
+\end{equation}
+the voter's ideological attachment to it. A transfer $t$ adds to the voter's earnings, so the voter's payoff is $u_{\text{winner}} + t$.
+
+The rest of the electorate is fixed. A set of committed voters supports each party, and the negotiated voter's vote is counted, by default, for a party $\ell \in \{A,B\}$ (the voter's ``label''). Let $n_A$ and $n_B$ denote the parties' vote totals when the negotiated voter votes by default; the total is odd, so there are no ties. The voter is \emph{pivotal}, $P=1$, if moving the vote from $\ell$ to $-\ell$ changes the winner, that is, if $n_\ell - n_{-\ell} = 1$; otherwise $P=0$. Note that the default label need not coincide with the preferred party: $\ell$ determines which party the vote counts for absent a transaction, while $i^\ast$ determines which outcome the voter prefers.
+
+Each party values office at $W>0$ and has a budget $B_i>0$ from which it can pay transfers. A party's payoff is $W\cdot\mathbb{1}\{\text{wins}\} + B_i - t_i$, where $t_i$ is the transfer it actually pays. A transaction binds: if the voter takes party $i$'s offer or accepted price, the vote is cast for $i$ and $i$ pays. All parameters are common knowledge.
+
+\subsection{The value of a vote and the irrelevance of loss aversion}
+
+Following the original formulation of our argument, let party $i$'s electoral stake in securing the negotiated vote be $R_i = q_i W$, where $q_i$ is the probability that securing the vote changes the outcome in $i$'s favor, and let parties evaluate that stake relative to a reference point. With loss-aversion parameter $\lambda_i \geq 1$ and loss salience $s_i\in[0,1]$, the perceived stake is
+\begin{equation}
+\widetilde{R}_i = \left[1 + (\lambda_i - 1)\,s_i\right] R_i ,
+\end{equation}
+and the \emph{effective willingness to pay} is $\overline{R}_i = \min\{B_i, \widetilde{R}_i\}$. The case $\lambda_i=1$ is the expected-payoff benchmark.
+
+\begin{lemma}[Value of a vote]\label{lem:value}
+In this environment $q_A = q_B = P$. Hence $R_A = R_B = P\cdot W$: a vote is worth the full value of office to either party when the voter is pivotal and nothing otherwise.
+\end{lemma}
+
+\begin{proof}
+If $P=0$, no allocation of the negotiated vote changes the winner, so securing it is worth nothing. If $P=1$, the party that secures the vote wins and the other loses; securing the vote is worth $W$ to $\ell$ (it protects a victory) and to $-\ell$ (it creates one).
+\end{proof}
+
+\autoref{lem:value} has a direct implication for measurement. A party's vote share, often treated as a separate source of electoral risk, has no effect on the value of the vote once pivotality is accounted for. The only electoral variable that matters is whether the voter can change the outcome.
+
+\begin{lemma}[Irrelevance of loss aversion when budgets bind]\label{lem:loss}
+If $B_i \leq W$, then $\overline{R}_i = P\cdot B_i$ for every $\lambda_i \geq 1$ and $s_i \in [0,1]$.
+\end{lemma}
+
+\begin{proof}
+If $P=0$, $\widetilde{R}_i = 0$ and $\overline{R}_i = 0$. If $P=1$, $\widetilde{R}_i \geq W \geq B_i$, so $\overline{R}_i = B_i$.
+\end{proof}
+
+\autoref{lem:loss} is a negative result for the mechanism that motivated this project. When parties hold correct beliefs about pivotality and budgets are smaller than the value of office---as in our experiment, where budgets range from 900 to 1,800 points and office is worth 2,400---loss aversion cannot raise willingness to pay above what the budget already allows, and it cannot create willingness to pay for a vote that does not matter. Any effect of loss aversion must therefore operate through beliefs, a possibility we take up in \autoref{sec:behavioral}. In what follows we set $B_A = B_B = M < W$, as in the experiment, so that $\overline{R}_A = \overline{R}_B = P\cdot M$.
+
+\subsection{Price-setting parties}
+
+In the price-setting-parties game, $\Gamma_P$, both parties simultaneously post offers $s_A, s_B \in [0, M]$. The voter observes both offers and takes one of them or neither; taking party $i$'s offer casts the vote for $i$ and triggers the transfer $s_i$. Ties are broken in favor of the voter's preferred party.
+
+\begin{proposition}[Price-setting parties]\label{prop:buying}
+Suppose $P=1$. In the equilibrium of $\Gamma_P$ in which no party offers more than its willingness to pay, the preferred party $i^\ast$ secures the vote. If $\Delta < M$, it pays $M-\Delta$ and the rival offers $M$; if $\Delta \geq M$, it pays nothing (or an arbitrarily small amount, if the vote must be moved). The voter earns
+\[
+U^{P} = u_{i^\ast} + \max\{0,\, M - \Delta\}.
+\]
+If $P=0$, no party makes a positive offer and the voter earns the ideological payoff of the default winner.
+\end{proposition}
+
+\begin{proof}
+With $P=1$ each party is willing to pay up to $M$ to secure the vote (\autoref{lem:loss}). The voter takes the offer that maximizes $u_i + s_i$. The rival $-i^\ast$ can attract the voter only by offering more than $\Delta$ above $i^\ast$'s offer; since it will offer at most $M$, $i^\ast$ secures the vote by offering $\max\{0, M - \Delta\}$, and the rival cannot profitably outbid it. This is the standard outcome of price competition between two buyers with equal valuations when the seller prefers one of them \parencite[compare][]{Dekel2008}. With $P=0$, any positive transfer is a pure loss.
+\end{proof}
+
+\autoref{prop:buying} recovers the core-voter intuition in equilibrium form: when parties set prices, the vote goes to the party the voter already prefers, and that party pays less the stronger the voter's attachment. It is cheaper to buy a supporter than an opponent because the rival must overcome $\Delta$. Note, however, that the transfer is determined by the rival's willingness to pay, not by the minimum compensation the voter would require in isolation.
+
+\subsection{Price-setting voter}
+
+In the price-setting-voter game, $\Gamma_V$, the voter first posts prices $a_A, a_B \in [0,M]$, one for each party. The parties then simultaneously accept or reject the price addressed to them. Finally, the voter takes one of the accepted prices or none; taking party $i$'s price casts the vote for $i$ and triggers the transfer $a_i$. Parties accept when indifferent.
+
+\begin{proposition}[Price-setting voter]\label{prop:selling}
+Suppose $P=1$. If $\Delta < M$ or $\ell \neq i^\ast$, there is a subgame-perfect equilibrium in which the voter requests $a_A = a_B = M$, both parties accept, and the voter sells to $i^\ast$, earning
+\[
+U^{V} = u_{i^\ast} + M .
+\]
+If $\Delta \geq M$ and $\ell = i^\ast$, the voter's threat to sell to the rival is not credible, the preferred party rejects any positive price, and the voter earns $u_{i^\ast}$. If $P=0$, both parties reject any positive price and the voter earns the ideological payoff of the default winner.
+\end{proposition}
+
+\begin{proof}
+Consider $P=1$. For the non-label party $-\ell$, accepting any $a_{-\ell}\leq M$ is weakly dominant: if the voter takes the price, $-\ell$ wins and earns $W + M - a_{-\ell} > M$; otherwise its payoff is $M$ whatever it does. For the label party, accepting matters only if the voter would otherwise sell to $-\ell$. Suppose first $\ell \neq i^\ast$. The voter requests $M$ from $i^\ast = -\ell$, which accepts; since $u_{i^\ast} + M$ exceeds anything $\ell$ can offer the voter ($u_{\ell} + a_\ell \leq u_{-i^\ast} + M$), the voter sells to $i^\ast$ at $M$. Suppose next $\ell = i^\ast$ and $\Delta < M$. Then $u_{-i^\ast} + M > u_{i^\ast}$, so the voter's threat to sell to the rival at $M$ is credible; the preferred party prefers paying $M$ and winning ($W$) to losing ($M$), accepts $a_{i^\ast} = M$, and the voter sells to it. Finally, if $\ell = i^\ast$ and $\Delta \geq M$, the voter would not sell to the rival even at $M$, so $i^\ast$ wins by rejecting. With $P=0$, a party that accepts pays only if chosen and gains nothing from being chosen, so accepting a positive price is weakly dominated.
+\end{proof}
+
+The price-setting-voter game is an ultimatum game in which the voter is the proposer and can use one responder's acceptance as a threat against the other. As in the ultimatum game, the proposer extracts the whole surplus available, which here is the parties' willingness to pay, $M$. Note that rejection never occurs in equilibrium: a voter who knows the parties' willingness to pay never asks for more. It is sometimes argued that voter-initiated exchange exposes voters to rejection risk; \autoref{prop:selling} shows that this cannot be an equilibrium property of the game, so if rejection occurs, it is a behavioral phenomenon (\autoref{sec:behavioral}).
+
+\subsection{The proposer advantage}
+
+Comparing Propositions \ref{prop:buying} and \ref{prop:selling} yields the paper's central prediction.
+
+\begin{proposition}[Proposer advantage]\label{prop:advantage}
+When the voter is pivotal, moving price-setting power from the parties to the voter raises the voter's earnings by
+\[
+U^{V} - U^{P} =
+\begin{cases}
+\min\{\Delta, M\} & \text{if } \Delta < M \text{ or } \ell \neq i^\ast,\\
+0 & \text{otherwise},
+\end{cases}
+\]
+and lowers the winning party's earnings by the same amount. When the voter is not pivotal, the protocol makes no difference. In both protocols, the preferred party wins the vote.
+\end{proposition}
+
+\begin{proof}
+Subtract $U^{P}$ in \autoref{prop:buying} from $U^{V}$ in \autoref{prop:selling}. Transfers are zero-sum between the voter and the winning party, and the losing party pays nothing in either game.
+\end{proof}
+
+The intuition is simple. When parties set prices, they compete for the voter, but the competition is softened by the voter's ideological attachment: the preferred party needs only to match its rival's best offer net of $\Delta$, and keeps $\Delta$ of the budget. When the voter sets prices, the voter can demand the whole budget from the preferred party, because the rival's willingness to accept makes the threat to defect credible. The voter's ideological attachment, which is a handicap when parties compete for the vote, becomes irrelevant when the voter sets the price. The proposer advantage is therefore largest for voters with strong ideological attachments---exactly the ``core'' voters whom party-centered theories expect to be cheapest to buy.
+
+\autoref{prop:advantage} runs against a natural behavioral conjecture, namely that voters should earn more when parties initiate the exchange, because loss-averse parties would pay an ``insurance premium.'' Under correct beliefs and binding budgets, there is no room for such a premium (\autoref{lem:loss}), and the voter's power as a proposer dominates.
+
+\subsection{Earnings and efficiency}
+
+Because transfers move points from parties to the voter without creating or destroying any, the two protocols generate the same total surplus in equilibrium: the preferred party wins in both, and the sum of the voter's and the parties' earnings is the same. The protocol affects only the division of the surplus. The same is true of the behavioral deviations we document below. A party that pays for a non-pivotal vote transfers points to the voter without changing the outcome or the total. A party that rejects an acceptable price from a pivotal voter may change the outcome; in that case the total changes only through the voter's ideological payoff, by at most $\Delta$, because one party earns $W$ in any case. This feature of the design is useful: it means that the comparison of voter earnings across protocols is a direct measure of how the protocol, and deviations from equilibrium play under each protocol, redistribute a fixed surplus.
+
+\subsection{A numerical illustration}
+
+To fix ideas, consider a round with a budget of $M=1{,}300$ points and a pivotal voter who earns $u_A = 1{,}800$ points if Party A wins and $u_B = 1{,}300$ if Party B wins, so that $i^\ast = A$ and $\Delta = 500$. With price-setting parties, Party B is willing to offer its entire budget to win, which would give the voter $1{,}300 + 1{,}300 = 2{,}600$ points. To keep the voter, Party A must match this, which requires an offer of $800$: the voter then earns $1{,}800 + 800 = 2{,}600$, Party A wins and keeps $500$ of its budget, and Party B pays nothing. With a price-setting voter, the voter asks both parties for $1{,}300$. Party B accepts, because winning at that price is better than losing; given that acceptance, Party A also accepts, because paying $1{,}300$ and winning is better than losing. The voter sells to Party A and earns $1{,}800 + 1{,}300 = 3{,}100$ points. The proposer advantage is $500 = \Delta$. If instead the voter were indifferent between the parties ($\Delta = 0$), the competition between buyers would already give the voter the whole budget and the protocol would not matter. If the voter were strongly attached to Party A ($\Delta \geq 1{,}300$), Party B could not compete at any price, and with price-setting parties the voter would receive nothing; with a price-setting voter, the outcome depends on whether the voter's default vote counts for Party A (no transfer) or Party B (the voter extracts $1{,}300$ from Party A).
+
+\subsection{Extensions and comparative statics}
+
+Three features of the model deserve comment. First, the assumption of common budgets is not essential. With budgets $B_A \neq B_B$, both below $W$, Propositions \ref{prop:buying} and \ref{prop:selling} generalize directly: with price-setting parties the voter earns the larger of $u_{i^\ast}$ and $u_{-i^\ast} + B_{-i^\ast}$ (the rival's best offer), while with a price-setting voter the voter earns $\max_i\{u_i + B_i\}$ whenever the threat is credible. The proposer advantage is then the difference between the voter's best ``bid-adjusted'' value and the second-best one, which is positive whenever the voter is not indifferent. Second, the model has only one negotiated voter. With several sellers, competition among them would weaken the bargaining position of a price-setting voter, just as competition among buyers strengthens the voter when parties set prices; our prediction is therefore an upper bound on the proposer advantage in larger electorates. Third, the proposer advantage depends on the voter's ideological attachment in a specific way. With price-setting parties, the transfer to a pivotal voter, $\max\{0, M - \Delta\}$, falls one-for-one with $\Delta$: strongly attached (``core'') voters receive less, because the rival party cannot compete for them. With a price-setting voter, the transfer is $M$ regardless of $\Delta$ (whenever the threat is credible). The protocol thus flips the relationship between attachment and transfers, and the proposer advantage should rise one-for-one with $\Delta$ up to the budget. This comparative static provides a second, sharper test of the model, which we use in \autoref{sec:results}.
+
+\subsection{Behavioral benchmarks}\label{sec:behavioral}
+
+The equilibrium benchmark makes sharp predictions, several of which our data reject. To interpret deviations, we consider two departures from the benchmark that keep the structure of the game but relax the assumption that players best respond to correct beliefs. Each generates a testable signature.
+
+\paragraph{Perceived pivotality and loss aversion.} Suppose parties believe that a non-pivotal vote decides the election with probability $\theta \in (0,1)$, for instance because they do not fully process the electorate or because they overweight small probabilities \parencite{Tversky1992a}. Then $R_i = \theta W$ when $P=0$, and
+\begin{equation}
+\overline{R}_i^{\,P=0} = \min\left\{ M,\ \left[1 + (\lambda_i - 1)s_i\right]\theta W \right\}.
+\end{equation}
+Whenever $\theta W < M$, loss aversion now has bite: parties will pay positive amounts for non-pivotal votes, and the amount rises with $\lambda_i$ and $s_i$. This yields three signatures. (B1) Parties make offers to, and accept requests from, non-pivotal voters. (B2) Because willingness to pay is interior and heterogeneous across parties, acceptance of non-pivotal requests falls with the price requested. (B3) If loss salience is higher for the party that leads before the voter acts---for which failing to secure the vote is framed as losing a race it is winning---than for the trailing party, then leading parties offer more and accept more than trailing parties. Signatures B1 and B2 follow from mistaken beliefs alone; B3 is specific to loss aversion.
+
+\paragraph{Noisy responders and rejection risk.} Suppose that parties accept a price $a \leq \overline{R}_i$ only with probability $1-r(a)$, where the rejection probability $r$ is increasing in $a$, as in quantal response models in which errors are more likely when they are less costly to the responder \parencite{McKelvey1995}, or in models of ultimatum responders who reject offers they consider unfair \parencite{Camerer2003}. A voter who anticipates this chooses a price that trades off the size of the transfer against the risk of rejection.
+
+\begin{remark}[Optimal request under rejection risk]\label{rem:noise}
+If the voter maximizes the expected transfer $a\,[1-r(a)]$ on $[0,M]$ and $r$ is differentiable and increasing, the optimal request is strictly below $M$ whenever $M\, r'(M) > 1 - r(M)$. For example, with logit acceptance, $1-r(a) = [1+\exp((a-M)/\mu)]^{-1}$, the condition holds whenever the noise parameter satisfies $\mu < M/2$.
+\end{remark}
+
+Under rejection risk, two further signatures follow. (B4) Parties reject some pivotal requests below the budget. (B5) Pivotal voters request less than the budget. As $\mu \to 0$, rejection disappears and the request converges to $M$, recovering \autoref{prop:selling}. This formalizes the original intuition that voter initiative carries rejection risk, but as a departure from equilibrium play rather than a feature of it. Together, B1 and B5 imply that the realized proposer advantage should be smaller than \autoref{prop:advantage} predicts: overpayment raises voter earnings when parties set prices, while cautious requests lower them when the voter does.
+
+\autoref{tab:predictions} summarizes the benchmark predictions and the behavioral signatures that we test.
+
+\begin{table}[htbp]
+\centering
+\caption{Benchmark predictions and behavioral signatures}\label{tab:predictions}
+\small
+\begin{tabular}{p{0.8cm}p{9.2cm}p{3.4cm}}
+\toprule
+ & Prediction & Source \\
+\midrule
+E1 & Parties make (accept) no positive offers (requests) when the voter is not pivotal & Lemmas \ref{lem:value}--\ref{lem:loss} \\
+E2 & Pivotal voter: preferred party offers $M-\Delta$, rival offers $M$; preferred party wins & \autoref{prop:buying} \\
+E3 & Pivotal voter: voter requests $M$ from both parties; both accept & \autoref{prop:selling} \\
+E4 & Pivotal voter earns $\min\{\Delta,M\}$ more as price-setter; no difference if not pivotal & \autoref{prop:advantage} \\
+E5 & The proposer advantage rises one-for-one with $\Delta$ (for $\Delta<M$) & \autoref{prop:advantage} \\
+\midrule
+B1 & Positive offers and acceptances for non-pivotal voters & Perceived pivotality \\
+B2 & Non-pivotal acceptance falls with the requested price & Perceived pivotality \\
+B3 & Leading parties pay and accept more than trailing parties & Loss aversion \\
+B4 & Some pivotal requests below the budget are rejected & Rejection risk \\
+B5 & Pivotal voters request less than the budget & Rejection risk \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experimental Design}\label{sec:design}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Implementation and sample}
+
+The experiment was programmed in oTree \parencite{Chen2016oTree} and conducted in a laboratory in \redacted{Santiago, Chile}, administered jointly by \redacted{the University of Santiago and the Oxford-Nuffield Centre for Experimental Social Sciences}, between \redacted{April 20 and May 28, 2021}.\footnote{Participants were recruited in the \redacted{university district} and received a show-up fee of \redacted{2,000 CLP} (approximately \redacted{2.1 euros}) plus their earnings in experimental points, converted into \redacted{pesos} at a fixed exchange rate announced in advance.} Each session was assigned to one protocol: \Sexpr{sVB} sessions played the price-setting-parties game and \Sexpr{sVS} sessions played the price-setting-voter game. The protocol therefore varies between sessions, and we cluster standard errors by session whenever we compare protocols. The analysis sample comprises \Sexpr{nAll} participants (\Sexpr{nVB} with price-setting parties and \Sexpr{nVS} with a price-setting voter); \Sexpr{rt$n.dropped} participant records with zero recorded earnings were excluded.\footnote{The raw oTree export contains \Sexpr{rt$n.raw} participant records. \autoref{tab:flow} in the Appendix reports the flow from records to analyzed observations.} After two practice rounds, participants played three paid rounds in fixed groups of three, with roles reassigned at random within the group each round. Each round thus produces one voter decision and two party decisions: \Sexpr{vrVB} voter-rounds and \Sexpr{2*vrVB} party-rounds with price-setting parties, and \Sexpr{vrVS} voter-rounds and \Sexpr{2*vrVS} party-rounds with a price-setting voter.
+
+\subsection{The game}
+
+In each round, one participant was the voter and two were Party A and Party B. \autoref{fig:flow} shows the sequence of moves. The environment maps directly onto the model.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/experimental_flow_3.pdf}
+  \caption{Sequence of moves in the two protocols. The protocol was assigned at the session level; all other features were redrawn each round.}
+  \label{fig:flow}
+\end{figure}
+
+\paragraph{Ideology.} The voter was told how many points they would earn if Party A or Party B won: $u_i = 2{,}000 - 20\,|x_j - \gamma_i|$, with $\gamma_A$ drawn from $\{1,\dots,50\}$, $\gamma_B$ from $\{51,\dots,100\}$, and $x_j$ from $\{1,\dots,100\}$. These induced payoffs define the voter's preferred party and the attachment $\Delta$. The voter's earnings depended on which party won, not on how the voter voted.
+
+\paragraph{Budgets and office.} Both parties received the same budget $M$, drawn uniformly between 900 and 1,800 points, and earned $W = 2{,}400$ points if they won the election, in addition to the unspent budget. A party paid a transfer only if the voter took its offer (or its accepted price). Because $M < W$ in every round, \autoref{lem:loss} applies throughout.
+
+\paragraph{Electorate and pivotality.} A fictional electorate of three or five votes was displayed, split between the parties; the negotiated voter's vote was counted for the voter's label party unless the voter took the other party's offer. The label was displayed on screen and need not coincide with the party favored by the voter's induced payoffs: it did so in \Sexpr{f0(lcVB)} percent of voter-rounds with price-setting parties and \Sexpr{f0(lcVS)} percent with a price-setting voter. Throughout, we define the preferred party and $\Delta$ from the induced payoffs; Propositions \ref{prop:buying}--\ref{prop:advantage} hold for either relationship between the label and the preferred party.
+
+\paragraph{Default vote and preferences.} Because the label and the preferred party vary across rounds, the design separates two quantities that observational data usually confound: the party a voter would support absent any exchange, and the party the voter prefers once the exchange is possible. This separation matters for the model. When the label party is also the preferred party, a price-setting voter can extract a payment from it only by threatening to sell to the rival, and that threat is credible only if the budget exceeds the voter's attachment. When the label party is the rival, the preferred party must pay to move the vote, and the voter's request to it is credible whatever the attachment. The variation therefore exposes both branches of \autoref{prop:selling} to observation. It also ensures that pivotality, which depends on the label and the displayed electorate, is not mechanically tied to the voter's ideological payoffs, so that the comparison between pivotal and non-pivotal rounds is not a comparison between more and less attached voters. The voter was pivotal when the label party led by exactly one vote (2--1 or 3--2), so that moving the vote would reverse the outcome. In all other configurations the outcome could not be changed. All information was public.
+
+\paragraph{Protocols.} With price-setting parties, each party chose an offer between zero and the budget without observing the other's offer; the voter then took one offer or none. With a price-setting voter, the voter chose a price between zero and the budget for each party; each party, observing both prices, accepted or rejected the one addressed to it; the voter then took one accepted price or none. In both protocols, taking an offer cast the vote for that party, so the commitment problem that characterizes real clientelism is absent by design.
+
+\paragraph{Information and decisions.} Decision screens displayed the budget, the voter's points under each possible winner, and the fictional electorate, including the vote count before the negotiated voter acted. Parties deciding whether to accept a price in the price-setting-voter game saw both prices the voter had posted, so they knew whether the rival had been offered a better or worse deal. Voters choosing among offers saw the amounts offered (or, with a price-setting voter, which parties had accepted their prices). Each screen had a limit of 240 seconds; across all participants and rounds, the data record 16 screens that timed out.
+
+\paragraph{What differs between the protocols.} The two protocols are designed to differ only in who proposes the price, but a change in the proposer necessarily changes some other features of the game, and it is important to be explicit about them. First, the action spaces differ: with price-setting parties, each party chooses a number and the voter chooses among offers; with a price-setting voter, the voter chooses two numbers and each party makes a binary decision. Second, the information at the moment of commitment differs: a party that accepts a price knows exactly what it will pay if chosen, whereas a party that posts an offer does not know whether its rival's offer will be higher. Third, the price-setting voter can tailor different prices to the two parties, while each party's offer is a single number. These differences are not confounds in the usual sense, because they are part of what it means for one side rather than the other to set the price; the model incorporates all three, and its predictions account for them. But they do mean that our comparison identifies the effect of the protocol as a whole, not of the order of moves holding the decision problem fixed. We therefore describe the treatments as price-setting protocols rather than as differences in ``initiative.''
+
+\subsection{Empirical strategy}
+
+Because the benchmark makes point predictions for each round given its draws, we test it by comparing observed behavior with the benchmark computed round by round. For each voter-round, we compute the voter's equilibrium earnings under the protocol actually played and under the alternative protocol, using the round's budget, induced payoffs, label, and electorate. For each party-round, we compute the equilibrium offer (with price-setting parties) or the equilibrium acceptance decision (with a price-setting voter). Averages of these benchmarks across rounds give the predicted values in \autoref{tab:results}; because the draws differ across rounds, the benchmark differs slightly across protocols and across groups of voters.
+
+Our tests are of three kinds. Within each protocol, we compare means of behavior with their benchmark and with each other (for example, pivotal versus non-pivotal dyads), using linear probability or linear models with standard errors clustered on the decision-maker. Across protocols, we estimate the difference in mean voter earnings with standard errors clustered by session, the unit of assignment, and use the $t$ distribution with $G-2$ degrees of freedom to account for the small number of clusters. We complement these tests with randomization inference, which permutes the protocol across sessions, and with two quantities that discipline the interpretation of null results: the minimum detectable effect at conventional power, and the smallest symmetric bounds within which an equivalence test \parencite{Lakens2017} declares the protocols equivalent. Because we test several predictions derived from a single model, and because the predictions were derived after the data were collected, we report every test we ran and interpret individual $p$-values near conventional thresholds with caution; the main conclusions rest on tests whose $p$-values are far from those thresholds.
+
+\paragraph{Earnings.} We compute each voter's earnings in a round from the rules of the game: the induced payoff from the winning party plus the transfer taken. Results using the points recorded by the software lead to the same conclusions (\autoref{tab:gaps} in the Appendix).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}\label{sec:results}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We report means with 95 percent confidence intervals clustered on the decision-maker (the party participant for party decisions; the voter for voter decisions) when describing behavior within a protocol, and clustered by session when comparing protocols. \autoref{tab:results} collects the main benchmark comparisons, and Figures \ref{fig:behaviour} and \ref{fig:payoffs} display them.
+
+\begin{table}[htbp]
+\centering
+\caption{Benchmark predictions and observed behavior}\label{tab:results}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrl}
+\toprule
+ & Benchmark & Observed & 95\% CI \\
+\midrule
+\multicolumn{4}{l}{\emph{Price-setting parties}} \\
+\quad Offer made, non-pivotal voter (\%) & 0 & \Sexpr{f1(rt$vb.np.any$est)} & [\Sexpr{f1(rt$vb.np.any$lo)}, \Sexpr{f1(rt$vb.np.any$hi)}] \\
+\quad Mean offer, non-pivotal voter (\% of budget) & 0 & \Sexpr{f1(rt$vb.np.pct$est)} & [\Sexpr{f1(rt$vb.np.pct$lo)}, \Sexpr{f1(rt$vb.np.pct$hi)}] \\
+\quad Offer made, pivotal voter (\%) & \Sexpr{f1(bAnyVB)} & \Sexpr{f1(rt$vb.p.any)} & \\
+\quad Preferred party's offer, pivotal voter (\% of budget) & \Sexpr{f1(vbB.pref)} & \Sexpr{f1(vbP.pref)} & \\
+\quad Rival's offer, pivotal voter (\% of budget) & 100.0 & \Sexpr{f1(vbP.disp)} & \\
+\quad Preferred party secures the pivotal vote (\%) & 100.0 & \Sexpr{f1(pv(VB,1,"win.pref"))} & \\
+\quad Transfer to pivotal voter (points) & \Sexpr{f0(pv(VB,1,"bench.transfer"))} & \Sexpr{f0(pv(VB,1,"transfer"))} & \\
+\midrule
+\multicolumn{4}{l}{\emph{Price-setting voter}} \\
+\quad Positive requests accepted, non-pivotal voter (\%) & 0 & \Sexpr{f1(acc0)} & \\
+\quad Positive requests accepted, pivotal voter (\%) & 100.0 & \Sexpr{f1(acc1)} & \\
+\quad Request, pivotal voter (\% of budget) & 100.0 & \Sexpr{f1(rt$vs.p.req$est)} & [\Sexpr{f1(rt$vs.p.req$lo)}, \Sexpr{f1(rt$vs.p.req$hi)}] \\
+\quad Requests equal to the budget, pivotal voter (\%) & 100.0 & \Sexpr{f1(rt$vs.p.full$est)} & [\Sexpr{f1(rt$vs.p.full$lo)}, \Sexpr{f1(rt$vs.p.full$hi)}] \\
+\quad Preferred party secures the pivotal vote (\%) & 100.0 & \Sexpr{f1(pv(VS,1,"win.pref"))} & \\
+\quad Transfer to pivotal voter (points) & \Sexpr{f0(pv(VS,1,"bench.transfer"))} & \Sexpr{f0(pv(VS,1,"transfer"))} & \\
+\midrule
+\multicolumn{4}{l}{\emph{Proposer advantage (voter earnings, price-setting voter minus price-setting parties)}} \\
+\quad Pivotal voter (points) & \Sexpr{f0(Gr$bench)} & \Sexpr{f0(Gr$est)} & [\Sexpr{f0(Gr$lo)}, \Sexpr{f0(Gr$hi)}] \\
+\quad Non-pivotal voter (points) & \Sexpr{f0(Gn$bench)} & \Sexpr{f0(Gn$est)} & [\Sexpr{f0(Gn$lo)}, \Sexpr{f0(Gn$hi)}] \\
+\bottomrule
+\end{tabular}}
+\par\vspace{0.5em}\begin{minipage}{0.95\textwidth}\footnotesize \emph{Notes:} Benchmarks are computed round by round from each round's budget, induced payoffs, and electorate, and then averaged. Confidence intervals are clustered by party participant or voter for behavioral statistics and by session for the proposer advantage, which uses voter earnings. Statistics without a confidence interval are reported with their tests in the text.\end{minipage}
+\end{table}
+
+\subsection{Pivotality moves behavior in the predicted direction}
+
+The benchmark's first-order prediction is that parties should care only about whether the voter is pivotal (\autoref{lem:value}). Behavior responds to pivotality in both protocols. With price-setting parties, \Sexpr{f1(rt$vb.p.any)} percent of parties facing a pivotal voter make a positive offer, against \Sexpr{f1(rt$vb.np.any$est)} percent facing a non-pivotal voter (difference \Sexpr{f1(rt$vb.piv.any$est)} percentage points, $p$ \Sexpr{fp(rt$vb.piv.any$p)}), and offers are \Sexpr{f1(rt$vb.piv$est)} percentage points of the budget larger ($p$ \Sexpr{fp(rt$vb.piv$p)}). With a price-setting voter, parties accept \Sexpr{f1(acc1)} percent of positive requests from pivotal voters and \Sexpr{f1(acc0)} percent from non-pivotal voters (difference \Sexpr{f1(rt$vs.acc.test$est)} points, $p$ \Sexpr{fp(rt$vs.acc.test$p)}). The direction is right in both games; the magnitudes, however, are far from the benchmark's all-or-nothing prediction, as Panels A and B of \autoref{fig:behaviour} show.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/benchmark_behaviour.pdf}
+  \caption{Party and voter behavior against the equilibrium benchmark. Panel A: parties' offers as a percentage of the budget (price-setting parties); the pivotal benchmark averages the preferred party's offer ($M-\Delta$) and the rival's ($M$). Panel B: share of positive requests accepted (price-setting voter). Panel C: pivotal voters' requests as a percentage of the budget. Means with 95\% confidence intervals clustered by party participant (A, B) or voter (C).}
+  \label{fig:behaviour}
+\end{figure}
+
+\autoref{prop:buying} also predicts which party wins a pivotal voter and how much each party offers. The direction of the predicted asymmetry between the parties appears in the data: the preferred party offers \Sexpr{f1(vbP.pref)} percent of the budget and its rival \Sexpr{f1(vbP.disp)} percent, but the difference is small and imprecise (\Sexpr{f1(rt$vb.pref.test$est)} points, $p$ \Sexpr{fp(rt$vb.pref.test$p)}), and the rival offers less than half of what the benchmark predicts. As a result the preferred party secures the pivotal vote in \Sexpr{f0(pv(VB,1,"win.pref"))} percent of rounds rather than in all of them. On average, however, the transfer that a pivotal voter receives when parties set prices is close to the benchmark (\Sexpr{f0(pv(VB,1,"transfer"))} against \Sexpr{f0(pv(VB,1,"bench.transfer"))} points), even though the offers that produce it are not: both parties offer less than the benchmark, and in the remaining \Sexpr{f0(100 - pv(VB,1,"win.pref"))} percent of rounds the voter sells to the rival.
+
+\subsection{Parties pay for votes that cannot change the outcome}
+
+The clearest deviation from the benchmark concerns non-pivotal voters (E1). A non-pivotal vote is worth nothing to either party, yet half of the parties facing a non-pivotal voter in the price-setting-parties game make a positive offer (\Sexpr{f1(rt$vb.np.any$est)} percent, 95\% CI \Sexpr{f1(rt$vb.np.any$lo)}--\Sexpr{f1(rt$vb.np.any$hi)}), and positive offers average \Sexpr{f1(rt$vb.np.pos$est)} percent of the budget. Non-pivotal offers are therefore not small gestures: they are about as large, conditional on being made, as offers to pivotal voters. In the price-setting-voter game, parties accept \Sexpr{f1(acc0)} percent of positive requests from non-pivotal voters, although these requests average \Sexpr{f1(req0)} percent of the budget. Non-pivotal voters receive on average \Sexpr{f0(pv(VB,0,"transfer"))} points per round when parties set prices and \Sexpr{f0(pv(VS,0,"transfer"))} points when they set prices themselves; in both protocols they earn several hundred points more than the benchmark (\autoref{fig:payoffs}, right panel). Signature B1 is thus strongly present.
+
+Signature B2 is also present: in the price-setting-voter game, the probability that a party accepts a non-pivotal request falls by \Sexpr{f2(abs(rt$vs.acc.price.np$est))} percentage points for each additional percentage point of the budget requested ($p$ \Sexpr{fp(rt$vs.acc.price.np$p)}). Parties thus behave as if the non-pivotal vote had some positive but limited value, as perceived pivotality implies, rather than accepting or rejecting at random.
+
+Is the overpayment loss-averse insurance? Signature B3 provides a direct test. If parties that lead before the voter acts frame the vote as protection against a loss, they should pay more than trailing parties. They do not. With price-setting parties, leading parties facing a non-pivotal voter offer \Sexpr{f1(abs(rt$lead.vb$est))} percentage points of the budget \emph{less} than trailing parties ($p$ \Sexpr{fp(rt$lead.vb$p)}); among pivotal voters, the difference is also negative and insignificant (\Sexpr{f1(rt$lead.vb.p$est)} points, $p$ \Sexpr{fp(rt$lead.vb.p$p)}). With a price-setting voter, leading parties accept non-pivotal requests \Sexpr{f1(rt$lead.vs$est)} points more often than trailing parties, a difference far from significance ($p$ \Sexpr{fp(rt$lead.vs$p)}; \autoref{tab:lead} in the Appendix). We cannot reject that overpayment is the same on both sides of a race. The data are consistent with parties that fail to condition fully on pivotality, but they provide no evidence for the reference-dependent asymmetry that loss aversion predicts.
+
+\subsection{Voters under-use their power to set prices}
+
+The benchmark predicts that a pivotal voter who sets prices should request the full budget from both parties and receive it (E3). Pivotal voters request on average \Sexpr{f1(rt$vs.p.req$est)} percent of the budget (95\% CI \Sexpr{f1(rt$vs.p.req$lo)}--\Sexpr{f1(rt$vs.p.req$hi)}; Panel C of \autoref{fig:behaviour}), and only \Sexpr{f1(rt$vs.p.full$est)} percent of their requests equal the budget. Many request nothing from one of the parties: \Sexpr{f0(vsZ.disp)} percent of requests to the party the voter's payoffs disfavor, and \Sexpr{f0(vsZ.pref)} percent to the favored party, are zero, which forgoes the threat that gives the price-setting voter its power. Requests from pivotal and non-pivotal voters are similar in size (\Sexpr{f1(rt$vs.p.req$est)} and \Sexpr{f1(rt$vs.np.req$est)} percent of the budget), so voters do not price their pivotality.
+
+Some caution is warranted from the voter's point of view, because parties reject requests that the benchmark says they should accept (B4): \Sexpr{f1(rej1)} percent of positive requests from pivotal voters were rejected, although every request was within the budget and the vote was worth more than the budget to the party. The acceptance rate among pivotal requests does not decline significantly with the price requested ($p$ \Sexpr{fp(rt$vs.acc.price.p$p)}), but the number of such requests is small (\Sexpr{nacc1}). Voters who set prices thus behave like ultimatum proposers who expect responders to reject greedy demands (B5), and the result is a transfer well below the benchmark: pivotal voters receive \Sexpr{f0(pv(VS,1,"transfer"))} points on average, against a benchmark of \Sexpr{f0(pv(VS,1,"bench.transfer"))}. The preferred party secures the pivotal vote in only \Sexpr{f0(pv(VS,1,"win.pref"))} percent of rounds; in the remaining rounds the vote goes to the rival, an outcome the benchmark rules out.
+
+\subsection{The proposer advantage disappears}
+
+\autoref{prop:advantage} predicts that a pivotal voter earns substantially more as a price-setter. Given the budgets and ideological payoffs drawn in our sessions, the predicted difference is \Sexpr{f0(Gr$bench)} points. \autoref{fig:payoffs} compares observed and predicted earnings. When parties set prices, pivotal voters earn \Sexpr{f0(pv(VB,1,"rule"))} points, close to the benchmark of \Sexpr{f0(pv(VB,1,"benchmark"))}. When the voter sets prices, pivotal voters earn \Sexpr{f0(pv(VS,1,"rule"))} points, far below the benchmark of \Sexpr{f0(pv(VS,1,"benchmark"))}. The observed proposer advantage is \Sexpr{f0(Gr$est)} points (95\% CI \Sexpr{f0(Gr$lo)} to \Sexpr{f0(Gr$hi)}, $p$ = \Sexpr{f2(Gr$p)}), and the benchmark is rejected ($p$ \Sexpr{fp(Gr$p.bench)}).
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/benchmark_payoffs.pdf}
+  \caption{Voter earnings per round by protocol and pivotality: observed (95\% confidence intervals clustered by session) and equilibrium benchmark (Propositions \ref{prop:buying} and \ref{prop:selling}).}
+  \label{fig:payoffs}
+\end{figure}
+
+This null is informative rather than merely underpowered. With \Sexpr{Gr$G} session clusters, the minimum effect we can detect with 80 percent power at the 5 percent level is \Sexpr{f0(Gr$mde)} points, well below the predicted \Sexpr{f0(Gr$bench)}. An equivalence test \parencite{Lakens2017} rejects differences larger than $\pm$\Sexpr{f0(Gr$tost)} points for pivotal voters and $\pm$\Sexpr{f0(Ga$tost)} points across all rounds, where the overall estimate is \Sexpr{f0(Ga$est)} points (95\% CI \Sexpr{f0(Ga$lo)} to \Sexpr{f0(Ga$hi)}). We can therefore rule out a proposer advantage of the size the model predicts, though not a modest one. The parties' side mirrors the voters': parties earn \Sexpr{f0(abs(pgap$estimate))} points less per round with a price-setting voter than with price-setting parties ($p$ = \Sexpr{f2(pgap$p.value)}), against a predicted loss for the winning party equal to the voter's gain.
+
+Two further checks support this conclusion. First, the model predicts not only the size but the shape of the proposer advantage: it should rise one-for-one with the voter's ideological attachment (E5). Among pivotal voters, the estimated slope of the advantage with respect to $\Delta$ is \Sexpr{f2(rt$int$est)} (standard error \Sexpr{f2(rt$int$se)}), statistically indistinguishable from zero ($p$ = \Sexpr{f2(rt$int$p)}) and clearly different from the predicted slope of one ($p$ \Sexpr{fp(rt$int$p.one)}). Strongly attached voters, who stand to gain most from setting the price, gain no more than weakly attached ones. Second, randomization inference, which permutes the protocol across the \Sexpr{sAll} sessions, gives $p$ = \Sexpr{f2(rt$ri$p)} for the null of no difference among pivotal voters, close to the cluster-robust result.
+
+The decomposition in \autoref{fig:payoffs} shows where the predicted rent goes. For pivotal voters, the price-setting-parties protocol performs close to the benchmark, while the price-setting-voter protocol falls well short of it because voters ask for too little and parties sometimes refuse. For non-pivotal voters, both protocols deliver several hundred points more than the benchmark (\Sexpr{f0(over.VB)} and \Sexpr{f0(over.VS)} points), because parties pay for votes that do not matter. Price-setting power, which in theory belongs to whoever proposes, is in practice dissipated on one side of the market and given away on the other.
+
+\subsection{Experience}
+
+The deviations we document are not fixed features of behavior. Across the three paid rounds, both shrink, although our panel is short and the estimates are imprecise. The share of parties making positive offers to non-pivotal voters falls from \Sexpr{f0(rt$learn$vb.np.any$v[1])} percent in the first round to \Sexpr{f0(rt$learn$vb.np.any$v[3])} percent in the third (linear trend \Sexpr{f1(rt$learn$vb.np.any.t$est)} points per round, $p$ \Sexpr{fp(rt$learn$vb.np.any.t$p)}), and the acceptance of non-pivotal requests falls from \Sexpr{f0(rt$learn$vs.np.acc$v[1])} to \Sexpr{f0(rt$learn$vs.np.acc$v[3])} percent (trend \Sexpr{f1(rt$learn$vs.np.acc.t$est)}, $p$ \Sexpr{fp(rt$learn$vs.np.acc.t$p)}). On the other side of the market, pivotal voters' requests rise from \Sexpr{f0(rt$learn$vs.p.req$v[1])} percent of the budget in the first round to \Sexpr{f0(rt$learn$vs.p.req$v[2])} and \Sexpr{f0(rt$learn$vs.p.req$v[3])} percent in the second and third (trend \Sexpr{f1(rt$learn$vs.p.req.t$est)} points per round, $p$ \Sexpr{fp(rt$learn$vs.p.req.t$p)}). Both trends point toward the equilibrium benchmark. If they continued, the offsetting frictions would weaken, and the proposer advantage predicted by the model could begin to appear. Our design, with three rounds per participant, cannot tell whether this would happen, and we regard the stability of our main result under longer experience as the most important open question it leaves. At the same time, actual clientelist exchanges rarely offer the repeated, fast feedback of a laboratory session about whether a particular vote was decisive, so the inexperienced behavior we observe may be the more relevant benchmark for elections.
+
+\subsection{What the offsetting pattern implies}
+
+It is worth emphasizing what the offsetting pattern does and does not imply. It does not imply that the protocol is irrelevant for everything. The composition of transfers differs: when parties set prices, a larger share of what voters receive comes from payments for votes that do not matter, whereas when the voter sets prices, a larger share comes from payments by the preferred party in pivotal rounds. Nor does the near-equality of average voter earnings imply that each voter is indifferent between the protocols. What it implies is that a voter who could choose the protocol before learning whether they would be pivotal would, on average, gain little by insisting on setting the price---the opposite of what the equilibrium analysis suggests.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion and Conclusion}\label{sec:discussion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Who sets the price of a vote should matter. In a simple model of clientelist exchange with two parties and one voter, moving price-setting power from parties to the voter shifts a rent equal to the voter's ideological attachment, capped by the parties' budget, from the winning party to the voter. The model nests vote buying and vote selling as two protocols of the same exchange and shows that the voter's attachment, which softens competition between parties when they set prices, ceases to protect the preferred party when the voter does. In our laboratory implementation, however, the predicted rent does not materialize. Pivotal voters earn about the same under both protocols, and the benchmark difference is rejected with a well-powered test. Two regularities explain why. Parties pay for votes that cannot change the outcome, which raises voters' earnings when parties set prices; and voters who set prices ask for about half of what parties would pay, which lowers their earnings when they hold the power to propose.
+
+These findings speak to three debates. First, they qualify the expectation, implicit in work that emphasizes citizens' agency in clientelism \parencite{Nichter2014a,NichterNunnari2022}, that voter-initiated exchange benefits voters. The formal right to name the price is not the same as the ability to use it: in our data, voters who set prices behave like cautious ultimatum proposers, and the parties they face reject some requests that it would pay them to accept. Whether the same is true in the field, where requests are embedded in repeated relationships with brokers, is an open question, but our results suggest that the distribution of clientelist rents should not be inferred from who initiates the exchange.
+
+Second, the results bear on theories of vote buying that put pivotality at the center \parencite{Groseclose1996,DalBo2007,Dekel2008}. Our participants understood that pivotal votes are worth more---offers and acceptances rise sharply with pivotality---but they did not treat non-pivotal votes as worthless. If buyers in real elections, who face far more uncertainty about pivotality than our participants, behave similarly, vote buying will be more widespread and less efficiently targeted than models with fully rational buyers predict. This is consistent with the observation that clientelist parties distribute benefits well beyond the voters whose behavior they could plausibly change.
+
+Third, the results discipline the use of prospect theory in the study of clientelism, including in our own earlier work \parencite{Bahamonde2022b}. When budgets bind, loss aversion has no observable implication for pivotal votes (\autoref{lem:loss}). It can matter for non-pivotal votes if parties overestimate their chances of being decisive, but its distinctive implication---that parties defending a lead pay more than parties trying to overturn one---finds no support in our data. Overpayment is better described as imperfect conditioning on pivotality than as loss-averse insurance. Future designs that vary budgets relative to the value of office, so that the budget does not bind, could provide a sharper test.
+
+From a public choice perspective, the results are also a statement about the incidence of political rents. The value of office in our game is fixed, and clientelist exchange determines only how much of it leaks to voters and through which channel. The model assigns that leakage to whoever proposes. Our participants instead spread it in a way that depends little on the protocol: parties transfer part of the rent to voters whose votes do not matter, and voters who could claim most of it leave a large share with the winning party. Two implications follow. First, the distribution of clientelist rents may be less sensitive to institutional details about who initiates exchanges than bargaining models suggest, and more sensitive to how well participants condition on the decisiveness of individual votes. Second, the inefficiency of clientelism need not come only from targeting the wrong voters or from the deadweight cost of transfers; it can also come from buyers' imperfect assessment of when a vote is worth buying, which spends resources on votes that cannot change the outcome. Both implications are testable with designs that vary the information parties have about pivotality, holding the protocol fixed.
+
+The results also have a policy dimension. Anti-vote-buying laws and campaigns usually target buyers: they penalize parties and brokers who offer benefits, and they inform voters that the ballot is secret. If voters increasingly initiate exchanges, one might expect enforcement aimed at buyers to become less effective, and the incidence of the rents created by clientelism to shift toward voters. Our results suggest caution on both counts. When voters set prices, they ask for less than they could obtain, and parties still pay for votes that do not matter. The total volume of transfers is therefore not obviously smaller under voter initiative, and the voters who initiate do not appear to capture more of the surplus. To the extent that our laboratory behavior generalizes, the most effective margin for policy may be the parties' willingness to pay for non-pivotal votes---for instance, by making the electoral irrelevance of small blocs of votes more salient---rather than the question of who proposes the exchange.
+
+Our design has limitations that also define the scope of these conclusions. The game is one-shot, with one negotiated voter and two parties, so it abstracts from repeated interaction, reputation, brokers, and competition among sellers. Votes are bound to transactions by design, which removes the commitment problem at the heart of real clientelism. The sample is modest: the price-setting-voter protocol was played in \Sexpr{sVS} sessions with \Sexpr{pivVS} pivotal voter-rounds, so estimates of behavior within that protocol are imprecise even though the main comparison is adequately powered. Participants played only three paid rounds, and both deviations shrink with experience, so we cannot say whether the protocols would continue to yield similar voter earnings after longer play. Finally, the benchmark predictions were derived after the data were collected.
+
+These limitations suggest the next steps. A structural estimation of quantal-response or level-$k$ versions of both games would quantify how much of the gap between theory and behavior is due to noise in parties' acceptance decisions and how much to voters' beliefs about it. Designs that let several voters compete as sellers, or several brokers compete as buyers, would show whether competition restores the power that our voters left unused, as competition does in other bargaining experiments \parencite{Roth1991}. And field designs that observe both requests and offers in the same clientelist networks could test whether the offsetting frictions we document also equalize the gains from vote selling and vote buying outside the laboratory.
+
+%TC:ignore
+\clearpage
+\newpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+\singlespacing
+\printbibliography
+\clearpage
+
+<<wordcount, echo=FALSE, cache=FALSE, warning = FALSE>>=
+comma <- function (x, ...) format(x, ..., big.mark = ",", scientific = FALSE, trim = TRUE)
+nameoffile <- current_input()
+nof2 <- strsplit(nameoffile, "\\.")[[1]][1]
+noftex <- paste(nof2, ".tex", sep = "")
+texcount.out <- if (file.exists(noftex)) system(paste("texcount -inc -total -sum", noftex), intern = TRUE) else "Sum count: 0"
+sum.row <- grep("Sum count", texcount.out, value = TRUE)
+count <- comma(as.numeric(regmatches(sum.row, regexpr("(\\d)+", sum.row))))
+@
+
+\begin{center}
+\vspace*{\stretch{1}}
+\dotfill {\huge {\bf Word count}: \Sexpr{count}} \dotfill\\[6pt]
+{\small Main text, from the Introduction to the end of the Conclusion, including tables and figure captions; excludes title page, abstract, references, and appendix. Counted with \texttt{texcount} on the previous compilation.}
+\vspace*{\stretch{1}}
+\end{center}
+\clearpage
+
+%% Appendix
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{A\arabic{figure}}
+
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
+\label{sec:appendix}
+
+\subsection*{A.1 Sample}
+
+\begin{table}[H]
+\centering
+\caption{From oTree records to analyzed observations}\label{tab:flow}
+\small
+<<flow_print, echo=FALSE, results='asis'>>=
+ft <- flow_table
+ft$Step <- gsub("Vote-selling", "Price-setting voter", ft$Step)
+ft$Step <- gsub("Vote-buying", "Price-setting parties", ft$Step)
+ft$Step <- gsub("requested-price model", "requested-price regression", ft$Step)
+print(knitr::kable(ft, format = "latex", booktabs = TRUE, col.names = c("Step", "N")))
+@
+\end{table}
+
+\subsection*{A.2 Proposer advantage: robustness}
+
+\begin{table}[H]
+\centering
+\caption{Proposer advantage by voter group and earnings measure}\label{tab:gaps}
+\footnotesize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrrr}
+\toprule
+Earnings & Voters & Estimate & 95\% CI & $p$ & MDE & Benchmark & $p$ (= benchmark) \\
+\midrule
+Rules of the game & Pivotal & \Sexpr{f0(Gr$est)} & [\Sexpr{f0(Gr$lo)}, \Sexpr{f0(Gr$hi)}] & \Sexpr{f2(Gr$p)} & \Sexpr{f0(Gr$mde)} & \Sexpr{f0(Gr$bench)} & \Sexpr{f2(Gr$p.bench)} \\
+ & Non-pivotal & \Sexpr{f0(Gn$est)} & [\Sexpr{f0(Gn$lo)}, \Sexpr{f0(Gn$hi)}] & \Sexpr{f2(Gn$p)} & \Sexpr{f0(Gn$mde)} & \Sexpr{f0(Gn$bench)} & \Sexpr{f2(Gn$p.bench)} \\
+ & All & \Sexpr{f0(Ga$est)} & [\Sexpr{f0(Ga$lo)}, \Sexpr{f0(Ga$hi)}] & \Sexpr{f2(Ga$p)} & \Sexpr{f0(Ga$mde)} & \Sexpr{f0(Ga$bench)} & \Sexpr{f2(Ga$p.bench)} \\
+Recorded by software & Pivotal & \Sexpr{f0(Gd$est)} & [\Sexpr{f0(Gd$lo)}, \Sexpr{f0(Gd$hi)}] & \Sexpr{f2(Gd$p)} & \Sexpr{f0(Gd$mde)} & \Sexpr{f0(Gd$bench)} & \Sexpr{f2(Gd$p.bench)} \\
+ & Non-pivotal & \Sexpr{f0(Gnd$est)} & [\Sexpr{f0(Gnd$lo)}, \Sexpr{f0(Gnd$hi)}] & \Sexpr{f2(Gnd$p)} & \Sexpr{f0(Gnd$mde)} & \Sexpr{f0(Gnd$bench)} & \Sexpr{f2(Gnd$p.bench)} \\
+ & All & \Sexpr{f0(Gad$est)} & [\Sexpr{f0(Gad$lo)}, \Sexpr{f0(Gad$hi)}] & \Sexpr{f2(Gad$p)} & \Sexpr{f0(Gad$mde)} & \Sexpr{f0(Gad$bench)} & \Sexpr{f2(Gad$p.bench)} \\
+\bottomrule
+\end{tabular}}
+\par\vspace{0.5em}\begin{minipage}{0.95\textwidth}\footnotesize \emph{Notes:} Difference in mean voter points per round, price-setting voter minus price-setting parties. Standard errors clustered by session ($t$ distribution with $G-2$ degrees of freedom). MDE: minimum detectable effect at 80\% power and 5\% significance. Benchmark: difference in mean equilibrium earnings (Propositions \ref{prop:buying}--\ref{prop:selling}) given each round's draws.\end{minipage}
+\end{table}
+
+\subsection*{A.3 Leading and trailing parties}
+
+\begin{table}[H]
+\centering
+\caption{Offers and acceptances by the party's position before the voter acts}\label{tab:lead}
+\small
+<<lead_print, echo=FALSE, results='asis'>>=
+lt <- as.data.frame(rt$lead.tab)
+lt$Voter <- ifelse(lt$pivotal == 1, "Pivotal", "Non-pivotal")
+lt$Party <- ifelse(lt$lead_party == 1, "Leading", "Trailing")
+lt <- lt[order(lt$stat, -lt$pivotal, -lt$lead_party), c("stat", "Voter", "Party", "n", "value")]
+lt$value <- round(lt$value, 1)
+print(knitr::kable(lt, format = "latex", booktabs = TRUE, row.names = FALSE,
+                   col.names = c("Statistic", "Voter", "Party", "N", "Mean")))
+@
+\par\vspace{0.5em}\begin{minipage}{0.9\textwidth}\footnotesize \emph{Notes:} A party leads if it has more votes than its rival before the negotiated voter acts. Tests of the leading--trailing difference (party-clustered) are reported in the text.\end{minipage}
+\end{table}
+
+\subsection*{A.4 Additional regressions}
+
+\autoref{tab:H1_regressions} reports reduced-form regressions of offers and requested prices on ideological distance and vote shares, with standard errors clustered as described in the note. Two features deserve comment in light of the model. First, \autoref{lem:value} implies that a party's vote share has no effect on the value of a vote once pivotality is accounted for, so the vote-share terms have no theoretical interpretation in this design. Second, ideological distance in these regressions is defined from the voter's label rather than from induced payoffs, which need not coincide (\autoref{sec:design}). With clustered standard errors, ideological distance is not a significant predictor of offers or requests, and the interaction between ideological distance and vote share in the requested-price model is not significant (\autoref{tab:H1_regressions}). In label-consistent rounds only, the interaction is positive and significant (\Sexpr{f2(1000*ct_cons["ideo.distance:vote.intention.party.per", 1])}$\times 10^{-3}$, $p$ \Sexpr{fp(ct_cons["ideo.distance:vote.intention.party.per", 4])}, $N$ = \Sexpr{nobs(m1_consistent)}), but because this subsample is defined after the fact and the term has no counterpart in the model, we do not interpret it.
+
+\begin{table}[H]
+\centering
+\caption{Offers and requested prices: reduced-form regressions}
+\label{tab:H1_regressions}
+\small
+<<H1_reg_table_print, echo=FALSE, results='asis'>>=
+cat(H1_table_latex)
+@
+\par\vspace{0.5em}\begin{minipage}{0.95\textwidth}\footnotesize \Sexpr{H1_table_notes}\end{minipage}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/depvarplot.pdf}
+  \caption{Distributions of parties' offers (price-setting parties, left) and voters' requests (price-setting voter, right), as a percentage of the budget.}
+  \label{fig:depvarplot}
+\end{figure}
+%TC:endignore
+
+\end{document}

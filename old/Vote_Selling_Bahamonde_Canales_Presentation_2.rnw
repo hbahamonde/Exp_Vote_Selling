@@ -1,55 +1,5 @@
 \RequirePackage{atbegshi}
-\documentclass[compress,aspectratio=169]{beamer}\usepackage[]{graphicx}\usepackage[dvipsnames]{xcolor}
-% maxwidth is the original width if it is less than linewidth
-% otherwise use linewidth (to make sure the graphics do not exceed the margin)
-\makeatletter
-\def\maxwidth{ %
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-
-\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
-\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
-\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
-\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
-\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
-\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
-\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
-\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
-\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
-\let\hlipl\hlkwb
-
-\usepackage{framed}
-\makeatletter
-\newenvironment{kframe}{%
- \def\at@end@of@kframe{}%
- \ifinner\ifhmode%
-  \def\at@end@of@kframe{\end{minipage}}%
-  \begin{minipage}{\columnwidth}%
- \fi\fi%
- \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
- \colorbox{shadecolor}{##1}\hskip-\fboxsep
-     % There is no \\@totalrightmargin, so:
-     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
- \MakeFramed {\advance\hsize-\width
-   \@totalleftmargin\z@ \linewidth\hsize
-   \@setminipage}}%
- {\par\unskip\endMakeFramed%
- \at@end@of@kframe}
-\makeatother
-
-\definecolor{shadecolor}{rgb}{.97, .97, .97}
-\definecolor{messagecolor}{rgb}{0, 0, 0}
-\definecolor{warningcolor}{rgb}{1, 0, 1}
-\definecolor{errorcolor}{rgb}{1, 0, 0}
-\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
-
-\usepackage{alltt}
+\documentclass[compress,aspectratio=169]{beamer}
 
 % % % % % % % % % % % % % % %
 %             MY PACKAGES 
@@ -218,12 +168,18 @@
 \author[shortname]{Hector Bahamonde \inst{1} \and Andrea Canales \inst{2}}
 \institute[shortinst]{\inst{1} University of Turku, Finland \and \inst{2} Central Bank of Chile, Chile}
 \date{\today}
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
 \begin{document}
 
+<<echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE>>=
+read_chunk('/Users/hectorbahamonde/research/Exp_Vote_Selling/old/Vote_Selling.R')
+@
 
-
-
+<<rsetup, include=FALSE>>=
+if (!require("pacman")) install.packages("pacman"); library(pacman)
+p_load(knitr)
+options(scipen = 999999999)
+@
 
 %====================
 % TITLE SLIDE
@@ -407,7 +363,7 @@
 \miniframesoff
 \begin{frame}[c]{}
 
-  \includegraphics[scale=0.27, center]{/Users/hectorbahamonde/research/Exp_Vote_Selling/clientelism_vdem_index_2024.png}
+  \includegraphics[scale=0.27, center]{/Users/hectorbahamonde/research/Exp_Vote_Selling/old/clientelism_vdem_index_2024.png}
 \end{frame}
 \fi
 
@@ -434,7 +390,7 @@
 \miniframesoff
 \begin{frame}[c]{Sequencing and Clientelism: Supply and Demand}
 \centering
-\includegraphics[width=0.75\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot_wide.pdf}
+\includegraphics[width=0.75\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/old/histogram_meta_plot_wide.pdf}
 \vspace{0.2cm}
 
 {\tiny Annual frequency of Web of Science publications whose abstracts include the terms ``vote buying'' and ``vote selling.''}
@@ -969,7 +925,7 @@ High demands are possible when \(\overline{R}_{-i^\ast}\) is large enough to com
 \miniframeson
 \begin{frame}[c]{Randomized Sequencing in Two Games}
 \centering
-\includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/experimental_flow.pdf}
+\includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/old/experimental_flow.pdf}
 
 %\vspace{0.2cm}
 %{\small Two institutional variants in an otherwise identical strategic environment.}
@@ -992,7 +948,7 @@ High demands are possible when \(\overline{R}_{-i^\ast}\) is large enough to com
 % LEFT COLUMN: HISTOGRAMS
 \begin{column}{0.6\textwidth}
 \centering
-\includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/depvarplot.pdf}
+\includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/old/depvarplot.pdf}
 
 %\vspace{0.1cm}
 %{\scriptsize Distributions of vote-buying offers (left) and vote-selling requests (right), as a share of party budgets.}
@@ -1061,15 +1017,15 @@ High demands are possible when \(\overline{R}_{-i^\ast}\) is large enough to com
   \begin{overlayarea}{\textwidth}{5cm}
 
     \only<1>{
-      \includegraphics[width=0.8\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_ideo_distance_plot.pdf}
+      \includegraphics[width=0.8\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/old/H1_ideo_distance_plot.pdf}
     }
 
     \only<2>{
-      \includegraphics[width=0.8\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_ols_presentation.pdf}
+      \includegraphics[width=0.8\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/old/H1_ols_presentation.pdf}
     }
 
     \only<3>{
-      \includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/H1_combined.pdf}
+      \includegraphics[width=\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/old/H1_combined.pdf}
     }
 
   \end{overlayarea}
@@ -1136,7 +1092,7 @@ High demands are possible when \(\overline{R}_{-i^\ast}\) is large enough to com
   % LEFT COLUMN: FIGURE
   \column{0.5\textwidth}
   \centering
-  \includegraphics[width=0.9\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/m1plot.pdf}
+  \includegraphics[width=0.9\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/old/m1plot.pdf}
 
   % RIGHT COLUMN: INTERPRETATION
   \column{0.5\textwidth}
@@ -1170,7 +1126,7 @@ High demands are possible when \(\overline{R}_{-i^\ast}\) is large enough to com
   \begin{column}{0.57\textwidth}
   \centering
   \raisebox{0.45cm}{%
-    \includegraphics[width=0.9\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/payoffs_plot.pdf}
+    \includegraphics[width=0.9\textwidth]{/Users/hectorbahamonde/research/Exp_Vote_Selling/old/payoffs_plot.pdf}
   }
   \end{column}
 
