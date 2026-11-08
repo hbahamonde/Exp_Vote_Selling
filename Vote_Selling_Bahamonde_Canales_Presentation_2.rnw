@@ -246,7 +246,7 @@ Gr   <- rt$gap$piv.rule
 \miniframeson
 \begin{frame}[c]{This Paper in One Slide}
 \begin{itemize}
-  \item {\bf Theory}: one voter, two parties, same budget. Two protocols of the {\it same} exchange:
+  \item {\bf Theory}: one voter, two parties, same budget. Two price-setting {\it institutions} for the {\it same} exchange:
   \begin{enumerate}
     \item {\color{red}Price-setting parties} (vote buying).
     \item {\color{blue}Price-setting voter} (vote selling).
@@ -382,7 +382,7 @@ Gr   <- rt$gap$piv.rule
 \begin{itemize}
   \item {\bf Theory}: who sets the price {\it should} decide who gets the clientelist rent.\pause
   \medskip
-  \item {\bf Evidence}: in the lab, it does not---the rent leaks to voters in similar amounts under both protocols.\pause
+  \item {\bf Evidence}: in the lab, it does not---the rent leaks to voters in similar amounts under both institutions.\pause
   \medskip
   \item {\bf Public choice}: the incidence of political rents may depend less on who initiates the exchange and more on how well actors judge {\color{blue}when a vote is decisive}.\pause
   \medskip

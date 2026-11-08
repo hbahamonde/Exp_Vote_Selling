@@ -194,7 +194,7 @@ rt <- local({
   b_int <- unname(coef(m_int)[tn]); s_int <- sqrt(V_int[tn, tn]); df_int <- length(unique(gvp$session)) - 2
   out$int <- list(est = b_int, se = s_int, p = 2 * pt(-abs(b_int / s_int), df_int),
                   p.one = 2 * pt(-abs((b_int - 1) / s_int), df_int))
-  # (b) Randomization inference: permute protocol labels across sessions
+  # (b) Randomization inference: permute institution labels across sessions
   set.seed(20261108)
   sess <- unique(gv[, c("session", "game")])
   ri_stat <- function(d, lab) {
