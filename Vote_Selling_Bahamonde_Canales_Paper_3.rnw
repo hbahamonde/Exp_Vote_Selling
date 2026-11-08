@@ -772,7 +772,8 @@ ft <- ft[!grepl("requested-price model\\)", ft$Step), ]
 ft$Step <- gsub("distinct voters in requested-price model", "distinct voters with requests", ft$Step)
 ft$Step <- gsub(" \\((any-offer logit|offer-size OLS)\\)", "", ft$Step)
 ft$Step <- gsub("party-dyad observations", "party decisions", ft$Step)
-print(knitr::kable(ft, format = "latex", booktabs = TRUE, col.names = c("Step", "N")))
+ft$Step <- sub("<= 0", "$\\leq$ 0", ft$Step, fixed = TRUE)
+print(knitr::kable(ft, format = "latex", booktabs = TRUE, row.names = FALSE, escape = FALSE, col.names = c("Step", "N")))
 @
 \end{table}
 
