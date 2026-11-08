@@ -1,13 +1,19 @@
 ##############################################################################################
-# Vote_Selling.R -- data preparation and descriptive analyses for
-#   "Who Sets the Price of a Vote?" (Vote_Selling_Bahamonde_Canales_Paper_3.rnw).
-# Benchmark tests are in Vote_Selling_revision_tests.R. Data in data/; oTree code in experiment/.
-# The previous version of this script is in old/Vote_Selling.R.
+# Vote_Selling_Bahamonde_Canales_Paper_3.r
+# Replication code for "Who Sets the Price of a Vote? Theory and Experimental Evidence on
+# Vote Buying and Vote Selling" (Vote_Selling_Bahamonde_Canales_Paper_3.rnw).
+# The .rnw reads the labeled chunks below with knitr::read_chunk() and runs them in order.
+# Data in data/; oTree code in experiment/.
+#
+# Benchmark tests (chunk `revision.tests`) build a group-round panel straight from the raw oTree
+# export and test the solved benchmark game:
+#   * a vote is worth E = 2400 to either party iff the voter is pivotal, 0 otherwise;
+#   * budgets M (900-1800) < E, so willingness to pay = M when pivotal (loss aversion has no bite);
+#   * price-setting parties (vote buying): asymmetric Bertrand -> voter gets u* + max(0, M - Delta);
+#   * price-setting voter (vote selling): voter asks M from both, both accept -> voter gets u* + M;
+#   * predicted proposer gap for the voter (pivotal only) = min(Delta, M); 0 when non-pivotal.
+# All benchmark results are stored in the list `rt`.
 ##############################################################################################
-
-############################## 
-# Cleaning
-##############################
 
 ## ---- loadings:d:2 ----
 cat("\014")
@@ -18,11 +24,11 @@ setwd("/Users/hectorbahamonde/research/Exp_Vote_Selling/")
 # K-adic Data Analyses
 # https://www.paulpoast.com/stata-software/4587316769
 
-# [REVISION 2026-11] max() that ignores NAs but returns NA (not -Inf) when all values are NA.
+# max() that ignores NAs but returns NA (not -Inf) when all values are NA.
 # Used for group-level aggregation: voter requests are recorded on the voter's row only.
 max_na <- function(x) if (all(is.na(x))) NA_real_ else max(x, na.rm = TRUE)
 
-# [REVISION 2026-11] NOTE ON GROUP IDENTIFIERS
+# NOTE ON GROUP IDENTIFIERS
 # Groups (one voter + Party A + Party B) were previously identified by the group budget
 # (vote_s.k.group.presupuesto). Budgets are drawn as int(runif(900, 1800)), so two groups
 # in the same round can share a budget, and the budget-only grouping also pooled groups
@@ -39,14 +45,14 @@ getmode <- function(v) {
 # Load the data
 if (!require("pacman")) install.packages("pacman"); library(pacman) 
 p_load(rio,tibble)
-# [REVISION 2026-11] Prefer the local clone of the data repo; fall back to GitHub.
+# Prefer the local clone of the data repo; fall back to GitHub.
 local.data <- "/Users/hectorbahamonde/research/Exp_Vote_Selling/data/data.xlsx"
 dat <- if (file.exists(local.data)) rio::import(local.data) else
   rio::import("https://github.com/hbahamonde/Economic_Experiment_Vote_Selling/raw/master/data/data.xlsx")
 
 # dropping obs
 # drop if payoff is 0
-# [REVISION 2026-11] report how many participants this drops (needed for the flow table).
+# report how many participants this drops (needed for the flow table).
 n.participants.raw <- nrow(dat)
 dat <- subset(dat, participant.payoff > 0)
 n.participants.dropped.zero.payoff <- n.participants.raw - nrow(dat)
@@ -267,7 +273,7 @@ v.selling.dat <- v.selling.dat %>%
 
 
 # pivotal.voter dyad
-# [REVISION 2026-11] Coding matches the oTree vote-counting rule: the real voter is counted inside
+# Coding matches the oTree vote-counting rule: the real voter is counted inside
 # the initial count of the party in his label (tipoAoB), and the vote changes the outcome only if he
 # defects. So the voter is pivotal iff his labelled party leads by exactly one (2-1 of 3, 3-2 of 5).
 # A 1-2 split is NOT pivotal: defecting only widens the loss. Pivotality is identical for both
@@ -407,7 +413,7 @@ v.selling.dat$accepts.offer.2.a = ifelse(v.selling.dat$role.2=="Party A" & v.sel
 v.selling.dat$accepts.offer.2.b = ifelse(v.selling.dat$role.2=="Party B" & v.selling.dat$accepts.offer.2==2, 1, 0)
 v.selling.dat$accepts.offer.3.a = ifelse(v.selling.dat$role.3=="Party A" & v.selling.dat$accepts.offer.3==1, 1, 0)
 v.selling.dat$accepts.offer.3.b = ifelse(v.selling.dat$role.3=="Party B" & v.selling.dat$accepts.offer.3==2, 1, 0)
-# [REVISION 2026-11] NOTE: "accepts.offer" above is the VOTER'S FINAL CHOICE
+# NOTE: "accepts.offer" above is the VOTER'S FINAL CHOICE
 # (votante_acepta_oferta: 1 = A, 2 = B, 3 = none), not the party's acceptance decision.
 # The party's accept/reject decision is player.partido_envia_puntos, recorded on each party's
 # own row. It is added below as party.accepts (needed to report rejection rates).
@@ -415,7 +421,7 @@ v.selling.dat$party.accepts.1 = as.numeric(v.selling.dat$vote_s.1.player.partido
 v.selling.dat$party.accepts.2 = as.numeric(v.selling.dat$vote_s.2.player.partido_envia_puntos)
 v.selling.dat$party.accepts.3 = as.numeric(v.selling.dat$vote_s.3.player.partido_envia_puntos)
 
-# [REVISION 2026-11] Ideological compensation required to vote for party i (in points).
+# Ideological compensation required to vote for party i (in points).
 # In the game, voter points = D - 20*|x - gamma_winner| (+ transfer): they depend on WHO WINS.
 # Hence this compensation is only at stake when the voter is pivotal.
 v.selling.dat$delta.req.1.a = pmax(0, v.selling.dat$vote_s.1.group.pje_win_cB - v.selling.dat$vote_s.1.group.pje_win_cA)
@@ -425,7 +431,7 @@ v.selling.dat$delta.req.2.b = pmax(0, v.selling.dat$vote_s.2.group.pje_win_cA - 
 v.selling.dat$delta.req.3.a = pmax(0, v.selling.dat$vote_s.3.group.pje_win_cB - v.selling.dat$vote_s.3.group.pje_win_cA)
 v.selling.dat$delta.req.3.b = pmax(0, v.selling.dat$vote_s.3.group.pje_win_cA - v.selling.dat$vote_s.3.group.pje_win_cB)
 
-# [REVISION 2026-11] Consistency between the voter's displayed party label (tipoAoB) and the
+# Consistency between the voter's displayed party label (tipoAoB) and the
 # voter's induced ideological payoffs. In the oTree code (models_vs.py / models_vb.py,
 # Subsession.get_votantes) the voter label is set with `if g.tipo_votante > 50` AFTER the loop
 # over groups, so `g` is the LAST group of the subsession: every voter in a session-round gets
@@ -454,9 +460,9 @@ v.selling.dat.1.a = subset(
     voter.own.1.a,
     budget.1.a,
     points.this.round.1,
-    party.accepts.1,      # [REVISION 2026-11]
-    delta.req.1.a,      # [REVISION 2026-11]
-    label.consistent.1    # [REVISION 2026-11]
+    party.accepts.1,
+    delta.req.1.a,
+    label.consistent.1
   )
 )
 v.selling.dat.1.a <- subset(v.selling.dat.1.a, role.1 == "Party A") # drop voters
@@ -484,9 +490,9 @@ v.selling.dat.1.b = subset(
     voter.own.1.b,
     budget.1.b,
     points.this.round.1,
-    party.accepts.1,      # [REVISION 2026-11]
-    delta.req.1.b,      # [REVISION 2026-11]
-    label.consistent.1    # [REVISION 2026-11]
+    party.accepts.1,
+    delta.req.1.b,
+    label.consistent.1
   )
 )
 v.selling.dat.1.b <- subset(v.selling.dat.1.b, role.1 == "Party B") # drop voters
@@ -514,9 +520,9 @@ v.selling.dat.2.a = subset(
     voter.own.2.a,
     budget.2.a,
     points.this.round.2,
-    party.accepts.2,      # [REVISION 2026-11]
-    delta.req.2.a,      # [REVISION 2026-11]
-    label.consistent.2    # [REVISION 2026-11]
+    party.accepts.2,
+    delta.req.2.a,
+    label.consistent.2
   )
 )
 v.selling.dat.2.a <- subset(v.selling.dat.2.a, role.2 == "Party A") # drop voters
@@ -544,9 +550,9 @@ v.selling.dat.2.b = subset(
     voter.own.2.b,
     budget.2.b,
     points.this.round.2,
-    party.accepts.2,      # [REVISION 2026-11]
-    delta.req.2.b,      # [REVISION 2026-11]
-    label.consistent.2    # [REVISION 2026-11]
+    party.accepts.2,
+    delta.req.2.b,
+    label.consistent.2
   )
 )
 v.selling.dat.2.b <- subset(v.selling.dat.2.b, role.2 == "Party B") # drop voters
@@ -574,9 +580,9 @@ v.selling.dat.3.a = subset(
     voter.own.3.a,
     budget.3.a,
     points.this.round.3,
-    party.accepts.3,      # [REVISION 2026-11]
-    delta.req.3.a,      # [REVISION 2026-11]
-    label.consistent.3    # [REVISION 2026-11]
+    party.accepts.3,
+    delta.req.3.a,
+    label.consistent.3
   )
 )
 v.selling.dat.3.a <- subset(v.selling.dat.3.a, role.3 == "Party A") # drop voters
@@ -604,9 +610,9 @@ v.selling.dat.3.b = subset(
     voter.own.3.b,
     budget.3.b,
     points.this.round.3,
-    party.accepts.3,      # [REVISION 2026-11]
-    delta.req.3.b,      # [REVISION 2026-11]
-    label.consistent.3    # [REVISION 2026-11]
+    party.accepts.3,
+    delta.req.3.b,
+    label.consistent.3
   )
 )
 v.selling.dat.3.b <- subset(v.selling.dat.3.b, role.3 == "Party B") # drop voters
@@ -629,14 +635,14 @@ dat.v.s = data.frame(
   )
 
 # Dropping NAs
-# [REVISION 2026-11] drop_na() only on the variables used in the original analysis, so that
+# drop_na() only on the variables used in the original analysis, so that
 # the new auxiliary variables (party.accepts, delta.req, label.consistent) do not change the sample.
 dat.v.s = dat.v.s %>% tidyr::drop_na(
   participant.code, participant.code.dyad, Dyad, participant.payoff, ideo.distance,
   vote.intention.party, vote.intention.party.per, voter.offer, voter.sells.to.both,
   accepts.offer, pivotal.voter, voter.own, budget, points.this.round)
 
-# [REVISION 2026-11] derived variables
+# derived variables
 dat.v.s$delta.req.p = (dat.v.s$delta.req * 100) / dat.v.s$budget  # required compensation, % of budget
 dat.v.s$marginal.value = 2400 * dat.v.s$pivotal.voter              # Constants.E x change in Pr(win): the vote is worth E to EITHER party iff pivotal, 0 otherwise
 
@@ -663,13 +669,7 @@ dat.v.s$voter.offer.p = (dat.v.s$voter.offer*100)/dat.v.s$budget
 
 # load vote buying df from paper 1 manipulations
 load("/Users/hectorbahamonde/research/Exp_Vote_Selling/data/vote_buying_df.RData")
-
 ## ----
-
-
-############################################################
-# *************   MODELING H1: CORE TARGETING   ************
-############################################################
 
 ## ---- hyp.one.vote.selling
 
@@ -757,7 +757,7 @@ m_H1_size <- lm(
 
 p_load(sandwich, sjPlot, ggeffects, ggplot2)
 
-# [REVISION 2026-11] The previous helper used model$model$participant.code, but model$model only
+# The previous helper used model$model$participant.code, but model$model only
 # contains the variables in the formula, so the cluster was NULL and sandwich::vcovCL() silently
 # returned HC1 (unclustered) standard errors. Cluster explicitly on the party participant.
 vcov_size <- sandwich::vcovCL(m_H1_size, cluster = ~ participant.code, type = "HC1")
@@ -824,15 +824,7 @@ pdf(
 
 print(H1plot_2_sq)
 dev.off()
-
-
-
-
 ## ----
-
-######################################################################### 
-# **************            D  E P   V A R                 **************
-#########################################################################
 
 ## ---- dep.var
 # plotting dep variable plot BY HAND
@@ -844,7 +836,7 @@ m1.dep.var <- histogram(
   aspect = 1,
   breaks = 20,
   xlab   = "Vote-Selling Prices (voters, % of party budget)",
-  ylab   = "Percent of observations"  # [REVISION 2026-11] y-axis is the share of observations
+  ylab   = "Percent of observations"  # y-axis is the share of observations
 )
 
 # Vote-buying dependent variable
@@ -854,7 +846,7 @@ m2.dep.var <- histogram(
   breaks = 20,
   nint  = 7,
   xlab   = "Vote-Buying Offers (parties, % of party budget)",
-  ylab   = "Percent of observations"  # [REVISION 2026-11]
+  ylab   = "Percent of observations"
 )
 
 # Save 2-panel figure
@@ -872,20 +864,16 @@ grid.arrange(m2.dep.var, m1.dep.var, ncol = 2)
 dev.off()
 ## ----
 
-######################################################################### 
-# ************** M      O       D       E       L       S **************
-#########################################################################
-
 ## ---- models
 m1 = lm(voter.offer.p ~ ideo.distance*vote.intention.party.per + pivotal.voter, dat.v.s)
 
-# [REVISION 2026-11] Clustered vcov on the VOTER (participant.code.dyad): each voter submits
+# Clustered vcov on the VOTER (participant.code.dyad): each voter submits
 # requests to two parties in each round they are the voter.
 p_load(sandwich)
 vcov_m1 <- sandwich::vcovCL(m1, cluster = ~ participant.code.dyad, type = "HC1")
 
-# [REVISION 2026-11] Marginal effect of ideological distance at each observed vote share
-# (Reviewer 2): dY/dIdeology = b1 + b3 * VoteShare, with clustered SEs, plus a formal test that
+# Marginal effect of ideological distance at each observed vote share
+#: dY/dIdeology = b1 + b3 * VoteShare, with clustered SEs, plus a formal test that
 # the slopes differ between weak (20%) and strong (80%) parties.
 me_ideology <- function(model, V, at) {
   b  <- coef(model)
@@ -914,18 +902,18 @@ H2_slope_diff <- data.frame(
   p.value = as.numeric(2 * pt(-abs(b3 / se.b3), m1$df.residual))
 )
 
-# [REVISION 2026-11] Robustness: dyads where the voter's displayed party label matches the
+# Robustness: dyads where the voter's displayed party label matches the
 # party that gives the voter the higher ideological payoff (see oTree labelling bug above).
 m1_consistent <- lm(voter.offer.p ~ ideo.distance*vote.intention.party.per + pivotal.voter,
                     data = subset(dat.v.s, label.consistent == 1))
 
-# [REVISION 2026-11] Alternative electoral-stake measure suggested by Reviewer 2:
+# Alternative electoral-stake measure:
 # marginal value of the vote = E x change in Pr(win) = 2400 x pivotal, identical for both parties.
 m1_marginal <- lm(voter.offer.p ~ ideo.distance*marginal.value, data = dat.v.s)
 ## ----
 
 ## ---- flow.descriptives
-# [REVISION 2026-11] Observation flow and descriptives requested by Reviewer 2 (comment 4).
+# Observation flow and descriptives.
 flow_table <- data.frame(
   Step = c(
     "Participant rows in raw data",
@@ -960,7 +948,7 @@ vs_desc <- with(dat.v.s, data.frame(
     "Requests of zero to the voter's non-labelled party (%)",
     "Requests of zero to the party with lower ideological payoff (%)",
     "Pivotal dyads: requests below required ideological compensation (%)",
-    "  ... of which requests of zero (%)",  # [REVISION 2026-11] zero requests have no accept/reject, so an acceptance rate is undefined here
+    "  ... of which requests of zero (%)",  # zero requests have no accept/reject, so an acceptance rate is undefined here
     "Party accepted the request (%)",
     "Party accepted, pivotal dyads (%)",
     "Party accepted, non-pivotal dyads (%)",
@@ -989,63 +977,11 @@ vb_desc <- with(subset(dat.v.b, !is.na(offer.made.party)), data.frame(
 ))
 ## ----
 
-options(scipen=999)
-summary(m1)
-
-# Clustered Std Errors and Model info
-# options(scipen=9999999) # turn off sci not
-vcov <- vcovCL(m1, 
-               cluster=dat.v.s$participant.code.dyad,
-               multi0 = TRUE,
-               cadjust = TRUE,
-               type = "HC1",
-               sandwich = TRUE
-               )
-p_load(sandwich,lmtest,lattice,latticeExtra)  # [REVISION 2026-11] DAMisc dropped: unused, not on CRAN for R 4.6
-coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC1"))
-# m1.clst.std.err = as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code, type = "HC0"))[,2])[1:6]
-# m1.clst.t.test = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,3])[1:6])
-# m1.clst.p.value = c(as.numeric(coeftest(m1, vcov. = vcovCL(m1, cluster = dat.v.s$participant.code.dyad, type = "HC0"))[,4])[1:6])
-# custom.model.names.m1 = "Amount of Vote-Buying Offer"
-
-
-
-# p_load(effects)
-# plot(effects::effect("ideo.distance*vote.intention.party.per", m1, confidence.level = 0.90),
-# ylab="Predicted Amount of Vote-Selling Offer\nMade by Voter (points)",
-#      xlab="Ideological Distance",
-#      main = "Partial Conditional Effect of Ideological Distance and Vote Share\nOn Vote-Selling Offer Made Voters",
-#      aspect = 1,
-#      layout = c(5, 2)
-#      )
-
-# with panel corrected std errors
-# p_load(ggeffects)
-# plot(ggeffects::ggpredict(
-#   model=m1,
-#   terms=c("ideo.distance", "vote.intention.party.per [20, 80]"), 
-#   vcov.fun = "vcovHC", 
-#   vcov.type = "HC0")
-# )
-
-
-# p_load(effects)
-# plot(predictorEffects(m1))
-
-
-## Additional Interaction Stuff
-### 1
-# p_load(DAMisc)
-# DAintfun2(m1, c("vote.intention.party.per", "ideo.distance"), varcov = vcov, hist=T, scale.hist=.3, level = 0.90) # plot.type="pdf"
-# BGMtest(m1, vars=c("vote.intention.party.per", "ideo.distance"))
-# DAintfun(m1, c("vote.intention.party.per", "ideo.distance"), theta=-45, phi=20)
-### 2
-
 ## ---- int.plot.d
 p_load(sjPlot, sjmisc, ggplot2)
 theme_set(theme_sjplot())
 
-# [REVISION 2026-11] plot_model(robust = TRUE) is no longer supported by sjPlot, so the previous
+# plot_model(robust = TRUE) is no longer supported by sjPlot, so the previous
 # CIs were not cluster-robust despite the caption. Use ggpredict with the voter-clustered vcov.
 # 95% CIs (update the Figure caption accordingly).
 pred_m1 <- ggeffects::ggpredict(
@@ -1083,16 +1019,8 @@ print(m1plot)
 dev.off()
 ## ----
 
-
-
-
-######################################################################### 
-# ************** p  a y o f f s  **************
-#########################################################################
-
-
 ## ---- payoffs.plot
-# [REVISION 2026-11] PAYOFF MEASURE CORRECTED.
+# PAYOFF MEASURE CORRECTED.
 # The previous version used dat$participant.payoff, which oTree defines as the participant's TOTAL
 # payoff summed over all rounds (and roles) of the session (in vote_buying_df.RData,
 # payoff = 5/12 x sum of the three rounds' points for every participant). A participant who was
@@ -1196,9 +1124,8 @@ print(payoffs.p)   # << required for knitr + device
 dev.off()
 ## ----
 
-
 ## ----ttest_payoffs
-# [REVISION 2026-11] Difference in voter round payoffs (Vote Selling - Vote Buying).
+# Difference in voter round payoffs (Vote Selling - Vote Buying).
 # (i) OLS with SEs clustered at the level of treatment assignment, two-sided;
 # (ii) randomization inference that permutes the game label across sessions (valid with few
 #      clusters when the variant is assigned by session).
@@ -1226,209 +1153,6 @@ t.test.payoffs        <- diff_test(subset(payoff.long, Role == "Voters"))
 t.test.payoffs.party  <- diff_test(subset(payoff.long, Role == "Parties"))
 ## ----
 
-
-#######################
-#### META: Histogram
-#######################
-
-## ----meta_analyses
-if (!require("pacman")) install.packages("pacman"); library(pacman) 
-p_load(tidyverse,readxl)
-
-# Load the data
-meta.d.v.b = read_excel("/Users/hectorbahamonde/research/Exp_Vote_Selling/data/vote_buying_selling_meta.xlsx", sheet = "VB-WOS-PolSci")
-meta.d.v.s = read_excel("/Users/hectorbahamonde/research/Exp_Vote_Selling/data/vote_buying_selling_meta.xlsx", sheet = "VS-WOS-PoliSci")
-
-# rbind
-meta.d = rbind(meta.d.v.b, meta.d.v.s)
-
-# relabel
-meta.d$Literature <- gsub("Vote-Buying", "Vote Buying", meta.d$Literature)
-meta.d$Literature <- gsub("Vote-Selling", "Vote Selling", meta.d$Literature)
-
-# plot
-histogram.meta.plot <- ggplot(meta.d, aes(x = Year, fill = Literature)) +
-  geom_histogram(binwidth = 1, colour = "white") +
-  ylab("Frequency") + xlab("Year of Publication") +
-  theme_bw() +
-  theme(
-    axis.text.y  = element_text(size = 15), 
-    axis.text.x  = element_text(size = 15), 
-    axis.title.y = element_text(size = 15), 
-    axis.title.x = element_text(size = 15), 
-    legend.text  = element_text(size = 15), 
-    legend.title = element_text(size = 0),
-    plot.title   = element_text(size = 3),
-    legend.position   = "bottom",
-    legend.key.size   = unit(0.9, "cm"),
-    legend.spacing.x  = unit(0.7, "cm"),
-    strip.text.x      = element_text(size = 15),
-    aspect.ratio      = 1        # <- square panel
-  )
-
-
-pdf(file=file.path(tempdir(), "histogram_meta_plot.pdf"), 
-    #type="cairo",
-    #units="in", 
-    width=9, 
-    height=5#, 
-    #pointsize=10, 
-    #res=600
-    )
-
-print(histogram.meta.plot)
-dev.off()
-
-# wide plot for presentation
-# plot
-histogram.meta.plot.wide <- ggplot(meta.d, aes(x = Year, fill = Literature)) +
-  geom_histogram(binwidth = 1, colour = "white") +
-  ylab("Frequency") + xlab("Year of Publication") +
-  theme_bw() +
-  theme(
-    axis.text.y  = element_text(size = 15), 
-    axis.text.x  = element_text(size = 15), 
-    axis.title.y = element_text(size = 15), 
-    axis.title.x = element_text(size = 15), 
-    legend.text  = element_text(size = 15), 
-    legend.title = element_text(size = 0),
-    plot.title   = element_text(size = 3),
-    legend.position   = "bottom",
-    legend.key.size   = unit(0.9, "cm"),
-    legend.spacing.x  = unit(0.7, "cm"),
-    strip.text.x      = element_text(size = 15)
-  )
-
-
-pdf(file="/Users/hectorbahamonde/research/Exp_Vote_Selling/histogram_meta_plot_wide.pdf", 
-    #type="cairo",
-    #units="in", 
-    width=9, 
-    height=5#, 
-    #pointsize=10, 
-    #res=600
-)
-
-print(histogram.meta.plot.wide)
-dev.off()
-
-## ----
-
-
-
-
-
-
-
-
-#######################
-#### META: Word cloud
-#######################
-p_load(tm, SnowballC, wordcloud, RColorBrewer)
-
-# declare text data
-v.buying.word.cloud =   as.character(meta.d.v.b$Abstract)
-v.selling.word.cloud =   as.character(meta.d.v.s$Abstract)
-
-###############
-# vote buying
-###############
-
-v.buying.w.c <- Corpus(VectorSource(v.buying.word.cloud))
-
-toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
-v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "/")
-v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "@")
-v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "\\|")
-v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "\\[")
-v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "\\]")
-v.buying.w.c <- tm_map(v.buying.w.c, toSpace, "\\^")
-
-# Convert the text to lower case
-v.buying.w.c <- tm_map(v.buying.w.c, content_transformer(tolower))
-# Remove numbers
-v.buying.w.c <- tm_map(v.buying.w.c, removeNumbers)
-# Remove english common stopwords
-v.buying.w.c <- tm_map(v.buying.w.c, removeWords, stopwords("english"))
-v.buying.w.c <- tm_map(v.buying.w.c, removeWords, c("that", "and", "the", "paper", "explain", "see", "also", "one", "two", "different", "span", "example", "however", "important", "hence", "argue", "since", "https", "well", "with", "are", "for")) 
-# Remove punctuations
-v.buying.w.c <- tm_map(v.buying.w.c, removePunctuation)
-# Eliminate extra white spaces
-v.buying.w.c <- tm_map(v.buying.w.c, stripWhitespace)
-
-dtm.v.b <- TermDocumentMatrix(v.buying.w.c)
-m.v.b <- as.matrix(dtm.v.b)
-v.v.b <- sort(rowSums(m.v.b),decreasing=TRUE)
-d.v.b <- data.frame(word = names(v.v.b),freq=v.v.b)
-head(d.v.b, 10)
-
-# [REVISION 2026-11] removed a stray dev.off() here: with no open device it errors
-# ("cannot shut down device 1") and stops source(). res = 10 dpi also produced an unusable image.
-png(filename=file.path(tempdir(), "wordcloud_buying.png"), 
-    type = "cairo",
-    width     = 9,
-    height    = 9,
-    units     = "in",
-    res       = 300,
-    pointsize = 10)
-
-set.seed(2021)
-wordcloud(words = d.v.b$word, freq = d.v.b$freq, min.freq = 10,
-          max.words=200, random.order=FALSE, rot.per=0.35, 
-          colors=brewer.pal(8, "Dark2"))
-
-dev.off()
-###############
-# vote selling 
-###############
-
-v.selling.w.c <- Corpus(VectorSource(v.selling.word.cloud))
-
-toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
-
-# Convert the text to lower case
-v.selling.w.c <- tm_map(v.selling.w.c, content_transformer(tolower))
-# Remove numbers
-v.selling.w.c <- tm_map(v.selling.w.c, removeNumbers)
-# Remove english common stopwords
-v.selling.w.c <- tm_map(v.selling.w.c, removeWords, stopwords("english"))
-v.selling.w.c <- tm_map(v.selling.w.c, removeWords, c("that", "and", "the", "paper", "explain", "see", "also", "one", "two", "different", "span", "example", "however", "important", "hence", "argue", "since", "https", "well", "with", "are", "for" )) 
-# Remove punctuations
-v.selling.w.c <- tm_map(v.selling.w.c, removePunctuation)
-# Eliminate extra white spaces
-v.selling.w.c <- tm_map(v.selling.w.c, stripWhitespace)
-
-dtm.v.s <- TermDocumentMatrix(v.selling.w.c)
-m.v.s <- as.matrix(dtm.v.s)
-v.v.s <- sort(rowSums(m.v.s),decreasing=TRUE)
-d.v.s <- data.frame(word = names(v.v.s),freq=v.v.s)
-head(d.v.s, 10)
-
-# [REVISION 2026-11] wordcloud() draws on the active device and returns NULL, so the previous
-# code (draw first, open png, then print NULL) saved an empty file; the double dev.off() could also
-# error. Open the device first, then draw.
-png(filename=file.path(tempdir(), "wordcloud_selling.png"), 
-    type="cairo",
-    units="in", 
-    width=9, 
-    height=9, 
-    pointsize=10, 
-    res=600)
-
-set.seed(2021)
-wordcloud(words = d.v.s$word, freq = d.v.s$freq, min.freq = 2,
-          max.words=200, random.order=FALSE, rot.per=0.35, 
-          colors=brewer.pal(8, "Dark2"))
-
-dev.off()
-
-
-
-################
-#### REG TABLE
-################
-
-
 ## ---- reg:table
 p_load(modelsummary, sandwich)
 
@@ -1439,7 +1163,7 @@ models_H1 <- list(
   "Requested price (OLS)" = m1
 )
 
-## [REVISION 2026-11] Clustered SEs. The previous helper used model$model$participant.code,
+## Clustered SEs. The previous helper used model$model$participant.code,
 ## which is NULL (model$model holds only formula variables), so the table reported UNCLUSTERED
 ## HC1 errors labelled "Clustered" (e.g., offer-size ideology SE 0.103 = HC1; party-clustered
 ## SE is 0.115). Supply each model's clustered vcov explicitly:
@@ -1493,7 +1217,7 @@ H1_table_latex <- gsub(
   fixed = TRUE
 )
 
-## [REVISION 2026-11] Table notes (Reviewer 2, minor comment 1). Print below the table in the .rnw.
+## Table notes. Print below the table in the .rnw.
 H1_table_notes <- paste0(
   "Notes: Cluster-robust standard errors (HC1) in parentheses. ",
   "+ p $<$ 0.1, * p $<$ 0.05, ** p $<$ 0.01, *** p $<$ 0.001 (two-sided). ",
@@ -1506,22 +1230,273 @@ H1_table_notes <- paste0(
 )
 ## ----
 
+## ---- revision.tests ----
+rt <- local({
+  suppressMessages({
+    if (!require("pacman")) install.packages("pacman"); library(pacman)
+    p_load(rio, dplyr, tidyr, sandwich, lmtest, ggplot2)
+  })
+  options(dplyr.summarise.inform = FALSE)
 
+  local.data <- "/Users/hectorbahamonde/research/Exp_Vote_Selling/data/data.xlsx"
+  raw <- if (file.exists(local.data)) rio::import(local.data) else
+    rio::import("https://github.com/hbahamonde/Economic_Experiment_Vote_Selling/raw/master/data/data.xlsx")
+  n.raw <- nrow(raw)
+  raw <- subset(raw, participant.payoff > 0)          # same exclusion as Vote_Selling.R
+  E <- 2400
 
+  # ---------------------------------------------------------------- panel
+  grab <- function(g, k) {
+    pre <- paste0("vote_", g, ".", k, ".")
+    col <- function(x) { nm <- paste0(pre, x); if (nm %in% names(raw)) raw[[nm]] else NA }
+    data.frame(
+      game = ifelse(g == "b", "Vote Buying", "Vote Selling"),
+      session = raw$session.code, pid = raw$participant.code, round = k,
+      group = col("group.id_in_subsession"),
+      role = col("player.votanteOpartido"), label = col("player.tipoAoB"),
+      M = col("group.presupuesto"), nA = col("group.n_votantes_A"), nB = col("group.n_votantes_B"),
+      uA = col("group.pje_win_cA"), uB = col("group.pje_win_cB"),
+      puntos = col("player.puntos"),
+      offer = col("player.p_oferta_amount"), vb_choice = col("player.p_oferta_acepta"),
+      req_A = col("player.p_oferta_amount_A"), req_B = col("player.p_oferta_amount_B"),
+      accepts = col("player.partido_envia_puntos"), vs_choice = col("player.votante_acepta_oferta"),
+      stringsAsFactors = FALSE)
+  }
+  long <- bind_rows(lapply(c("b", "s"), function(g) bind_rows(lapply(1:3, function(k) grab(g, k))))) %>%
+    filter(!is.na(role), !is.na(M), M > 0)
 
+  gv <- long %>% filter(role == "votantes") %>%
+    transmute(game, session, round, group, voter = pid, label, M, nA, nB, uA, uB,
+              v_puntos = as.numeric(puntos), vb_choice, vs_choice,
+              req_A = as.numeric(req_A), req_B = as.numeric(req_B)) %>%
+    mutate(
+      n_label = ifelse(label == "A", nA, nB), n_other = ifelse(label == "A", nB, nA),
+      pivotal = as.integer(n_label - n_other == 1),
+      Delta   = abs(uA - uB), u_star = pmax(uA, uB),
+      pref    = ifelse(uA >= uB, "A", "B"),
+      label_consistent = as.integer(label == pref),
+      leader  = ifelse(nA > nB, "A", "B"),
+      u_default = ifelse(leader == "A", uA, uB),
+      pred_vb = ifelse(pivotal == 1, u_star + pmax(0, M - Delta), u_default),
+      # Price-setting voter: the threat to sell to the other party is credible unless the label
+      # party is the preferred party and Delta >= M (then no transfer in equilibrium).
+      credible = as.integer(Delta < M | label != pref),
+      pred_vs = ifelse(pivotal == 1, u_star + M * credible, u_default),
+      pred_gap = pred_vs - pred_vb)
 
-################
-#### ABSTRACT
-################
+  pp <- long %>% filter(role != "votantes") %>%
+    mutate(party = ifelse(role == "Partido A", "A", "B")) %>%
+    select(game, session, round, group, pid, party, offer, accepts) %>%
+    mutate(offer = as.numeric(offer), accepts = as.numeric(accepts)) %>%
+    left_join(gv, by = c("game", "session", "round", "group")) %>%
+    mutate(lead_party = as.integer(party == leader), pref_party = as.integer(party == pref),
+           request = ifelse(party == "A", req_A, req_B),
+           offer_p = 100 * offer / M, request_p = 100 * request / M)
 
-## ---- abstract ----
-# Abstract of the previous version (abstract.txt is now written by the Paper_3 .rnw)
-abstract.c <- as.character(c("Most research on clientelism treats parties as active buyers and voters as passive targets. We argue that this misses vote selling, where voters initiate transactions and price their support. Building on prospect theory, we develop a formal model in which initiative shifts bargaining power, perceived electoral risk, and surplus allocation. Loss aversion provides one mechanism through which electorally exposed parties may overpay to avoid defeat. A laboratory experiment varying initiative, ideology, electoral strength, and pivotality supports the model’s behavioral implications. Party-initiated vote buying concentrates offers among ideologically proximate voters and generates higher voter payoffs. Voter-initiated vote selling shifts requested prices toward electorally advantaged parties, especially when they are ideologically distant, but exposes voters to rejection risk and does not necessarily increase voter surplus."))
-## ----
+  # ---------------------------------------------------------------- payoff-code check
+  offers_w <- pp %>% select(game, session, round, group, party, offer, accepts) %>%
+    pivot_wider(names_from = party, values_from = c(offer, accepts))
+  gv <- gv %>%
+    mutate(sold_to = case_when(
+      game == "Vote Buying"  & vb_choice %in% c(1, 2) ~ c("A", "B")[pmax(1, vb_choice)],
+      game == "Vote Selling" & vs_choice %in% c(1, 2) ~ c("A", "B")[pmax(1, vs_choice)],
+      TRUE ~ NA_character_)) %>%
+    left_join(offers_w, by = c("game", "session", "round", "group")) %>%
+    mutate(
+      transfer = case_when(
+        is.na(sold_to) ~ 0,
+        game == "Vote Buying"  & sold_to == "A" ~ offer_A,
+        game == "Vote Buying"  & sold_to == "B" ~ offer_B,
+        game == "Vote Selling" & sold_to == "A" ~ ifelse(accepts_A %in% 1, req_A, 0),
+        game == "Vote Selling" & sold_to == "B" ~ ifelse(accepts_B %in% 1, req_B, 0)),
+      transfer = ifelse(is.na(transfer), 0, transfer),
+      moves = !is.na(sold_to) & sold_to != label &
+        ((game == "Vote Buying"  & ifelse(sold_to == "A", offer_A, offer_B) > 0) |
+         (game == "Vote Selling" & ifelse(sold_to == "A", req_A, req_B) > 0)),
+      fA = nA + ifelse(moves & sold_to == "A", 1, ifelse(moves & sold_to == "B", -1, 0)),
+      fB = nB + ifelse(moves & sold_to == "B", 1, ifelse(moves & sold_to == "A", -1, 0)),
+      win_rule = ifelse(fA > fB, "A", "B"),
+      rule_puntos = ifelse(win_rule == "A", uA, uB) + transfer,
+      mismatch = v_puntos != rule_puntos,
+      sold_pref = as.integer(!is.na(sold_to) & sold_to == pref & transfer > 0))
 
+  # ---------------------------------------------------------------- helpers
+  mean_cl <- function(y, cluster) {
+    m <- lm(y ~ 1); s <- sqrt(vcovCL(m, cluster = cluster, type = "HC1")[1, 1]); b <- unname(coef(m)[1])
+    list(est = b, se = s, lo = b - 1.96 * s, hi = b + 1.96 * s, n = length(y), G = length(unique(cluster)))
+  }
+  coef_cl <- function(m, cluster, term) {
+    ct <- coeftest(m, vcov = vcovCL(m, cluster = cluster, type = "HC1"))
+    list(est = ct[term, 1], se = ct[term, 2], p = ct[term, 4])
+  }
+  gap_test <- function(d, y = "v_puntos") {
+    d$y <- d[[y]]
+    m <- lm(y ~ I(game == "Vote Selling"), data = d)
+    s <- sqrt(vcovCL(m, cluster = d$session, type = "HC1")[2, 2]); b <- unname(coef(m)[2])
+    G <- length(unique(d$session)); dfree <- G - 2; tc <- qt(0.975, dfree)
+    bench <- mean(d$pred_vs[d$game == "Vote Selling"]) - mean(d$pred_vb[d$game == "Vote Buying"])
+    list(est = b, se = s, lo = b - tc * s, hi = b + tc * s, p = 2 * pt(-abs(b / s), dfree),
+         mde = (tc + qt(0.8, dfree)) * s, bench = bench, p.bench = 2 * pt(-abs((b - bench) / s), dfree),
+         tost = abs(b) + qt(0.95, dfree) * s, n = nrow(d), G = G)
+  }
 
+  # ---------------------------------------------------------------- tests
+  out <- list()
+  out$n.raw <- n.raw; out$n.dropped <- n.raw - nrow(raw)
+  out$sample <- gv %>% group_by(game) %>%
+    summarise(participants = n_distinct(c(voter, pp$pid[pp$game == first(game)])),
+              sessions = n_distinct(session), voter.rounds = n(), pivotal = sum(pivotal),
+              label.consistent = 100 * mean(label_consistent))
+  out$participants <- tapply(long$pid, long$game, function(x) length(unique(x)))
+  out$sessions <- tapply(long$session, long$game, function(x) length(unique(x)))
+  out$mismatch <- gv %>% group_by(game) %>% summarise(n = n(), mismatches = sum(mismatch, na.rm = TRUE))
+  out$bug.vs <- gv %>% filter(game == "Vote Selling", label == "A", sold_to == "A", transfer > 0) %>%
+    summarise(n = n(), unpaid = sum(mismatch), lost = sum(rule_puntos - v_puntos))
 
+  vb  <- pp %>% filter(game == "Vote Buying", !is.na(offer))
+  vbn <- vb %>% filter(pivotal == 0); vbp <- vb %>% filter(pivotal == 1)
+  out$vb.np.any   <- mean_cl(100 * (vbn$offer > 0), vbn$pid)
+  out$vb.np.pct   <- mean_cl(vbn$offer_p, vbn$pid)
+  out$vb.np.pos   <- mean_cl(vbn$offer_p[vbn$offer > 0], vbn$pid[vbn$offer > 0])
+  out$vb.p.any    <- 100 * mean(vbp$offer > 0)
+  out$vb.np.n <- nrow(vbn); out$vb.p.n <- nrow(vbp)
+  out$vb.piv      <- coef_cl(lm(offer_p ~ pivotal, data = vb), vb$pid, "pivotal")
+  out$vb.piv.any  <- coef_cl(lm(I(100 * (offer > 0)) ~ pivotal, data = vb), vb$pid, "pivotal")
+  out$vb.pref <- vbp %>% mutate(bench = ifelse(pref_party == 1, 100 * pmax(0, M - Delta) / M, 100)) %>%
+    group_by(pref_party) %>% summarise(n = n(), any = 100 * mean(offer > 0), pct = mean(offer_p), bench = mean(bench))
+  out$vb.pref.test <- coef_cl(lm(offer_p ~ pref_party, data = vbp), vbp$pid, "pref_party")
 
-## ---- a.length ----
-abstract.c.l = sapply(strsplit(abstract.c, " "), length)
+  vs  <- pp %>% filter(game == "Vote Selling")
+  vsa <- vs %>% filter(request > 0, !is.na(accepts))
+  out$vs.acc <- vsa %>% group_by(pivotal) %>% summarise(n = n(), accept = 100 * mean(accepts), req = mean(request_p))
+  out$vs.acc.test <- coef_cl(lm(I(100 * accepts) ~ pivotal, data = vsa), vsa$pid, "pivotal")
+  out$vs.acc.price.np <- coef_cl(lm(I(100 * accepts) ~ request_p, data = subset(vsa, pivotal == 0)),
+                                 subset(vsa, pivotal == 0)$pid, "request_p")
+  out$vs.acc.price.p  <- coef_cl(lm(I(100 * accepts) ~ request_p, data = subset(vsa, pivotal == 1)),
+                                 subset(vsa, pivotal == 1)$pid, "request_p")
+  vsp <- vs %>% filter(pivotal == 1, !is.na(request))
+  out$vs.p.req  <- mean_cl(vsp$request_p, vsp$voter)
+  out$vs.p.full <- mean_cl(100 * (vsp$request >= vsp$M), vsp$voter)
+  out$vs.p.zero <- 100 * mean(vsp$request == 0)
+  out$vs.pref <- vsp %>% group_by(pref_party) %>% summarise(n = n(), pct = mean(request_p), zero = 100 * mean(request == 0))
+  vsn <- vs %>% filter(pivotal == 0, !is.na(request))
+  out$vs.np.req <- mean_cl(vsn$request_p, vsn$voter)
+
+  out$lead.vb <- coef_cl(lm(offer_p ~ lead_party, data = vbn), vbn$pid, "lead_party")
+  out$lead.vb.p <- coef_cl(lm(offer_p ~ lead_party, data = vbp), vbp$pid, "lead_party")
+  out$lead.vs <- coef_cl(lm(I(100 * accepts) ~ lead_party, data = subset(vsa, pivotal == 0)),
+                         subset(vsa, pivotal == 0)$pid, "lead_party")
+  out$lead.tab <- bind_rows(
+    vb %>% group_by(pivotal, lead_party) %>% summarise(n = n(), value = mean(offer_p)) %>% mutate(stat = "Vote buying: offer (% of budget)"),
+    vsa %>% group_by(pivotal, lead_party) %>% summarise(n = n(), value = 100 * mean(accepts)) %>% mutate(stat = "Vote selling: requests accepted (%)"))
+
+  out$payoffs <- gv %>% group_by(game, pivotal) %>%
+    summarise(n = n(), recorded = mean(v_puntos), rule = mean(rule_puntos),
+              benchmark = mean(ifelse(game == "Vote Buying", pred_vb, pred_vs)),
+              transfer = mean(transfer), bench.transfer = mean(ifelse(pivotal == 1,
+                ifelse(game == "Vote Buying", pmax(0, M - Delta), M * credible), 0)),
+              win.pref = 100 * mean(win_rule == pref), credible = 100 * mean(credible),
+              sold.pref = 100 * mean(sold_pref), M = mean(M), Delta = mean(Delta))
+  out$pred.gap.piv <- mean(gv$pred_gap[gv$pivotal == 1])
+  out$pred.gap.pct <- 100 * mean(gv$pred_gap[gv$pivotal == 1] / gv$M[gv$pivotal == 1])
+  out$gap <- list(
+    all.rec = gap_test(gv), piv.rec = gap_test(subset(gv, pivotal == 1)), np.rec = gap_test(subset(gv, pivotal == 0)),
+    all.rule = gap_test(gv, "rule_puntos"), piv.rule = gap_test(subset(gv, pivotal == 1), "rule_puntos"),
+    np.rule = gap_test(subset(gv, pivotal == 0), "rule_puntos"))
+
+  # ---------------------------------------------------------------- extra tests of the proposer advantage
+  gvp <- subset(gv, pivotal == 1)
+  # (a) Does the realized advantage rise with Delta? Benchmark slope = 1 (for Delta < M).
+  m_int <- lm(rule_puntos ~ I(game == "Vote Selling") * Delta, data = gvp)
+  V_int <- vcovCL(m_int, cluster = gvp$session, type = "HC1")
+  tn <- 'I(game == "Vote Selling")TRUE:Delta'
+  b_int <- unname(coef(m_int)[tn]); s_int <- sqrt(V_int[tn, tn]); df_int <- length(unique(gvp$session)) - 2
+  out$int <- list(est = b_int, se = s_int, p = 2 * pt(-abs(b_int / s_int), df_int),
+                  p.one = 2 * pt(-abs((b_int - 1) / s_int), df_int))
+  # (b) Randomization inference: permute institution labels across sessions
+  set.seed(20261108)
+  sess <- unique(gv[, c("session", "game")])
+  ri_stat <- function(d, lab) {
+    g <- lab[match(d$session, sess$session)]
+    mean(d$rule_puntos[g == "Vote Selling"]) - mean(d$rule_puntos[g == "Vote Buying"])
+  }
+  obs_ri <- ri_stat(gvp, sess$game)
+  sims <- replicate(5000, ri_stat(gvp, sample(sess$game)))
+  out$ri <- list(est = obs_ri, p = mean(abs(sims) >= abs(obs_ri)),
+                 p.bench = mean(abs(sims - mean(sims)) >= abs(obs_ri - out$gap$piv.rule$bench)))
+  # (c) Excluding every round with a payoff discrepancy
+  out$gap.clean <- gap_test(subset(gv, pivotal == 1 & !mismatch))
+  out$n.clean <- sum(gvp$mismatch)
+
+  # (d) Experience: do the deviations shrink across the three paid rounds?
+  lin_round <- function(d, y, cl) { m <- lm(d[[y]] ~ d$round); coef_cl(m, cl, "d$round") }
+  vbn$any100 <- 100 * (vbn$offer > 0)
+  vsan <- subset(vsa, pivotal == 0); vsan$acc100 <- 100 * vsan$accepts
+  out$learn <- list(
+    vb.np.any = vbn %>% group_by(round) %>% summarise(v = mean(any100)),
+    vb.np.any.t = lin_round(vbn, "any100", vbn$pid),
+    vs.np.acc = vsan %>% group_by(round) %>% summarise(v = mean(acc100)),
+    vs.np.acc.t = lin_round(vsan, "acc100", vsan$pid),
+    vs.p.req = vsp %>% group_by(round) %>% summarise(v = mean(request_p)),
+    vs.p.req.t = lin_round(vsp, "request_p", vsp$voter))
+
+  # ---------------------------------------------------------------- figures
+  theme_pc <- theme_minimal(base_size = 11) +
+    theme(panel.grid.minor = element_blank(), panel.grid.major.x = element_blank(),
+          legend.position = "bottom", legend.title = element_blank(),
+          strip.text = element_text(face = "bold"), axis.title.x = element_blank())
+
+  # Figure: voter payoffs, observed (rule-implied, 95% session-clustered CI) vs benchmark
+  f1 <- gv %>% group_by(game, pivotal) %>%
+    group_modify(~ { m <- mean_cl(.x$rule_puntos, .x$session)
+      data.frame(observed = m$est, lo = m$lo, hi = m$hi,
+                 benchmark = if (.y$game == "Vote Buying") mean(.x$pred_vb) else mean(.x$pred_vs)) }) %>%
+    ungroup() %>%
+    mutate(game = factor(ifelse(game == "Vote Buying", "Price-setting\nparties", "Price-setting\nvoter"),
+                         levels = c("Price-setting\nparties", "Price-setting\nvoter")),
+           pivotal = factor(ifelse(pivotal == 1, "Pivotal voter", "Non-pivotal voter"),
+                            levels = c("Pivotal voter", "Non-pivotal voter")))
+  g1 <- ggplot(f1, aes(x = game)) +
+    geom_errorbar(aes(ymin = lo, ymax = hi), width = 0.08, linewidth = 0.5, colour = "grey30") +
+    geom_point(aes(y = observed, shape = "Observed (95% CI)"), size = 2.8, colour = "black") +
+    geom_point(aes(y = benchmark, shape = "Benchmark prediction"), size = 3, stroke = 1, colour = "black") +
+    scale_shape_manual(values = c("Observed (95% CI)" = 16, "Benchmark prediction" = 2)) +
+    facet_wrap(~ pivotal) + labs(y = "Voter points per round") + theme_pc
+  ggsave("/Users/hectorbahamonde/research/Exp_Vote_Selling/benchmark_payoffs.pdf", g1, width = 6.5, height = 3.6)
+
+  # Figure: party and voter behaviour vs benchmark
+  ci <- function(y, cl) { m <- mean_cl(y, cl); c(m$est, m$lo, m$hi) }
+  rows <- list(
+    c("A. Parties' offers\n(price-setting parties)", "Non-pivotal", ci(vbn$offer_p, vbn$pid), 0),
+    c("A. Parties' offers\n(price-setting parties)", "Pivotal", ci(vbp$offer_p, vbp$pid),
+      mean(ifelse(vbp$pref_party == 1, 100 * pmax(0, vbp$M - vbp$Delta) / vbp$M, 100))),
+    c("B. Requests accepted\n(price-setting voter)", "Non-pivotal",
+      ci(100 * vsa$accepts[vsa$pivotal == 0], vsa$pid[vsa$pivotal == 0]), 0),
+    c("B. Requests accepted\n(price-setting voter)", "Pivotal",
+      ci(100 * vsa$accepts[vsa$pivotal == 1], vsa$pid[vsa$pivotal == 1]), 100),
+    c("C. Voter's requests\n(price-setting voter)", "Pivotal", ci(vsp$request_p, vsp$voter),
+      100 * mean(vsp$credible)))
+  f2 <- as.data.frame(do.call(rbind, rows), stringsAsFactors = FALSE)
+  names(f2) <- c("panel", "pivotal", "observed", "lo", "hi", "benchmark")
+  f2[, 3:6] <- lapply(f2[, 3:6], as.numeric)
+  f2$pivotal <- factor(f2$pivotal, levels = c("Pivotal", "Non-pivotal"))
+  g2 <- ggplot(f2, aes(x = pivotal)) +
+    geom_errorbar(aes(ymin = lo, ymax = hi), width = 0.08, linewidth = 0.5, colour = "grey30") +
+    geom_point(aes(y = observed, shape = "Observed (95% CI)"), size = 2.8) +
+    geom_point(aes(y = benchmark, shape = "Benchmark prediction"), size = 3, stroke = 1) +
+    scale_shape_manual(values = c("Observed (95% CI)" = 16, "Benchmark prediction" = 2)) +
+    scale_y_continuous(limits = c(0, 100)) +
+    facet_wrap(~ panel, scales = "free_x") + labs(y = "Percent (of budget, or of requests)") + theme_pc
+  ggsave("/Users/hectorbahamonde/research/Exp_Vote_Selling/benchmark_behaviour.pdf", g2, width = 6.5, height = 3.6)
+
+  out$gv <- gv; out$pp <- pp
+  out
+})
+
+# Formatting helpers for \Sexpr{}
+neg <- function(s) sub("^-", "$-$", s)                   # typographic minus in LaTeX
+f0 <- function(x) neg(format(round(x), big.mark = ",", trim = TRUE))
+f1 <- function(x) neg(formatC(x, format = "f", digits = 1))
+f2 <- function(x) neg(formatC(x, format = "f", digits = 2))
+fp <- function(p) if (p < 0.001) "< 0.001" else paste("=", formatC(p, format = "f", digits = 3))
 ## ----

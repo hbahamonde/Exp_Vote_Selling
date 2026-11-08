@@ -217,18 +217,6 @@ headpunct=:
 %%% bib end
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% [REVISION 2026-11] Paper_3: Public Choice version.
-% Built on Paper_2 (rejected at Political Behavior). Main changes:
-%  - contribution narrowed to a controlled comparison of WHO SETS THE PRICE;
-%  - Andrea's model kept (Delta, R_i, loss aversion, effective WTP) but solved in equilibrium;
-%    the old H3 is replaced by a derived proposer-advantage proposition;
-%  - prospect theory kept as a behavioural extension with testable signatures;
-%  - treatments renamed (price-setting parties / price-setting voter);
-%  - disclosure of Bahamonde & Canales (2022).
-% Numbers come from Vote_Selling.R and Vote_Selling_revision_tests.R (object `rt`).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \addbibresource{/Users/hectorbahamonde/research/Exp_Vote_Selling/Vote_Selling_Bahamonde_Canales_Paper_3.bib}
 
 \newtheorem{lemma}{Lemma}
@@ -262,8 +250,7 @@ headpunct=:
 
 <<echo=FALSE, cache=FALSE, warning = FALSE, message = F>>=
 library(knitr)
-read_chunk('/Users/hectorbahamonde/research/Exp_Vote_Selling/Vote_Selling.R')
-read_chunk('/Users/hectorbahamonde/research/Exp_Vote_Selling/Vote_Selling_revision_tests.R')
+read_chunk('/Users/hectorbahamonde/research/Exp_Vote_Selling/Vote_Selling_Bahamonde_Canales_Paper_3.r')
 @
 
 <<rsetup, include=FALSE>>=
@@ -556,28 +543,6 @@ Under rejection risk, two further signatures follow. (B4) Parties reject some pi
 
 \autoref{tab:predictions} summarizes the benchmark predictions and the behavioral signatures that we test.
 
-\begin{table}[htbp]
-\centering
-\caption{Benchmark predictions and behavioral signatures}\label{tab:predictions}
-\small
-\begin{tabular}{p{0.8cm}p{9.2cm}p{3.4cm}}
-\toprule
- & Prediction & Source \\
-\midrule
-E1 & Parties make (accept) no positive offers (requests) when the voter is not pivotal & Lemmas \ref{lem:value}--\ref{lem:loss} \\
-E2 & Pivotal voter: preferred party offers $M-\Delta$, rival offers $M$; preferred party wins & \autoref{prop:buying} \\
-E3 & Pivotal voter: voter requests $M$ from both parties; both accept & \autoref{prop:selling} \\
-E4 & Pivotal voter earns $\min\{\Delta,M\}$ more as price-setter; no difference if not pivotal & \autoref{prop:advantage} \\
-E5 & The proposer advantage rises one-for-one with $\Delta$ (for $\Delta<M$) & \autoref{prop:advantage} \\
-\midrule
-B1 & Positive offers and acceptances for non-pivotal voters & Perceived pivotality \\
-B2 & Non-pivotal acceptance falls with the requested price & Perceived pivotality \\
-B3 & Leading parties pay and accept more than trailing parties & Loss aversion \\
-B4 & Some pivotal requests below the budget are rejected & Rejection risk \\
-B5 & Pivotal voters request less than the budget & Rejection risk \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental Design}\label{sec:design}
@@ -779,6 +744,29 @@ count <- comma(as.numeric(regmatches(sum.row, regexpr("(\\d)+", sum.row))))
 \section*{Appendix}
 \addcontentsline{toc}{section}{Appendix}
 \label{sec:appendix}
+
+\begin{table}[htbp]
+\centering
+\caption{Benchmark predictions and behavioral signatures}\label{tab:predictions}
+\small
+\begin{tabular}{p{0.8cm}p{9.2cm}p{3.4cm}}
+\toprule
+ & Prediction & Source \\
+\midrule
+E1 & Parties make (accept) no positive offers (requests) when the voter is not pivotal & Lemmas \ref{lem:value}--\ref{lem:loss} \\
+E2 & Pivotal voter: preferred party offers $M-\Delta$, rival offers $M$; preferred party wins & \autoref{prop:buying} \\
+E3 & Pivotal voter: voter requests $M$ from both parties; both accept & \autoref{prop:selling} \\
+E4 & Pivotal voter earns $\min\{\Delta,M\}$ more as price-setter; no difference if not pivotal & \autoref{prop:advantage} \\
+E5 & The proposer advantage rises one-for-one with $\Delta$ (for $\Delta<M$) & \autoref{prop:advantage} \\
+\midrule
+B1 & Positive offers and acceptances for non-pivotal voters & Perceived pivotality \\
+B2 & Non-pivotal acceptance falls with the requested price & Perceived pivotality \\
+B3 & Leading parties pay and accept more than trailing parties & Loss aversion \\
+B4 & Some pivotal requests below the budget are rejected & Rejection risk \\
+B5 & Pivotal voters request less than the budget & Rejection risk \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection*{A.1 Sample}
 

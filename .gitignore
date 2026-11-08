@@ -284,7 +284,9 @@ Vote_Selling_Bahamonde_Canales_Paper_2.tex
 .Rapp.history
 
 # local working notes (not part of the replication material)
-old/HANDOFF_CLAUDE_CODE.md
-old/.Rhistory
+old/
 .Rhistory
 .DS_Store
+
+# journal submission package (local only)
+Public Choice/

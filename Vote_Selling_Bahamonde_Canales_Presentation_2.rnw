@@ -174,7 +174,7 @@
 
 <<echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE>>=
 library(knitr)
-read_chunk('/Users/hectorbahamonde/research/Exp_Vote_Selling/Vote_Selling_revision_tests.R')
+read_chunk('/Users/hectorbahamonde/research/Exp_Vote_Selling/Vote_Selling_Bahamonde_Canales_Paper_3.r')
 @
 
 <<rsetup, include=FALSE>>=
