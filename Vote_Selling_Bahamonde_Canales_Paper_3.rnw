@@ -318,9 +318,9 @@ rej1 <- 100 - acc1
 # Party payoffs, recorded (session-clustered; from Vote_Selling.R)
 pgap <- t.test.payoffs.party
 # Abstract
-abstract3 <- paste0("Formal models of clientelism usually let parties set the price of a vote. We ask what changes when the voter sets it. We solve a game in which two parties with a common budget compete for one voter whose vote is worth something only when it is pivotal, and compare an institution in which parties set the price (vote buying) with one in which the voter sets it (vote selling). The model predicts that handing price-setting power to the voter transfers to the voter a rent equal to the voter's ideological attachment, capped by the budget, and that party loss aversion affects offers only when parties misperceive whether a vote is pivotal. A laboratory experiment in Chile (", nAll, " participants, ", sAll, " sessions) rejects the proposer-advantage prediction: pivotal voters earn about the same under both institutions (difference of ", f0(Gr$est), " points against a predicted ", f0(Gr$bench), "). Two behavioral regularities absorb the predicted rent. Parties pay for votes that cannot change the outcome, and voters who set prices ask for about half of what parties would be willing to pay.")
+# The abstract lives in abstract.txt (edited by hand; never overwritten by this file)
+abstract3 <- paste(readLines("abstract.txt", warn = FALSE), collapse = " ")
 abstract3.l <- length(strsplit(abstract3, " ")[[1]])
-writeLines(abstract3, "abstract.txt")
 @
 
 %TC:endignore
