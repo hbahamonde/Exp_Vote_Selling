@@ -277,12 +277,12 @@ Gr   <- rt$gap$piv.rule
   {\small The preferred party wins and pays less the more the voter likes it (``core voter'' logic).}\pause
   \medskip
   \item {\bf When the voter sets prices}, it is an ultimatum game.\\
-  {\small The voter can play one party against the other and ask for the {\color{blue}whole budget}.}
+  {\small Bargaining is structural: no communication, only posted prices and accept/reject decisions. The rival's acceptance gives the voter somewhere else to sell, so the voter can ask for the {\color{blue}whole budget}.}
 \end{enumerate}
 \pause
 \medskip
 \begin{exampleblock}{{\small Proposer advantage}}
-{\small Moving price-setting power to a pivotal voter should raise the voter's earnings by $\min(\Delta, M)$: ideological attachment, capped by the budget. Loss aversion should not matter when budgets bind.}
+{\small Moving price-setting power to a pivotal voter should raise the voter's earnings by $\min(\Delta, M)$: ideological attachment, capped by the budget. When budgets bind and beliefs about pivotality are correct, loss aversion cannot raise what parties pay.}
 \end{exampleblock}
 \end{frame}
 
@@ -342,6 +342,11 @@ Gr   <- rt$gap$piv.rule
 
 \miniframeson
 \begin{frame}[c]{Result 3: The Proposer Advantage Disappears}
+{\small Pivotal voters only; standard errors clustered by session ($t_{G-2}$):}
+\[
+\mathit{Earnings}_{vrs} = \alpha + \tau\, \mathit{VoterSets}_{s} + \varepsilon_{vrs}
+\]
+\vspace{-0.3cm}
 \begin{columns}[c,totalwidth=\textwidth]
 \begin{column}{0.58\textwidth}
 \centering
@@ -349,9 +354,9 @@ Gr   <- rt$gap$piv.rule
 \end{column}
 \begin{column}{0.42\textwidth}
 \begin{itemize}
-  \item Predicted gain for pivotal voters: {\bf \Sexpr{f0(Gr$bench)}} points.\pause
+  \item Predicted: $\tau^\ast$ = {\bf \Sexpr{f0(Gr$bench)}} points.\pause
   \medskip
-  \item Observed: {\color{blue}\Sexpr{f0(Gr$est)}} points {\scriptsize [\Sexpr{f0(Gr$lo)}, \Sexpr{f0(Gr$hi)}]}.\pause
+  \item Observed: $\hat\tau$ = {\color{blue}\Sexpr{f0(Gr$est)}} points {\scriptsize [\Sexpr{f0(Gr$lo)}, \Sexpr{f0(Gr$hi)}]}.\pause
   \medskip
   \item Not a power problem: MDE = \Sexpr{f0(Gr$mde)}; equivalence bound $\pm$\Sexpr{f0(Gr$tost)}.
 \end{itemize}
@@ -365,9 +370,9 @@ Gr   <- rt$gap$piv.rule
   \medskip
   \item {\color{blue}Price-setting voter}: under-asking {\bf lowers} voter earnings.\pause
   \medskip
-  \item Is overpayment loss-averse ``insurance''? {\bf No}: leading and trailing parties pay the same.\pause
+  \item Why pay for a vote that cannot decide the election? Parties act {\bf as if a non-pivotal vote might still be decisive}.\pause
   \medskip
-  \item[\checkmark] Better described as {\bf imperfect conditioning on pivotality}, not prospect theory.
+  \item[\checkmark] Then the budget no longer binds and {\bf loss aversion} shapes offers: misperceived pivotality and loss aversion are {\bf complements}.
 \end{itemize}
 \end{frame}
 
