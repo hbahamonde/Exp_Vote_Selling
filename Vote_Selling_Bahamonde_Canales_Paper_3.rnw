@@ -315,9 +315,6 @@ meanD.p <- mean(gvp$Delta)
 pred.gap.pct <- rt$pred.gap.pct
 over.VB <- pv(VB, 0, "rule") - pv(VB, 0, "benchmark"); over.VS <- pv(VS, 0, "rule") - pv(VS, 0, "benchmark")
 rej1 <- 100 - acc1
-# Label-consistent robustness (voter-clustered)
-ct_cons <- lmtest::coeftest(m1_consistent, vcov = sandwich::vcovCL(m1_consistent,
-             cluster = subset(dat.v.s, label.consistent == 1)$participant.code.dyad, type = "HC1"))
 # Party payoffs, recorded (session-clustered; from Vote_Selling.R)
 pgap <- t.test.payoffs.party
 # Abstract
@@ -771,7 +768,10 @@ count <- comma(as.numeric(regmatches(sum.row, regexpr("(\\d)+", sum.row))))
 ft <- flow_table
 ft$Step <- gsub("Vote-selling", "Price-setting voter", ft$Step)
 ft$Step <- gsub("Vote-buying", "Price-setting parties", ft$Step)
-ft$Step <- gsub("requested-price model", "requested-price regression", ft$Step)
+ft <- ft[!grepl("requested-price model\\)", ft$Step), ]
+ft$Step <- gsub("distinct voters in requested-price model", "distinct voters with requests", ft$Step)
+ft$Step <- gsub(" \\((any-offer logit|offer-size OLS)\\)", "", ft$Step)
+ft$Step <- gsub("party-dyad observations", "party decisions", ft$Step)
 print(knitr::kable(ft, format = "latex", booktabs = TRUE, col.names = c("Step", "N")))
 @
 \end{table}
@@ -816,20 +816,7 @@ print(knitr::kable(lt, format = "latex", booktabs = TRUE, row.names = FALSE,
 \par\vspace{0.5em}\begin{minipage}{0.9\textwidth}\footnotesize \emph{Notes:} A party leads if it has more votes than its rival before the negotiated voter acts. Tests of the leading--trailing difference (party-clustered) are reported in the text.\end{minipage}
 \end{table}
 
-\subsection*{A.4 Additional regressions}
-
-\autoref{tab:H1_regressions} reports reduced-form regressions of offers and requested prices on ideological distance and vote shares, with standard errors clustered as described in the note. Two features deserve comment in light of the model. First, \autoref{lem:value} implies that, in equilibrium, vote share affects the value of a vote only through pivotality, so the vote-share terms capture how parties perceive electoral risk rather than the equilibrium value of the vote. Second, ideological distance in these regressions is defined from the voter's label rather than from induced payoffs, which need not coincide (\autoref{sec:design}). With clustered standard errors, the coefficients on ideological distance and on its interaction with vote share are imprecisely estimated (\autoref{tab:H1_regressions}). In label-consistent rounds only, the interaction is positive and significant (\Sexpr{f2(1000*ct_cons["ideo.distance:vote.intention.party.per", 1])}$\times 10^{-3}$, $p$ \Sexpr{fp(ct_cons["ideo.distance:vote.intention.party.per", 4])}, $N$ = \Sexpr{nobs(m1_consistent)}), but because this subsample is defined after the fact and the term has no counterpart in the model, we do not interpret it.
-
-\begin{table}[H]
-\centering
-\caption{Offers and requested prices: reduced-form regressions}
-\label{tab:H1_regressions}
-\small
-<<H1_reg_table_print, echo=FALSE, results='asis'>>=
-cat(H1_table_latex)
-@
-\par\vspace{0.5em}\begin{minipage}{0.95\textwidth}\footnotesize \Sexpr{H1_table_notes}\end{minipage}
-\end{table}
+\subsection*{A.4 Distribution of offers and requests}
 
 \begin{figure}[H]
   \centering
